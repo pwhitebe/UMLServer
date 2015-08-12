@@ -12,7 +12,8 @@ var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'mmwrcasewebapp',
   password : 'mmwrquizcase',
-  database : 'mmwrcase'
+  database : 'mmwrcase',
+  port     : '/tmp/mysql.sock' 
 });
 connection.connect();
 if(true){
