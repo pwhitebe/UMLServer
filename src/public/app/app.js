@@ -1,5 +1,6 @@
 var mmwrcase = angular.module('app', [
   'ngRoute'
+  ,'ui.router'
   ,'ngResource'
   ,'ngAnimate'
   ,'ngSanitize'
