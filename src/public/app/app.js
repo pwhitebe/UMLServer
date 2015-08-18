@@ -1,5 +1,5 @@
 var mmwrcase = angular.module('app', [
-  'ngRoute'
+  //'ngRoute'
   ,'ui.router'
   ,'ngResource'
   ,'ngAnimate'
@@ -28,16 +28,16 @@ mmwrcase.config([
     }
 ])
 
-mmwrcase.config(['$routeProvider', 
-  function($routeProvider) {
-    $routeProvider.
-      when('/', {
-        templateUrl: '/partials/main',
+mmwrcase.config(['$stateProvider', '$urlRouterProvider',
+  function($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise('/');
+
+    $stateProvider
+      .state('home', {
+        url:'/',
+        templateUrl: 'partials/main',
         controller: 'mainCtrl'
-      }).
-      otherwise({
-        redirectTo: '/main'
-      });
+      })
 }]);
 
 angular.module('app').run(function($rootScope,$location) {
