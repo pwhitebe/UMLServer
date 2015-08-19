@@ -9,7 +9,7 @@ var connection = mysql.createConnection({
 
 
 
-exports.getCases = function(req,res) {
+exports.getCasesByStatus = function(req,res) {
 	//connection.connect();
 	var devStatus = req.params.devStatus;
 	var displayStatus = req.params.displayStatus; 
@@ -128,7 +128,7 @@ exports.getQuestions = function(req,res) {
 //	connection.end();
 
 }
-exports.getAnswers = function(req,req) {
+exports.getAnswers = function(req,res) {
 //	connection.connect();
 	if(true){
 		connection.query('SELECT * FROM case_main where ',function(err,rows){
@@ -145,6 +145,41 @@ exports.getAnswers = function(req,req) {
 		console.log("DB connection failed");
 	}
 //	connection.end();
+
+}
+
+exports.getCaseById = function(req,res) {
+	var caseId = req.params.caseId;
+	var caseData = {}
+	var sqlStm = 'SELECT * FROM case_main where case_id = '+ caseId;
+	console.log(sqlStm)
+	if(true){
+		connection.query(sqlStm,function(err,rows){
+  		if(err) {
+  			res.send(err);
+  		} 
+  		else {
+  				caseData = rows[0];
+  				sqlStm = 'SELECT * FROM image where case_id = '+ caseData.case_id;
+  			   	connection.query(sqlStm,function(err,images){
+	  			   	if(err) {
+	  					res.send(err);
+	  				} 
+	  				else {
+	  					caseData['images'] = images;
+	  					res.send(caseData);
+	  				}
+  		 		});
+
+ 		 	}
+		});
+	}
+	else
+	{
+		console.log("DB connection failed");
+	}
+//	connection.end();
+
 
 }
 

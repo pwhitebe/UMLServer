@@ -14,7 +14,9 @@ module.exports = function(app) {
   // app.post('/api/users', users.createUser);
   // app.put('/api/users', users.updateUser);
   app.get('/api/mmwrcase/currentCase/',mmwrCase.getCurrentCase);
-  app.get('/api/mmwrcase/getCases/:devStatus/:displayStatus',mmwrCase.getCases)
+  app.get('/api/mmwrcase/getCasesByStatus/:devStatus/:displayStatus',mmwrCase.getCasesByStatus);
+  app.get('/api/mmwrcase/getCaseById/:caseId',mmwrCase.getCaseById);
+  
   app.get('/partials/*', function(req, res) {
     res.render('../../public/app/views/' + req.params);
   });
