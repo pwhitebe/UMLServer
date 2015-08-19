@@ -8,9 +8,9 @@ var connection = mysql.createConnection({
 });
 
 exports.getCurrentCase = function(req,res) {
-	connection.connect();
+	//connection.connect();
 	if(true){
-		connection.query('SELECT * FROM case_main',function(err,rows){
+		connection.query('SELECT * FROM case_main where ',function(err,rows){
   		if(err) {
   			res.send(err);
   		} 
@@ -23,6 +23,86 @@ exports.getCurrentCase = function(req,res) {
 	{
 		console.log("DB connection failed");
 	}
-	connection.end();
+//	connection.end();
 
 }
+
+exports.getUpComingCases = function(req,res) {
+	//connection.connect();
+	if(true){
+		connection.query('SELECT * FROM case_main where ',function(err,rows){
+  		if(err) {
+  			res.send(err);
+  		} 
+  		else {
+  		 	   res.send(rows);
+		 	}
+		});
+	}
+	else
+	{
+		console.log("DB connection failed");
+	}
+//	connection.end();
+
+}
+
+exports.getPreviousCases = function(req,res) {
+//	connection.connect();
+	if(true){
+		connection.query('SELECT * FROM case_main where ',function(err,rows){
+  		if(err) {
+  			res.send(err);
+  		} 
+  		else {
+  		 	   res.send(rows);
+		 	}
+		});
+	}
+	else
+	{
+		console.log("DB connection failed");
+	}
+//	connection.end();
+
+}
+
+exports.getQuestions = function(req,res) {
+//	connection.connect();
+	if(true){
+		connection.query('SELECT * FROM case_main where ',function(err,rows){
+  		if(err) {
+  			res.send(err);
+  		} 
+  		else {
+  		 	   res.send(rows);
+		 	}
+		});
+	}
+	else
+	{
+		console.log("DB connection failed");
+	}
+//	connection.end();
+
+}
+exports.getAnswers = function(req,req) {
+//	connection.connect();
+	if(true){
+		connection.query('SELECT * FROM case_main where ',function(err,rows){
+  		if(err) {
+  			res.send(err);
+  		} 
+  		else {
+  		 	   res.send(rows);
+		 	}
+		});
+	}
+	else
+	{
+		console.log("DB connection failed");
+	}
+//	connection.end();
+
+}
+
