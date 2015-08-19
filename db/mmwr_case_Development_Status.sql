@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.24, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.24, for osx10.8 (x86_64)
 --
--- Host: localhost    Database: mmwr_case
+-- Host: 127.0.0.1    Database: mmwr_case
 -- ------------------------------------------------------
--- Server version	5.6.26-log
+-- Server version	5.5.45
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -35,6 +35,7 @@ CREATE TABLE `development_status` (
 
 LOCK TABLES `development_status` WRITE;
 /*!40000 ALTER TABLE `development_status` DISABLE KEYS */;
+INSERT INTO `development_status` VALUES (0,'In Development'),(1,'On Hold'),(2,'Completed'),(3,'Awaiting CME Accreditation'),(4,'Approved for Publication'),(5,'Published');
 /*!40000 ALTER TABLE `development_status` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -47,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-19 11:39:35
+-- Dump completed on 2015-08-19 12:24:59
