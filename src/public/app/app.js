@@ -35,15 +35,15 @@ mmwrcase.config(['$stateProvider', '$urlRouterProvider',
     $stateProvider
       .state('home', {
         url:'/',
-        templateUrl: 'partials/main',
-        controller: 'mainCtrl'
+        templateUrl: 'partials/home',
+        controller: 'homeCtrl'
       })
 }]);
 
-angular.module('app').run(function($rootScope,$location) {
-  $rootScope.$on('$routeChangeError', function(evt,current, previous,rejection) {
-    if(rejection === 'not authorized'){
-      $location.path('/main');
-    }
-  }) 
-})
+// angular.module('app').run(function($rootScope,$location) {
+//   $rootScope.$on('$routeChangeError', function(evt,current, previous,rejection) {
+//     if(rejection === 'not authorized'){
+//       $location.path('/main');
+//     }
+//   }) 
+// });
