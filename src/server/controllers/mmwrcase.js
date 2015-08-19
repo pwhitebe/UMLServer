@@ -10,13 +10,13 @@ var connection = mysql.createConnection({
 exports.getCurrentCase = function(req,res) {
 	//connection.connect();
 	if(true){
-		connection.query('SELECT * FROM case_main where development_status = "5" and display_status = "0" ',function(err,rows){
+		connection.query('SELECT * FROM case_main where development_status = 5 and display_status = 0 ',function(err,rows){
   		if(err) {
   			res.send(err);
   		} 
   		else {
   		 	   res.send(rows);
-		 	}
+ 		 	}
 		});
 	}
 	else
@@ -30,7 +30,7 @@ exports.getCurrentCase = function(req,res) {
 exports.getUpComingCases = function(req,res) {
 	//connection.connect();
 	if(true){
-		connection.query('SELECT * FROM case_main where development_status = "5" and display_status = "1"',function(err,rows){
+		connection.query('SELECT * FROM case_main where development_status = 5 and display_status = 1',function(err,rows){
   		if(err) {
   			res.send(err);
   		} 
