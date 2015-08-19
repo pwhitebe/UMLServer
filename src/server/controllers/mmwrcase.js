@@ -44,6 +44,7 @@ exports.getCurrentCase = function(req,res) {
   			res.send(err);
   		} 
   		else {
+  				try {
   				caseData = rows[0];
   				sqlStm = 'SELECT * FROM image where case_id = '+ caseData.case_id;
   			   	connection.query(sqlStm,function(err,images){
@@ -55,6 +56,11 @@ exports.getCurrentCase = function(req,res) {
 	  					res.send(caseData);
 	  				}
   		 		});
+
+ 		 		}
+ 		 		catch(e) {
+ 		 			res.send('case not found');
+ 		 		}
 
  		 	}
 		});
@@ -159,6 +165,7 @@ exports.getCaseById = function(req,res) {
   			res.send(err);
   		} 
   		else {
+  			 try {
   				caseData = rows[0];
   				sqlStm = 'SELECT * FROM image where case_id = '+ caseData.case_id;
   			   	connection.query(sqlStm,function(err,images){
@@ -171,6 +178,10 @@ exports.getCaseById = function(req,res) {
 	  				}
   		 		});
 
+ 		 		}
+ 		 		catch(e) {
+ 		 			res.send('case not found');
+ 		 		}
  		 	}
 		});
 	}
