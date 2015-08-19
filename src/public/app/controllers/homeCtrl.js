@@ -1,8 +1,9 @@
 angular.module('app').controller('homeCtrl', function($scope, $http) {
 	//commented out until there is an active end point
+	//$http.get('/api/mmwrcase/getCases/5/0').then(function(res) {
 	$http.get('/api/mmwrcase/currentCase/').then(function(res) {
 		if (res.data) {
-			$scope.currentCase = res.data[0];
+			$scope.currentCase = res.data;
 			console.log($scope.currentCase);
 		} else {
 			alert('no data received');
