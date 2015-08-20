@@ -202,6 +202,7 @@ fieldset[disabled] .btn-mmwr.active {
   padding-top:18px;
   display:block;
   cursor:pointer;
+  align:center;
   transition: background-color 0.4s ease;
 }
 .sep-box:hover {
@@ -262,6 +263,7 @@ fieldset[disabled] .btn-mmwr.active {
 }
 .view-all {
   margin-top:10px;
+  align:right;
 }
 .footer-cont {
   background-color:#f8f6f6;
@@ -277,6 +279,15 @@ fieldset[disabled] .btn-mmwr.active {
 .usa-gov-logo {
   float:right;
   margin-right:20px;
+}
+
+.zero-padding-margin {
+  padding:0; 
+  margin:0;
+}
+
+.glyphicon-star {
+  color:#f0d743;
 }
 @media only screen and (max-width: 420px) {
 

@@ -33,11 +33,41 @@ mmwrcase.config(['$stateProvider', '$urlRouterProvider',
     $urlRouterProvider.otherwise('/');
 
     $stateProvider
+    // Home states and nested views
       .state('home', {
         url:'/',
-        templateUrl: 'partials/home',
-        controller: 'homeCtrl'
+        views: {
+          '': {
+            templateUrl: 'partials/home'
+          },
+          'currentCase@home': {
+            templateUrl: 'partials/home/currentCase',
+            controller:'currentCaseCtrl'
+          },
+          'previousCase@home': {
+            templateUrl: 'partials/home/previousCase',
+            controller:'previousCaseCtrl'
+          },
+          'linkBox@home': {
+            templateUrl: 'partials/home/linkBox'
+          },
+          'upcomingCase@home':{
+            templateUrl: 'partials/home/upcomingCase',
+            controller:'upcomingCaseCtrl'
+          }
+        }
+        
       })
+
+      // .state('content', {
+      //   parent:'home',
+      //   views:{
+      //     'currentCase':{
+      //       templateUrl:'partials/home/currentCase',
+      //       controller:'currentCaseCtrl'
+      //     }
+      //   }
+      // })
 }]);
 
 // angular.module('app').run(function($rootScope,$location) {
