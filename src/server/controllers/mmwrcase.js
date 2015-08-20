@@ -54,7 +54,7 @@ exports.getCurrentCase = function(req,res) {
 		  					res.send(err);
 		  				} 
 		  				else {
-		  					try {	console.log('resultset ', resultSets);
+		  					try {	//console.log('resultset ', resultSets);
 					  				caseData['images'] = resultSets[0,0];
 					  				caseData['QA'] = [];
 					  				var questions = resultSets[0,1];
@@ -183,7 +183,7 @@ exports.getAnswers = function(req,res) {
 exports.getCaseById = function(req,res) {
 	var caseId = req.params.caseId;
 	var caseData = {}
-		connection.query('select * from case_main where case_id = ?; SELECT * FROM image where case_id = ?; select * from question where case_id = ?; select * from answer where case_id = ? ',[caseId,caseId,caseId],function(err,resultSets){
+		connection.query('select * from case_main where case_id = ?; SELECT * FROM image where case_id = ?; select * from question where case_id = ?; select * from answer where case_id = ? ',[caseId,caseId,caseId,caseId],function(err,resultSets){
 		if(err) {
   			res.send(err);
   		} 
