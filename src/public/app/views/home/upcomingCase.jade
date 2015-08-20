@@ -4,7 +4,7 @@
 			.row
 				.col-lg-6.col-md-8.col-sm-8.col-xs-7
 					h4 Upcoming Cases
-				.col-lg-6.col-md-4.col-sm-4.col-xs-5.view-all
+				.col-lg-6.col-md-4.col-sm-4.col-xs-5.view-all(align='right')
 					a(href='#') View All
 			hr
 			.row(ng-repeat='case in upcomingCases')
@@ -13,7 +13,6 @@
 						a(href='#') {{case.title}}
 					br
 					span.teaser-date {{case.publication_date | date : 'shortDate'}}
-			.row
 				.col-lg-12.col-md-12.col-sm-12
-
+					| {{case.tag_line}}
 

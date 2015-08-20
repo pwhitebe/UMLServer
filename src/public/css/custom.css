@@ -181,7 +181,7 @@ fieldset[disabled] .btn-mmwr.active {
   padding:0px;
 }
 .previous-cases-content {
-  height:325px;
+  height:302px;
   overflow-x: hidden;
   overflow-y:auto;
 }
@@ -202,7 +202,6 @@ fieldset[disabled] .btn-mmwr.active {
   padding-top:18px;
   display:block;
   cursor:pointer;
-  align:center;
   transition: background-color 0.4s ease;
 }
 .sep-box:hover {
@@ -263,7 +262,6 @@ fieldset[disabled] .btn-mmwr.active {
 }
 .view-all {
   margin-top:10px;
-  align:right;
 }
 .footer-cont {
   background-color:#f8f6f6;
