@@ -14,7 +14,7 @@ html(lang="en" ng-app="app")
     link(rel="stylesheet" href="/vendor/toastr/toastr.css")
     link(rel="P3Pv1" href="http://www.cdc.gov/w3c/p3p.xml")
   
-  body
+  body(ng-controller='rootCtrl')
     #cw-container
         //HEADER
         .row.mw-header
@@ -47,7 +47,7 @@ html(lang="en" ng-app="app")
             .col-lg-3.col-md-3.col-sm-4.col-xs-6
                 div(style='search-box')
                     .input-group
-                        input.form-control(type='text' placeholder='Search Cases')
+                        input.form-control(type='text' placeholder='Search Cases' ng-model='selected' typeahead='case as case.title for case in searchableCases| filter:$viewValue | limitTo:10')
                         span.input-group-btn
                             button.btn.btn-default(type='submit')
                                 i.glyphicon.glyphicon-search
