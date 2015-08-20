@@ -13,7 +13,7 @@ angular.module('app').controller('currentCaseCtrl', function($scope, $http) {
 
 	//ratings
 	$scope.max = 5;
-	$scope.isReadonly = true;
+	$scope.isReadOnly = true;
 
 	$scope.hoveringOver = function(value) {
 		$scope.overStar = value;
