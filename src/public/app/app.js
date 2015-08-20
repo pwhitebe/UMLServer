@@ -59,15 +59,6 @@ mmwrcase.config(['$stateProvider', '$urlRouterProvider',
         
       })
 
-      // .state('content', {
-      //   parent:'home',
-      //   views:{
-      //     'currentCase':{
-      //       templateUrl:'partials/home/currentCase',
-      //       controller:'currentCaseCtrl'
-      //     }
-      //   }
-      // })
 }]);
 
 // angular.module('app').run(function($rootScope,$location) {

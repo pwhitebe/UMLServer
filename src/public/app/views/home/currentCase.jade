@@ -1,47 +1,46 @@
-.col-lg-8.col-md-8.col-sm-12.zero-padding-margin
-		.left-content
-			.row
-				.col-lg-8.col-md-6.col-sm-6.col-xs-6
-					h4 Current Case
-				.col-lg-4.col-md-6.col-sm-6.col-xs-6.rating-sty
-					rating(ng-model='currentCase.rating' max ='max' readOnly='isReadOnly' on-hover='hoveringOver(value)' on-leave='overStar = null')
-			.row
-				.col-lg-12.col-md-12.col-sm-12
-					hr
-			.row
-				.col-lg-9.col-md-8.col-sm-8.col-xs-8
-					h4.current-case-title {{currentCase.title}}
-					span.current-case-date {{currentCase.publication_date}}
-					br
-					br
-					strong Overview
-					br
-					| {{currentCase.overview}}
-					br
-					br
-					button.btn.btn-mmwr(type='button') Begin Case
-				.col-lg-3.col-md-4.col-sm-4.col-xs-4
-					img.img-thumbnail(src='img/influenza.jpg')
-					//img.img-thumbnail(src='{{currentCase.images[0].image_url}}')
-			.row
-				.col-lg-12.col-md-12.col-sm-12.people-liked
-					span.people-liked-text People who liked this case also liked...
-					.well
-						span.teaser-title
-							a(href='#') Salmonella in Texas
-						span.teaser-date  07/23/2015
-						br
-						| Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet cursus mauris.
-						hr
-						span.teaser-title
-							a(href='#') Heart Disease Guideline
-						span.teaser-date  07/23/2015
-						br
-						| Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet cursus mauris.
-						hr
-						span.teaser-title
-							a(href='#') Measles vs Rubeola
-						span.teaser-date  07/23/2015
-						br
-						| Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet cursus mauris.
-					
+.left-content
+	.row
+		.col-lg-8.col-md-6.col-sm-6.col-xs-6
+			h4 Current Case
+		.col-lg-4.col-md-6.col-sm-6.col-xs-6.rating-sty
+			rating(ng-model='currentCase.rating' max ='max' readOnly='isReadOnly' on-hover='hoveringOver(value)' on-leave='overStar = null')
+	.row
+		.col-lg-12.col-md-12.col-sm-12
+			hr
+	.row
+		.col-lg-9.col-md-8.col-sm-8.col-xs-8
+			h4.current-case-title {{currentCase.title}}
+			span.current-case-date {{currentCase.publication_date}}
+			br
+			br
+			strong Overview
+			br
+			| {{currentCase.overview}}
+			br
+			br
+			button.btn.btn-mmwr(type='button') Begin Case
+		.col-lg-3.col-md-4.col-sm-4.col-xs-4
+			img.img-thumbnail(src='img/influenza.jpg')
+			//img.img-thumbnail(src='{{currentCase.images[0].image_url}}')
+	.row
+		.col-lg-12.col-md-12.col-sm-12.people-liked
+			span.people-liked-text People who liked this case also liked...
+			.well
+				span.teaser-title
+					a(href='#') Salmonella in Texas
+				span.teaser-date  07/23/2015
+				br
+				| Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet cursus mauris.
+				hr
+				span.teaser-title
+					a(href='#') Heart Disease Guideline
+				span.teaser-date  07/23/2015
+				br
+				| Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet cursus mauris.
+				hr
+				span.teaser-title
+					a(href='#') Measles vs Rubeola
+				span.teaser-date  07/23/2015
+				br
+				| Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet cursus mauris.
+			
