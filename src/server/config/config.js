@@ -15,11 +15,11 @@ var connection = mysql.createConnection({
   database : 'mmwr_case',
   port     : '/tmp/mysql.sock' 
 });
-connection.connect();
-if(true){
-	console.log("DB connection established");
-}
-else
-{
-	console.log("DB connection failed");
-}
+connection.connect( function(err) {
+	if(err) {
+		console.error('error connecting: ' + err.stack);
+		return;
+	}
+
+	console.log('connected to mysql db as id ' + connection.threadId);
+});
