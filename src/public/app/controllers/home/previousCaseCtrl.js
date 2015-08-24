@@ -1,14 +1,17 @@
-angular.module('app').controller('previousCaseCtrl', function($scope, $http) {
+angular.module('app').controller('previousCaseCtrl', function($scope, $http, ngCase) {
 	$scope.displayStatus = 2;
 	$scope.developmentStatus = 5;
+	$scope.previousCases;
+	getPreviousCases();
 
-	$http.get('/api/mmwrcase/getCasesByStatus/' + $scope.developmentStatus + '/' + $scope.displayStatus).then(function(res) {
-		if (res.data) {
-			$scope.previousCases = res.data;
-			console.log($scope.previousCases);
-		} else {
-			alert('no data received');
-		}
-	});
+	function getPreviousCases() {
+		ngCase.getCasesByStatus($scope.developmentStatus, $scope.displayStatus)
+			.success(function(cases) {
+				$scope.previousCases = cases;
+			})
+			.error(function(err) {
+				console.log('Unable to load case data');
+			});
+	}
 
 });

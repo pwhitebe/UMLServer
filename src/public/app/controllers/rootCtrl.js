@@ -1,13 +1,15 @@
-angular.module('app').controller('rootCtrl', function($scope, $http) {
-
+angular.module('app').controller('rootCtrl', function($scope, $http, ngCase) {
+	getAvailableCases();
 	$scope.selected = '';
-	$http.get('/api/mmwrcase/getAllAvailCases/').then(function(res) {
-		if (res.data) {
-			$scope.searchableCases = res.data;
-			console.log($scope.searchableCases);
-		} else {
-			alert('no data received');
-		}
-	});
+
+	function getAvailableCases() {
+		ngCase.getAllAvailCases()
+			.success(function(cases){
+				$scope.searchableCases = cases;
+			})
+			.error(function(err) {
+				console.log('Case data unvailable');
+			});
+	}
 
 });
