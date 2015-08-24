@@ -17,6 +17,7 @@ module.exports = function(app) {
   app.get('/api/mmwrcase/getCasesByStatus/:devStatus/:displayStatus',mmwrCase.getCasesByStatus);
   app.get('/api/mmwrcase/getCaseById/:caseId',mmwrCase.getCaseById);
   app.get('/api/mmwrcase/getAllAvailCases/',mmwrCase.getAllAvailCases);
+  app.post('/api/mmwrcase/createCase',mmwrCase.createCase);
   
   app.get('/partials/*', function(req, res) {
     res.render('../../public/app/views/' + req.params);

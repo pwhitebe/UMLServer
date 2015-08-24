@@ -238,3 +238,97 @@ exports.getAllAvailCases = function(req,res) {
 
 }
 
+exports.updateHitCounter = function(req,res) {
+	var caseId = req.params.caseId;
+	var questionId = req.params.questionId;
+	var answerId = req.params.answerId;
+	connection.query('update answer set hit_counter = hit_counter+1 where case_id = ? and question_id=? and ? and answer_id = ?',[caseId,questionId,answerId],function(err,result) {
+		if (err) {
+			res.send(err);
+		}
+		else {
+			res.send('update success');
+		}
+	})
+
+}
+
+exports.createCase = function(req,res) {
+	var caseData = req.body;
+
+	// var questions = data.questions;
+	// var answers = data.answers,
+	// var images - data.images
+	console.log(caseData);
+	// var insertValues = [
+	// 					caseData.title,
+	// 					caseData.overview, 
+	// 					caseData.createdDate, 
+	// 					caseData.publishcationDate, 
+	// 					caseData.caseText, 
+	// 					caseData.abstractText, 
+	// 					caseData.additionalInformation,
+	// 					caseData.rating,
+	// 					caseData.developmentStatus, 
+	// 					caseData.developmentStatusNotes,
+	// 					caseData.displayStatus, 
+	// 					caseData.availCmeCredit,
+ // 						caseData.cmeReleaseDate,
+ // 						caseData.cmeValidUntil, 
+ // 						caseData.numberCmeCreditAvailable, 
+ // 						caseData.tagLine
+ // 						];
+ // 	console.log(insertValues);
+	connection.query('insert into case_main set ?',caseData,function(err,result){
+		if(err) {
+  			res.send(err);
+  		} 
+  		else {
+  			   res.send({'message':'case added','caseId': result.insertId});
+ 		 	}
+	})
+
+
+}
+
+exports.updateCase = function(req,res) {
+	var caseData = req.params.data;
+	var case_id = caseData.case_id;
+	connection.query('update case_main set ? where case_id = ?',[caseData,case_id],function(err,updateResult){
+		if (err) {
+			res.send(err);
+		}
+		else {
+			res.send('Update success');
+		}
+	})
+}
+
+exports.createQuestionAnswer = function(req,res) {
+	var question = req.params.question;
+	var anwsers = req.params.answers;
+   	connection.query('insert into question set ?',question,function(err,questionResult){
+  			   		if (err) {
+  			   			res.send(err);
+  			   		}
+  			   		else {
+  			   			var questionId = questionResult.insertId;
+  			   			for (var i = 0; i < anwsers.length; i++) {
+  			   				answers[i].questionId = questionId;
+  			   			}
+  			   			var answerInsert =  'insert into answer (`question_id`,`case_id`,`sequence_id`,`post_pre`,`question`) Values ?'
+  			   			connection.query(answerInsert,answers,function(err,questionResult){
+  			   				if (err) {
+  			   					res.send(err)
+  			   				}
+  			   				else {
+  			   					res.send('insert success')
+  			   				}		
+  			   			})
+  			   		}
+  			   	})
+}
+
+exports.updateQuestionAnswer = function(req,res) {
+	// to be implement
+}
