@@ -28,6 +28,7 @@ CREATE TABLE `answer` (
   `case_id` int(11) NOT NULL,
   `answer` varchar(250) NOT NULL,
   `correct` tinyint(1) NOT NULL,
+  `hit_counter` decimal(9,2) 
   PRIMARY KEY (`answer_id`),
   UNIQUE KEY `answer_id_UNIQUE` (`answer_id`),
   KEY `fk_Answer_Question1_idx` (`question_id`),
