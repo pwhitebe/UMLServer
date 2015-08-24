@@ -1,16 +1,4 @@
-angular.module('app').controller('currentCaseCtrl', function($scope, $http) {
-	//commented out until there is an active end point
-	//$http.get('/api/mmwrcase/getCases/5/0').then(function(res) {
-	$http.get('/api/mmwrcase/currentCase/').then(function(res) {
-		if (res.data) {
-			$scope.currentCase = res.data;
-			console.log($scope.currentCase);
-		} else {
-			alert('no data received');
-		}
-	});
-	
-
+angular.module('app').controller('currentCaseCtrl', function($scope, $http, ngCase) {
 	//ratings
 	$scope.max = 5;
 	$scope.isReadOnly = true;
@@ -19,7 +7,21 @@ angular.module('app').controller('currentCaseCtrl', function($scope, $http) {
 		$scope.overStar = value;
 		$scope.percent = 100 * (value / $scope.max);
 	};
-	//temporary case object to work on front end
+
+	getCurrentCase();
+
+	function getCurrentCase() {
+		ngCase.getCurrentCase()
+			.success(function(currentCase){
+				$scope.currentCase = currentCase;
+			})
+			.error(function(err) {
+				console.log('Case data unvailable');
+			});
+	}
+
+
+		//temporary case object to work on front end
 	// $scope.currentCase = {
 	// 	'case_id': 1,
 	// 	'title': 'Hepatitis B',

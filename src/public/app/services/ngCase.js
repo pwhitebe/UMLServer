@@ -5,6 +5,9 @@ angular.module('app').factory('ngCase', function($http) {
 		},
 		getAllAvailCases: function() {
 			return $http.get('/api/mmwrcase/getAllAvailCases/');
+		},
+		getCurrentCase: function() {
+			return $http.get('/api/mmwrcase/currentCase/');
 		}
 
 
