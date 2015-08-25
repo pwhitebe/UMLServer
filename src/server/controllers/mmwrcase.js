@@ -161,7 +161,6 @@ exports.getAnswers = function(req,res) {
 //	connection.connect();
 	var caseId = req.params.caseId;
 	var questionId = req.params.questionId;
-	if(true){
 		connection.query('SELECT * FROM answers where case_id = ? and question_id = ? '[caseId,questionId],function(err,rows){
   		if(err) {
   			res.send(err);
@@ -170,11 +169,6 @@ exports.getAnswers = function(req,res) {
   		 	   res.send(rows);
 		 	}
 		});
-	}
-	else
-	{
-		console.log("DB connection failed");
-	}
 //	connection.end();
 
 }
@@ -255,30 +249,25 @@ exports.updateHitCounter = function(req,res) {
 
 exports.createCase = function(req,res) {
 	var caseData = req.body;
-
-	// var questions = data.questions;
-	// var answers = data.answers,
-	// var images - data.images
-	console.log(caseData);
-	// var insertValues = [
-	// 					caseData.title,
-	// 					caseData.overview, 
-	// 					caseData.createdDate, 
-	// 					caseData.publishcationDate, 
-	// 					caseData.caseText, 
-	// 					caseData.abstractText, 
-	// 					caseData.additionalInformation,
-	// 					caseData.rating,
-	// 					caseData.developmentStatus, 
-	// 					caseData.developmentStatusNotes,
-	// 					caseData.displayStatus, 
-	// 					caseData.availCmeCredit,
- // 						caseData.cmeReleaseDate,
- // 						caseData.cmeValidUntil, 
- // 						caseData.numberCmeCreditAvailable, 
- // 						caseData.tagLine
- // 						];
- // 	console.log(insertValues);
+	// test data
+//	caseData = 
+// 	{   
+//     "title": "Hepatitis C", 
+//     "overview": "A 28yo Asian woman presents to arrange ongoing car… normal based on standard, non-invasive measures.", 
+//     "publication_date": null,
+//     "case_text": "A 28yo Asian woman presents to arrange ongoing care for her new baby following delivery. She is in her 37th week of what has been a completely uneventful, normal, first pregnancy. She has had excellent prenatal care and fetal development has been normal based on standard, non-invasive measures. ",
+//     "abstract_text": "The current recommendations from the Advisory Committee on Immunization Practices (ACIP) for infants born to hepatitis B-infected mothers include postexposure prophylaxis consisting of hepatitis B (HepB) vaccine and hepatitis B immune globulin administered within 12 hours of birth, followed by completion of the 3- or 4-dose HepB vaccine series (1). To identify infants who need revaccination as well as those who need follow-up medical care for hepatitis B virus (HBV) infection, ACIP currently recommends HepB post-vaccination serologic testing (PVST) at age 9–18 months (1). This report provides CDC guidance for shortening the interval for PVST to age 9–12 months to reduce the need for unnecessary revaccination and was prompted by new data from the Enhanced Perinatal Hepatitis B Prevention Program (EPHBPP).",
+//     "additional_information": "",
+//     "rating": null,
+//     "development_status": 0,
+//     "development_status_notes": "",
+//     "display_status": 0,
+//     "available_cme_credits": 1,
+//     "cme_release_date": null,
+//     "cme_valid_until": null,
+//     "number_cme_credits_available": 3,
+//     "tag_line": null
+// }
 	connection.query('insert into case_main set ?',caseData,function(err,result){
 		if(err) {
   			res.send(err);
@@ -292,7 +281,26 @@ exports.createCase = function(req,res) {
 }
 
 exports.updateCase = function(req,res) {
-	var caseData = req.params.data;
+	var caseData = req.body;
+		// test data
+//	caseData = 
+// 	{  "case_id": 5, 
+//     "title": "Hepatitis C", 
+//     "overview": "A 30yo Asian woman presents to arrange ongoing car… normal based on standard, non-invasive measures.", 
+//     "publication_date": null,
+//     "case_text": "A 28yo Asian woman presents to arrange ongoing care for her new baby following delivery. She is in her 37th week of what has been a completely uneventful, normal, first pregnancy. She has had excellent prenatal care and fetal development has been normal based on standard, non-invasive measures. ",
+//     "abstract_text": "The current recommendations from the Advisory Committee on Immunization Practices (ACIP) for infants born to hepatitis B-infected mothers include postexposure prophylaxis consisting of hepatitis B (HepB) vaccine and hepatitis B immune globulin administered within 12 hours of birth, followed by completion of the 3- or 4-dose HepB vaccine series (1). To identify infants who need revaccination as well as those who need follow-up medical care for hepatitis B virus (HBV) infection, ACIP currently recommends HepB post-vaccination serologic testing (PVST) at age 9–18 months (1). This report provides CDC guidance for shortening the interval for PVST to age 9–12 months to reduce the need for unnecessary revaccination and was prompted by new data from the Enhanced Perinatal Hepatitis B Prevention Program (EPHBPP).",
+//     "additional_information": "",
+//     "rating": null,
+//     "development_status": 0,
+//     "development_status_notes": "",
+//     "display_status": 0,
+//     "available_cme_credits": 1,
+//     "cme_release_date": null,
+//     "cme_valid_until": null,
+//     "number_cme_credits_available": 3,
+//     "tag_line": null
+// }
 	var case_id = caseData.case_id;
 	connection.query('update case_main set ? where case_id = ?',[caseData,case_id],function(err,updateResult){
 		if (err) {
