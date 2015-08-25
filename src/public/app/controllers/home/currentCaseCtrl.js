@@ -1,4 +1,4 @@
-angular.module('app').controller('currentCaseCtrl', function($scope, $http, ngCase) {
+angular.module('app').controller('currentCaseCtrl', function($scope, ngCase) {
 	//ratings
 	$scope.max = 5;
 	$scope.isReadOnly = true;
@@ -8,9 +8,7 @@ angular.module('app').controller('currentCaseCtrl', function($scope, $http, ngCa
 		$scope.percent = 100 * (value / $scope.max);
 	};
 
-	getCurrentCase();
-
-	function getCurrentCase() {
+	(function() {
 		ngCase.getCurrentCase()
 			.success(function(currentCase){
 				$scope.currentCase = currentCase;
@@ -18,9 +16,8 @@ angular.module('app').controller('currentCaseCtrl', function($scope, $http, ngCa
 			.error(function(err) {
 				console.log('Case data unvailable');
 			});
-	}
-
-	
+		function getCurrentCase() {}
+	})();
 
 
 		//temporary case object to work on front end
