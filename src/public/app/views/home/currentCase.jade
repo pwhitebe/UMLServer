@@ -18,7 +18,7 @@
 			| {{currentCase.overview}}
 			br
 			br
-			button.btn.btn-mmwr(type='button') Begin Case
+			button.btn.btn-mmwr(type='button' ui-sref='overview({caseID:currentCase.case_id})') Begin Case
 		.col-lg-3.col-md-4.col-sm-4.col-xs-4
 			//img.img-thumbnail(src='img/influenza.jpg')
 			img.img-thumbnail(src='{{currentCase.images[0].image_url}}')

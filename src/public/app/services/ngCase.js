@@ -8,6 +8,9 @@ angular.module('app').factory('ngCase', function($http) {
 		},
 		getCurrentCase: function() {
 			return $http.get('/api/mmwrcase/currentCase/');
+		},
+		getCaseById: function(caseId) {
+			return $http.get('/api/mmwrcase/getCaseById/'+caseId);
 		}
 
 

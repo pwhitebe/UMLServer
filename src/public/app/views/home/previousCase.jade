@@ -9,7 +9,7 @@
 				.row(ng-repeat='case in previousCases')
 					.col-lg-7.col-md-8.col-sm-8.col-xs-8
 						span.teaser-title
-							a(href='#') {{case.title}}
+							a(ui-sref='overview({caseID:case.case_id})') {{case.title}}
 						br
 						span.teaser-date {{case.publication_date | date}}
 					//.col-lg-5.col-md-4.col-sm-4.col-xs-4

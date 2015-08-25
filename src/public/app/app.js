@@ -58,6 +58,11 @@ mmwrcase.config(['$stateProvider', '$urlRouterProvider',
         }
         
       })
+      .state('overview', {
+        url:'/overview/:caseID',
+        templateUrl: 'partials/case/overview',
+        controller:'overviewCtrl'
+      })
 
 }]);
 
