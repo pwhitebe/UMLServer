@@ -1,10 +1,15 @@
 body
 	.modal-header
-		h3.modal-title Upcoming Cases
+		h4.modal-title Upcoming Cases
 	.modal-body
-		ul
-			li(ng-repeat='case in upcomingCases')
-				a(href='#') {{case.title}}
+		.row(ng-repeat='case in upcomingCases')
+			.col-lg-7.col-md-8.col-sm-8.col-xs-8
+				span.teaser-title
+					a(href='#') {{case.title}}
+				br
+				span.teaser-date {{case.publication_date | date}}
+			.col-lg-12.col-md-12.col-sm-12
+				| {{case.tag_line}}
 				hr
 	.modal-footer
 		button.btn.btn-primary.pull-right(type='button'  ng-click='ok()') OK

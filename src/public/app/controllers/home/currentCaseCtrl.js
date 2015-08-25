@@ -20,6 +20,8 @@ angular.module('app').controller('currentCaseCtrl', function($scope, $http, ngCa
 			});
 	}
 
+	
+
 
 		//temporary case object to work on front end
 	// $scope.currentCase = {
