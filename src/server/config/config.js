@@ -9,10 +9,10 @@ module.exports = {
 
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
-  host     : '127.0.0.1',
-  user     : 'mmwrcasewebapp',
-  password : 'mmwrquizcase',
-  database : 'mmwr_case'
+  host     : properties.mysqlhost,
+  user     : properties.mysqluser,
+  password : properties.mysqlpassword,
+  database : properties.mysqldatabase
   //port     : '/tmp/mysql.sock' 
 });
 connection.connect( function(err) {

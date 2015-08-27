@@ -1,2 +1,4 @@
 ALTER TABLE `mmwr_case`.`answer` 
-ADD COLUMN `hit_counter` DECIMAL(9,2) NULL COMMENT '' AFTER `correct`;
+CHANGE COLUMN `hit_counter` `hit_counter` INT UNSIGNED NULL DEFAULT 0 COMMENT '' ;
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`case_id`, `question_id`, `answer_id`)  COMMENT '';

@@ -1,9 +1,10 @@
 var mysql      = require('mysql');
+var properties = require('../lib/envProperties');
 var connection = mysql.createConnection({
-  host     : '127.0.0.1',
-  user     : 'mmwrcasewebapp',
-  password : 'mmwrquizcase',
-  database : 'mmwr_case',
+  host     : properties.mysqlhost,
+  user     : properties.mysqluser,
+  password : properties.mysqlpassword,
+  database : properties.mysqldatabase,
   //port     : '/tmp/mysql.sock',
   multipleStatements : true
 });
@@ -312,31 +313,174 @@ exports.updateCase = function(req,res) {
 	})
 }
 
-exports.createQuestionAnswer = function(req,res) {
-	var question = req.params.question;
-	var anwsers = req.params.answers;
-   	connection.query('insert into question set ?',question,function(err,questionResult){
-  			   		if (err) {
-  			   			res.send(err);
-  			   		}
-  			   		else {
-  			   			var questionId = questionResult.insertId;
-  			   			for (var i = 0; i < anwsers.length; i++) {
-  			   				answers[i].questionId = questionId;
-  			   			}
-  			   			var answerInsert =  'insert into answer (`question_id`,`case_id`,`sequence_id`,`post_pre`,`question`) Values ?'
-  			   			connection.query(answerInsert,answers,function(err,questionResult){
-  			   				if (err) {
-  			   					res.send(err)
-  			   				}
-  			   				else {
-  			   					res.send('insert success')
-  			   				}		
-  			   			})
-  			   		}
-  			   	})
+exports.createQuestion = function(req,res) {
+	var data = req.body;
+	connection.query('insert into question set ? ',data,function(err,result){
+		if(err) {
+  			res.send(err);
+  		} 
+  		else {
+  			   res.send({'message':'question added','question_id': result.insertId});
+ 		 	}
+	})
 }
 
-exports.updateQuestionAnswer = function(req,res) {
-	// to be implement
+exports.updateQuestion = function(req,res) {
+	var data = req.body;
+	var case_id = data.case_id;
+	var question_id = data.question_id;
+
+	connection.query('update question set ? where case_id = ? and question_id = ?',[case_id,question_id],function(err,updateResult){
+		if (err) {
+			res.send(err);
+		}
+		else {
+			res.send('Question Update success');
+		}
+	})
+}
+
+exports.createAnswer = function(req,res) {
+	var data = req.body;
+	connection.query('insert into answer set ?',data,function(err,result){
+		if(err) {
+  			res.send(err);
+  		} 
+  		else {
+  			   res.send('answer added');
+ 		 	}
+	})
+}
+
+exports.updateAnswer = function(req,res) {
+	var data = req.body;
+	var case_id = data.case_id;
+	var question_id = data.question_id;
+	var answer_id = data.answer_id;
+
+	connection.query('update answer set ? where case_id = ? and question_id = ? and answer_id = ?',[case_id,question_id,answer_id],function(err,updateResult){
+		if (err) {
+			res.send(err);
+		}
+		else {
+			res.send('Answer Update success');
+		}
+	})
+}
+
+exports.createQuestionAnswer = function(req,res) {
+
+
+	var data = req.body;
+// test data
+// 	{   
+//     "question": {"question_id":1,"case_id":5,"sequence_id":1,"post_pre":"pre","question":"this is question 1"} ,
+//     "answers": [
+//                 {"answer_id":1,"question_id":1,"case_id":5,"answer":"answer 1","correct":0,"hit_counter":0}
+//                 ,{  "answer_id":2,"question_id":1,"case_id":5,"answer":"answer 2","correct":0,"hit_counter":0}
+//                 ,{  "answer_id":3,"question_id":1,"case_id":5,"answer":"answer 3","correct":1,"hit_counter":0}
+//                 ,{  "answer_id":4,"question_id":1,"case_id":5,"answer":"answer 4","correct":0,"hit_counter":0}
+//     ]
+// }
+	// var case_id = data.case_id;
+	 var question = data.question;
+	 var answers =  data.answers;
+	 connection.beginTransaction(function(err) {
+	  if (err) { throw err; }
+	   		connection.query('insert into question set ? ON DUPLICATE KEY UPDATE question_id = question_id + 1',question,function(err,questionResult){
+		   		if (err) {
+		   			  	return connection.rollback(function() {
+	        			throw err;
+	      				});
+		   				res.send({'error location':'question','error msg':err});
+		   		}
+		   		else {
+		   				var colNames = Object.keys(answers[0]);
+						var newValueSet = [];
+						var newValues =[];
+						for(var i = 0; i < answers.length; i++){
+							for (j=0; j < colNames.length; j++) {
+								newValues.push(answers[i][colNames[j]]);
+							}
+							newValueSet.push('("' + newValues.join('","') + '")');
+							newValues=[];
+						}
+						connection.query('INSERT INTO answer (' + colNames.join(',') + ') VALUES ' + newValueSet.join(',') , function(err, rows, fields) {
+  
+			   				if (err) {
+			   					 return connection.rollback(function() {
+						          throw err;
+						        });
+			   				}
+			   				else {
+									connection.commit(function(err) {
+							        if (err) {
+							          return connection.rollback(function() {
+							            throw err;
+							          });
+							        }
+							        res.send('insert success!');
+							      });
+							}		
+			   			})
+		   		}
+  		   	})
+	   	})
+}
+
+exports.checkQuestionExist = function(req,res) {
+	var case_id = req.params.caseId;
+	var question_id = req.params.questionId;
+
+	connection.query('SELECT 1 FROM question WHERE case_id =  ? AND question_id = ?',[case_id,question_id],function(err,result){
+			if (err) {
+				res.send(err);
+			}
+			else {
+				if (result.length > 0) {
+					res.send(true);
+				}
+				else {
+					res.send(false);
+				}
+			}
+	})
+}
+
+exports.checkAnswerExist = function(req,res) {
+		var case_id = req.params.caseId;
+	var question_id = req.params.questionId;
+	var answer_id = req.params.answerId;
+
+	connection.query('SELECT 1 FROM answer WHERE case_id =  ? AND question_id = ? and answer_id = ?',[case_id,question_id,answer_id],function(err,result){
+			if (err) {
+				res.send(err);
+			}
+			else {
+				if (result.length > 0) {
+					res.send(true);
+				}
+				else {
+					res.send(false);
+				}
+			}
+	})
+
+}
+exports.checkCaseExist = function(req,res) {
+		var case_id = req.params.caseId;
+
+	connection.query('SELECT 1 FROM case_main WHERE case_id =  ?',[case_id],function(err,result){
+			if (err) {
+				res.send(err);
+			}
+			else {
+				if (result.length > 0) {
+					res.send(true);
+				}
+				else {
+					res.send(false);
+				}
+			}
+	})
 }
