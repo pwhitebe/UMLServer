@@ -8,6 +8,7 @@ angular.module('app').controller('previousCaseCtrl', function($scope, $http, ngC
 		ngCase.getCasesByStatus($scope.developmentStatus, $scope.displayStatus)
 			.success(function(cases) {
 				$scope.previousCases = cases;
+				console.log($scope.previousCases);
 			})
 			.error(function(err) {
 				console.log('Unable to load case data');
