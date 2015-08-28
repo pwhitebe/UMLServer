@@ -12,7 +12,7 @@ angular.module('app').controller('currentCaseCtrl', function($scope, ngCase) {
 		ngCase.getCurrentCase()
 			.success(function(currentCase){
 				$scope.currentCase = currentCase;
-				console.log($scope.currentCase);
+				//console.log($scope.currentCase);
 			})
 			.error(function(err) {
 				console.log('Case data unvailable');
