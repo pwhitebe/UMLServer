@@ -7,7 +7,15 @@
 				.col-lg-6.col-md-4.col-sm-4.col-xs-5.view-all(align='right')
 					a(href='#' ng-click='openModal("md")') View All
 			hr
-			.row(ng-repeat='case in upcomingCases')
+			.row
+				.col-lg-7.col-md-8.col-sm-8.col-xs-8
+					span.teaser-title
+						a(href='#') {{upcomingCases[0].title}}
+					br
+					span.teaser-date {{upcomingCases[0].publication_date | date}}
+				.col-lg-12.col-md-12.col-sm-12
+					| {{upcomingCases[0].tag_line}}
+			//.row(ng-repeat='case in upcomingCases')
 				.col-lg-7.col-md-8.col-sm-8.col-xs-8
 					span.teaser-title
 						a(href='#') {{case.title}}
