@@ -1,48 +1,20 @@
 .row.mmwr-content
- .col(style='padding:0; margin:0;')
-      .main-content
-        .row
-          .col-lg-12
-            span.title-type The Case: 
-            span.title-case (PLACEHOLDER)
-            span.title-date (07/07/2015) 
-        .row
-          .col-lg-12.col-md-12.col-sm-12
-            hr(style='margin-bottom:30px;')
-        .row
-          .col-lg-12
-            p
-              | A 17yo young man comes to see you, accompanied by his mother, for a pre-college health assessment. He and his family are very well known to you as you have cared for him and his older brother, now a 19-yo college sophomore, since they were young children. He and his mother report no specific complaints, and his physical examination is completely normal. He is looking forward to starting classes at a large university about 200 miles away in a neighboring state. He reports with excitement that he got a spot at the most popular residence hall and will be sharing a suite with three other freshman. He’s not yet sure what his major will be, but is hoping to use his first year to sample a variety of classes and extracurricular activities and really experience college life.
-            p
-              | In addition to completing a standard health history and physical examination form, the University requires that you
-              | provide a detailed immunization record. According to your records, he is up to date on all of his childhood vaccines. When he was 12yo, you administered the Tdap, HPV-4 series, and one dose of the meningococcal conjugate (MenACWY) vaccine. You advise that he receive a second dose of the MenACWY vaccine as a booster today.
-            p
-              | As she retrieves an envelope from her bag, she reports that her older son, who attends a small college on the other side of the country and is home for the summer, recently received this letter from the student health service. The letter states that early in the summer term, two students became ill with meningitis due to N. meningitides, serogroup B. In an effort to prevent additional cases, the college is strongly advising that all new and returning students receive the new MenB vaccine prior to starting classes in the fall.
-            p
-              | Understandably confused, the mother asks whether her older son is already protected against meningitis since, just as you recommended for his younger brother today, he received a MenACWY booster vaccine prior to entering college a year ago. If not and he indeed requires another vaccination, she wants to understand the differences between the two vaccines and whether the vaccine her younger son is to receive today will cover all forms of meningitis.
-            br
-            br
-        .row
-          .col-lg-12.col-md-12.col-sm-12
-            button.btn.btn-mmwr.btn-lg.pull-right(type='button', style='width:150px;')
-              | Next 
-              span.glyphicon.glyphicon-chevron-right
-//- 	.col.zero-padding-margin
-//- 		.main-content
-//- 			.row
-//- 				.col-lg-12
-//- 					span.title-type The Case: 
-//- 					span.title-case {{case.title}}
-//- 					span.title-date {{case.publication_date | date}}
-//- 			.row
-//- 				.col-lg-12.col-md-12.col-sm-12
-//- 					hr(style='margin-bottom:30px;')
-//- 			.row
-//- 				.col-lg-12
-//- 					p
-//- 						| {{case.case_text}}
-//- 			.row
-//- 				.col-lg-12.col-md-12.col-sm-12
-//- 					button.btn.btn-mmwr.btn-lg.pull-right(type='button' style='width:150px;')
-//- 						| Next
-//- 						span.glyphicon.glyphicon-chevron-right
+    .btn.btn-default.btn-circle.glyphicon.glyphicon-remove.pull-right(type='button' ui-sref='home')
+    .col.zero-padding-margin
+        .main-content
+            .row
+                .col-lg-12
+                    span.title-type The Case: 
+                    span.title-case {{case.title}}
+                    span.title-date {{case.publication_date | date}}
+            .row
+                .col-lg-12.col-md-12.col-sm-12
+                    hr(style='margin-bottom:30px;')
+            .row
+                .col-lg-12
+                    p(ng-bind-html='case.case_text')
+            .row
+                .col-lg-12.col-md-12.col-sm-12
+                    button.btn.btn-mmwr.btn-lg.pull-right(type='button' style='width:150px;')
+                        | Next
+                        span.glyphicon.glyphicon-chevron-right
