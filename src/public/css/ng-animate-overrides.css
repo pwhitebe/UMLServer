@@ -2,7 +2,7 @@
 to prevent collapsing during animation*/
 .ui-view-container {
   position: relative;
-  height: 750px;
+  min-height: 750px;
 }
 
 [ui-view].ng-enter, [ui-view].ng-leave {
