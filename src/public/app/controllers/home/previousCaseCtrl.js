@@ -2,9 +2,12 @@ angular.module('app').controller('previousCaseCtrl', function($scope, $http, ngC
 	$scope.displayStatus = 2;
 	$scope.developmentStatus = 5;
 	$scope.previousCases;
-	getPreviousCases();
 
-	function getPreviousCases() {
+	$scope.max = 5;
+	$scope.isReadOnly = true;
+
+
+	(function() {
 		ngCase.getCasesByStatus($scope.developmentStatus, $scope.displayStatus)
 			.success(function(cases) {
 				$scope.previousCases = cases;
@@ -13,6 +16,7 @@ angular.module('app').controller('previousCaseCtrl', function($scope, $http, ngC
 			.error(function(err) {
 				console.log('Unable to load case data');
 			});
-	}
+		function getPreviousCases() {}
+	})();
 
 });
