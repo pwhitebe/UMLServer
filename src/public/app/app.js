@@ -63,6 +63,11 @@ mmwrcase.config(['$stateProvider', '$urlRouterProvider',
         templateUrl: 'partials/case/overview',
         controller:'overviewCtrl'
       })
+      .state('preTest', {
+        url:'/pretest/:caseID',
+        templateUrl: 'partials/case/preTest',
+        controller: 'preTestCtrl'
+      })
 
 }]);
 

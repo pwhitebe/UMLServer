@@ -15,6 +15,6 @@
                     p(ng-bind-html='case.case_text')
             .row
                 .col-lg-12.col-md-12.col-sm-12
-                    button.btn.btn-mmwr.btn-lg.pull-right(type='button' style='width:150px;')
+                    button.btn.btn-mmwr.btn-lg.pull-right(type='button' style='width:150px;' ui-sref='preTest({caseID:case.case_id})')
                         | Next
                         span.glyphicon.glyphicon-chevron-right
