@@ -11,14 +11,13 @@
 					hr(style='margin-bottom: 30px;')
 			.row
 				.col-lg-12
-					p
-						| {{case.QA[0].question.question}}
+					p {{questions[0].question.question}}
 					br
-					.well(ng-repeat='answers in case.QA[0].answers')
+					.well(ng-repeat='answers in questions[0].answers')
 						.row
 							.col-lg-1.col-md-1.col-sm-1.col-xs-2(align='center')
 								label
-									input(type='radio' name='radioGroup'+'{{answers.answer.id}}' value='radio')
+									input(type='radio' name='answer' value='{{answers.answer}}')
 							.col-lg-11.col-md-11.col-sm-11.col-xs-10
 								{{answers.answer}}
 			br
