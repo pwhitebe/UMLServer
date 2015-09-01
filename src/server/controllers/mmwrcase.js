@@ -484,3 +484,22 @@ exports.checkCaseExist = function(req,res) {
 			}
 	})
 }
+
+exports.getRating = function(req,res) {
+  // implementation pending
+}
+
+exports.getAnswerStatistic = function(req, res) {
+	var case_id = req.params.caseId;
+	var question_id = req.params.questionId;
+
+	connection.query('select *, hit_counter / (select sum(hit_counter) from answer where case_id = ? and question_id = ?)*100  as distribution from answer where case_ID = ? AND question_id = ? ',[case_id,question_id,case_id,question_id], function(err,result){
+		if (err) {
+			res.send(err);
+		}
+		else {
+			res.send(result);
+		}
+	})
+
+}

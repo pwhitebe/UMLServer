@@ -20,6 +20,8 @@ module.exports = function(app) {
   app.get('/api/mmwrcase/checkQuestionExist/:caseId/:questionId',mmwrCase.checkQuestionExist);
   app.get('/api/mmwrcase/checkAnswerExist/:caseId/:questionId/:answerId',mmwrCase.checkAnswerExist);
   app.get('/api/mmwrcase/checkCaseExist/:caseId',mmwrCase.checkCaseExist);
+  app.get('/api/mmwrcase/getAnswerStatistic/:caseId/:questionId',mmwrCase.getAnswerStatistic);
+
   app.post('/api/mmwrcase/createCase',mmwrCase.createCase);
   app.post('/api/mmwrcase/updateCase',mmwrCase.updateCase);
   app.post('/api/mmwrcase/createQuestionAnswer',mmwrCase.createQuestionAnswer);
