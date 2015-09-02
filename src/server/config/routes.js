@@ -21,6 +21,8 @@ module.exports = function(app) {
   app.get('/api/mmwrcase/checkAnswerExist/:caseId/:questionId/:answerId',mmwrCase.checkAnswerExist);
   app.get('/api/mmwrcase/checkCaseExist/:caseId',mmwrCase.checkCaseExist);
   app.get('/api/mmwrcase/getAnswerStatistic/:caseId/:questionId',mmwrCase.getAnswerStatistic);
+  app.get('/api/mmwrcase/getDevStatus',mmwrCase.getDevStatus);
+  app.get('/api/mmwrcase/getDisplayStatus',mmwrCase.getDisplayStatus);
 
   app.post('/api/mmwrcase/createCase',mmwrCase.createCase);
   app.post('/api/mmwrcase/updateCase',mmwrCase.updateCase);

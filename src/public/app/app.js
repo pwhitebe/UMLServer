@@ -78,6 +78,11 @@ mmwrcase.config(['$stateProvider', '$urlRouterProvider',
         templateUrl: 'partials/case/abstract',
         controller: 'abstractCtrl'
       })
+      .state('dashboard', {
+        url:'/dashboard',
+        templateUrl : 'partials/dashboard',
+        controller  : 'dashboardCtrl' 
+      })
 
 }]);
 

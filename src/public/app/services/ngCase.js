@@ -11,9 +11,13 @@ angular.module('app').factory('ngCase', function($http) {
 		},
 		getCaseById: function(caseId) {
 			return $http.get('/api/mmwrcase/getCaseById/'+caseId);
+		},
+		getDevStatus : function() {
+			return $http.get('/api/mmwrcase/getDevStatus/');
+		},
+		getDisplayStatus : function() {
+			return $http.get('/api/mmwrcase/getDisplayStatus/');
 		}
-
-
 	}
 
 });

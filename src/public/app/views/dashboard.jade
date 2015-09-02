@@ -1,0 +1,98 @@
+.row.mmwr-content
+    .col.zero-padding-margin
+        .main-content
+            h4 Quick Stats
+            .row
+                .well(ui-view='mmwrCaseCharts')
+                    | place holder for chart
+            .row 
+                .tab-container
+                    tabset
+                        tab(heading="Drafts")
+                            br
+                            .row
+                                .col-lg-8.col-md-6.col-sm-6.col-xs-6
+                                    h4 Draft Cases
+                            div(ng-repeat='case in draftCases')
+                                .well(style='background-color:#ffffff;')
+                                    .row
+                                        .col-sm-1
+                                            img(src='img/note.png', width='45', height='40')
+                                        .col-md-3
+                                            span.title-case(style="color:black")
+                                                {{case.title}}  
+                                                a(ui-sref='editCase({caseID:case.case_id})')
+                                                    span.teaser-title Edit/View
+                                            br
+                                            rating(ng-model='case.rating' max ='max' readOnly='isReadOnly' on-hover='hoveringOver(value)' on-leave='overStar = null')
+                                        .col-md-1
+                                            span.teaser-date {{case.publication_date | date}}
+                        tab(heading="Current")
+                            br
+                            .row
+                                .col-lg-8.col-md-6.col-sm-6.col-xs-6
+                                    h4 Current Case
+                            div(ng-repeat='case in currentCases')
+                                .well(style='background-color:#ffffff;')
+                                    .row
+                                        .col-sm-1
+                                            img(src='img/note.png', width='45', height='40')
+                                        .col-md-3
+                                            span.title-case(style="color:black")
+                                                {{case.title}}  
+                                                a(ui-sref='editCase({caseID:case.case_id})')
+                                                    span.teaser-title Edit/View
+                                            br
+                                            rating(ng-model='case.rating' max ='max' readOnly='isReadOnly' on-hover='hoveringOver(value)' on-leave='overStar = null')
+                                        .col-md-1
+                                            span.teaser-date {{case.publication_date | date}}
+                        tab(heading="Upcoming")
+                            br
+                            .row
+                                .col-lg-8.col-md-6.col-sm-6.col-xs-6
+                                    h4 Upcoming Cases
+                            div(ng-repeat='case in upcomingCases')
+                                .well(style='background-color:#ffffff;')
+                                    .row
+                                        .col-sm-1
+                                            img(src='img/note.png', width='45', height='40')
+                                        .col-md-3
+                                            span.title-case(style="color:black")
+                                                {{case.title}}  
+                                                a(ui-sref='editCase({caseID:case.case_id})')
+                                                    span.teaser-title Edit/View
+                                            br
+                                            rating(ng-model='case.rating' max ='max' readOnly='isReadOnly' on-hover='hoveringOver(value)' on-leave='overStar = null')
+                                        .col-md-1
+                                            span.teaser-date
+                                                {{case.publication_date | date}}
+                        tab(heading="Previous")
+                            br
+                            .row
+                                .col-lg-8.col-md-6.col-sm-6.col-xs-6
+                                    h4 Previous Cases  
+                            div(ng-repeat='case in previousCases')
+                                .well(style='background-color:#ffffff;')
+                                    .row
+                                        .col-sm-1
+                                            img(src='img/note.png', width='45', height='40')
+                                        .col-md-3
+                                            span.title-case(style="color:black")
+                                                {{case.title}}  
+                                                a(ui-sref='editCase({caseID:case.case_id})')
+                                                    span.teaser-title Edit/View
+                                            br
+                                            rating(ng-model='case.rating' max ='max' readOnly='isReadOnly' on-hover='hoveringOver(value)' on-leave='overStar = null')
+                                        .col-md-1
+                                            span.teaser-date
+                                                {{case.publication_date | date}}
+                        tab(heading="Private")
+                            br
+                            .row
+                                .col-lg-8.col-md-6.col-sm-6.col-xs-6
+                                    h4 Private
+                            .row
+                                .col-lg-12.col-md-12.col-sm-12
+                                    hr
+            .clear-divs
+        

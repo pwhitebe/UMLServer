@@ -503,3 +503,27 @@ exports.getAnswerStatistic = function(req, res) {
 	})
 
 }
+
+exports.getDevStatus = function(req,res) {
+
+	connection.query('select * from development_status', function(err,result){
+		if (err) {
+			res.send(err);
+		}
+		else {
+			res.send(result);
+		}
+	})
+}
+
+exports.getDisplayStatus = function(req,res) {
+
+	connection.query('select * from Display_Status', function(err,result){
+		if (err) {
+			res.send(err);
+		}
+		else {
+			res.send(result);
+		}
+	})
+}

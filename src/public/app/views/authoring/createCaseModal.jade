@@ -1,0 +1,11 @@
+.modal-content
+	.row.mmwr-content
+		//LEFT COLUMN
+		.col-lg-8.col-md-8.col-sm-12.zero-padding-margin
+			div(ui-view='caseName')
+			div(ui-view='caseContent')
+		//RIGHT COLUMN
+		.col-lg-4.col-md-4.col-sm-12.zero-padding-margin
+			div(ui-view='casePublish')
+			div(ui-view='caseCMECredit')
+			div(ui-view='caseFeatureImage')
