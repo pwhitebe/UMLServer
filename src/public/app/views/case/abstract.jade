@@ -12,3 +12,11 @@
 			.row
 				.col-lg-12
 					p(ng-bind-html='case.abstract_text')
+					br
+					.well
+						.row
+							.col-md-3.col-xs-6.thumb(ng-repeat= 'image in case.images')
+								a.thumbnail(href='')
+									img#imageresource.img-responsive(src='{{image.image_url}}')
+									h4.thumbnail-fig Figure {{image.sequence_id}}
+									p.thumbnail-title {{image.title}}
