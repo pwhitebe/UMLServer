@@ -183,7 +183,7 @@ exports.getCaseById = function(req,res) {
   			res.send(err);
   		} 
   		else { 
-  				console.log(resultSets);
+  				//console.log(resultSets);
   				caseData = resultSets[0,0][0];
   				caseData['images'] = resultSets[0,1];
   				caseData['QA'] = [];
