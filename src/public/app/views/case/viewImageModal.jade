@@ -1,0 +1,10 @@
+body
+	.modal-content
+		.modal-header
+			button.close(type='button' ng-click='cancel()')
+				span(aria-hidden = 'true') x
+			h4.thumbnail-fig.modal-title Figure {{image.sequence_id}}
+		.modal-body
+			img.img-responsive.center(src='{{image.image_url}}')
+		.modal-footer
+			{{image.title}}

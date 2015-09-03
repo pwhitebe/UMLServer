@@ -324,13 +324,13 @@ fieldset[disabled] .btn-mmwr.active {
   height:25px;
   margin-bottom:7px;
 }
-.thumbnail-fig {
+.thumbnail-title {
   font-size:12px;
   color:#656565;
   text-align: center;
   padding:10px;
 }
-.thumbnail-title  {
+.thumbnail-fig  {
   font-size:12px;
   font-weight: bold;
   color:#323232;
@@ -376,6 +376,9 @@ fieldset[disabled] .btn-mmwr.active {
   margin-bottom: 30px;
 }
 
+.center {
+  margin: auto;
+}
 
 .btn-circle {
   width: 30px;
@@ -396,10 +399,6 @@ fieldset[disabled] .btn-mmwr.active {
 .btn-circle link:hover {
   background-color:#ffffff;
   color:#000000;
-}
-
-.verticalLine {
-    border-right: thick solid #fbfbfb;
 }
 
 @media only screen and (max-width: 420px) {

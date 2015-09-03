@@ -1,4 +1,4 @@
-angular.module('app').controller('abstractCtrl', function($scope,$stateParams, ngCase) {
+angular.module('app').controller('abstractCtrl', function($scope,$stateParams, ngCase, $modal) {
 	$scope.case;
 
 	(function(){
@@ -11,4 +11,27 @@ angular.module('app').controller('abstractCtrl', function($scope,$stateParams, n
 			});
 		function getCase() {}
 	})();
+
+	//MODAL
+	$scope.animationsEnabled = true;
+
+	$scope.openModal = function(size,image) {
+
+		var modalInstance = $modal.open({
+			animation: $scope.animationsEnabled,
+			templateUrl: 'partials/case/viewImageModal',
+			controller: 'viewImageModalCtrl',
+			size: size,
+			resolve: {
+				image: function() {
+					return image;
+				}
+			}
+		});
+
+		modalInstance.result.then(function() {
+
+		});
+	};
+
 });
