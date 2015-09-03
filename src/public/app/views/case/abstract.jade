@@ -1,4 +1,6 @@
 .row.mmwr-content
+	.button-cont
+		.btn.btn-default.btn-circle.glyphicon.glyphicon-remove.pull-right(type='button' ui-sref='home')
 	.col.zero-padding-margin
 		.main-content
 			.row
@@ -22,6 +24,6 @@
 									p.thumbnail-title {{image.title}}
 			.row
 				.col-lg-12.col-md-12.col-sm-12
-					button.btn.btn-mmwr.btn-lg.pull-right(type='button', style='width: 150px;')
+					button.btn.btn-mmwr.btn-lg.pull-right(type='button', style='width: 150px;' ui-sref='test({caseID:case.case_id, testType:"post"})')
 						| Next
 						span.glyphicon.glyphicon-chevron-right
