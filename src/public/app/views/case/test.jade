@@ -1,9 +1,12 @@
 .row.mmwr-content
+	.button-cont
+		.btn.btn-default.btn-circle.glyphicon.glyphicon-remove.pull-right(type='button' us-sref='home')
 	.col.zero-padding-margin
 		.main-content
 			.row
 				.col-lg-12
-					span.title-type Pre-test: 
+					span.title-type(ng-show='questions.question.post_pre == "pre"') Pre-test: 
+					span.title-type(ng-show='questions.question.post_pre == "post"') Pre-test: 
 					span.title-case {{case.title}}
 					span.title-date {{case.publication_date | date}}
 			.row
@@ -11,13 +14,13 @@
 					hr(style='margin-bottom: 30px;')
 			.row
 				.col-lg-12
-					p {{questions[0].question.question}}
+					p {{questions.question.question}}
 					br
-					.well(ng-repeat='answers in questions[0].answers')
+					.well(ng-repeat='answers in questions.answers')
 						.row
 							.col-lg-1.col-md-1.col-sm-1.col-xs-2(align='center')
 								label
-									input(type='radio' name='answer' value='{{answers.answer_id}}' ng-model='questions[0].selectedAnswer')
+									input(type='radio' name='answer' value='{{answers.answer_id}}' ng-model='questions.selectedAnswer')
 							.col-lg-11.col-md-11.col-sm-11.col-xs-10
 								{{answers.answer}}
 					br

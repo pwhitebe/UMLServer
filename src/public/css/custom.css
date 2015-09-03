@@ -396,6 +396,12 @@ fieldset[disabled] .btn-mmwr.active {
   color:#ffffff;
 }
 
+.button-cont {
+  float:right; 
+  position:relative; 
+  margin:-10px 5px 10px 0;
+}
+
 .btn-circle link:hover {
   background-color:#ffffff;
   color:#000000;

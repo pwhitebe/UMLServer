@@ -1,11 +1,11 @@
-angular.module('app').controller('preTestCtrl', function($scope, ngTest, ngCase, $stateParams) {
+angular.module('app').controller('testCtrl', function($scope, ngTest, ngCase, $stateParams) {
 	$scope.case;
 	$scope.input = {};
-	//console.log($stateParams.caseID);
+	console.log($stateParams);
 
-	ngTest.getQuestions($stateParams.caseID).then(function(data) {
+	ngTest.getQuestions($stateParams.caseID, $stateParams.testType).then(function(data) {
 		$scope.questions = data;
-		//console.log($scope.questions);
+		console.log($scope.questions);
 	});
 	
 	ngCase.getCaseById($stateParams.caseID).success(function(caseData){
