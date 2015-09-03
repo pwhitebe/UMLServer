@@ -407,6 +407,38 @@ fieldset[disabled] .btn-mmwr.active {
   color:#000000;
 }
 
+.verticalLine {
+    border-right: thick solid #fbfbfb;
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+
+.create-new-case-cont {
+  float:left; 
+  position:relative; 
+  margin:0 0 10px 30px;
+}
+
+.save-draft-cont {
+  float:right; 
+  position:relative; 
+  margin:15px 10px 10px 0;
+}
+
+
+.modal.modal-wide .modal-dialog {
+  width: 90%;
+}
+.modal-wide .modal-body {
+  overflow-y: auto;
+}
+
+
 @media only screen and (max-width: 420px) {
 
    body { font-size: 1.6em; }

@@ -1,17 +1,24 @@
 .row.mmwr-content
     .col.zero-padding-margin
         .main-content
-            h4 Quick Stats
             .row
+                h3 Quick Stats
                 .well(ui-view='mmwrCaseCharts')
-                    | place holder for chart
-            .row 
+                    | place holder for charts
+            .row
+                hr
+            .row
+                .col-lg-9.col-md-9.col-sm-8
+                    h3 All Cases 
+                .col-lg-3.col-md-3.col-sm-4
+                    button.btn.btn-primary.ng-cloak.pull-right(type='button' ng-click="createCase('lg')") Create New Case
+            .row
                 .tab-container
                     tabset
                         tab(heading="Drafts")
                             br
                             .row
-                                .col-lg-8.col-md-6.col-sm-6.col-xs-6
+                                .col-lg-12.col-md-8.col-sm-8.col-xs-6
                                     h4 Draft Cases
                             div(ng-repeat='case in draftCases')
                                 .well(style='background-color:#ffffff;')
@@ -25,8 +32,17 @@
                                                     span.teaser-title Edit/View
                                             br
                                             rating(ng-model='case.rating' max ='max' readOnly='isReadOnly' on-hover='hoveringOver(value)' on-leave='overStar = null')
-                                        .col-md-1
-                                            span.teaser-date {{case.publication_date | date}}
+                                        .col-md-3
+                                            span.teaser-title(style="color:black") Published Date: 
+                                            span.teaser-date
+                                                {{case.publication_date | date}}
+                                            br
+                                            span.teaser-title(style="color:black") Last Edited:
+                                            span.teaser-date
+                                                {{case.last_edited | date}}
+                                        .col-md-3
+                                            a.del-edit-btn.btn.btn-default.btn-lg( href='', data-nodrag='', ng-click="delete(case)")
+                                                .glyphicon.glyphicon-trash
                         tab(heading="Current")
                             br
                             .row
@@ -44,8 +60,18 @@
                                                     span.teaser-title Edit/View
                                             br
                                             rating(ng-model='case.rating' max ='max' readOnly='isReadOnly' on-hover='hoveringOver(value)' on-leave='overStar = null')
-                                        .col-md-1
-                                            span.teaser-date {{case.publication_date | date}}
+                                        .col-md-3
+                                            span.teaser-title(style="color:black") Published Date: 
+                                            span.teaser-date
+                                                {{case.publication_date | date}}
+                                            br
+                                            span.teaser-title(style="color:black") Last Edited:
+                                            span.teaser-date
+                                                {{case.last_edited | date}}
+                                        .col-md-3
+                                            a.del-edit-btn.btn.btn-default.btn-lg( href='', data-nodrag='', ng-click="delete(case)")
+                                                .glyphicon.glyphicon-trash
+
                         tab(heading="Upcoming")
                             br
                             .row
@@ -63,9 +89,17 @@
                                                     span.teaser-title Edit/View
                                             br
                                             rating(ng-model='case.rating' max ='max' readOnly='isReadOnly' on-hover='hoveringOver(value)' on-leave='overStar = null')
-                                        .col-md-1
+                                        .col-md-3
+                                            span.teaser-title(style="color:black") Published Date: 
                                             span.teaser-date
                                                 {{case.publication_date | date}}
+                                            br
+                                            span.teaser-title(style="color:black") Last Edited:
+                                            span.teaser-date
+                                                {{case.last_edited | date}}
+                                        .col-md-3
+                                            a.del-edit-btn.btn.btn-default.btn-lg( href='', data-nodrag='', ng-click="delete(case)")
+                                                .glyphicon.glyphicon-trash
                         tab(heading="Previous")
                             br
                             .row
@@ -77,15 +111,23 @@
                                         .col-sm-1
                                             img(src='img/note.png', width='45', height='40')
                                         .col-md-3
-                                            span.title-case(style="color:black")
+                                            span.teaser-title(style="color:black")
                                                 {{case.title}}  
                                                 a(ui-sref='editCase({caseID:case.case_id})')
                                                     span.teaser-title Edit/View
                                             br
                                             rating(ng-model='case.rating' max ='max' readOnly='isReadOnly' on-hover='hoveringOver(value)' on-leave='overStar = null')
-                                        .col-md-1
+                                        .col-md-3
+                                            span.teaser-title(style="color:black") Published Date: 
                                             span.teaser-date
                                                 {{case.publication_date | date}}
+                                            br
+                                            span.teaser-title(style="color:black") Last Edited:
+                                            span.teaser-date
+                                                {{case.last_edited | date}}
+                                        .col-md-3
+                                            a.del-edit-btn.btn.btn-default.btn-lg( href='', data-nodrag='', ng-click="delete(case)")
+                                                .glyphicon.glyphicon-trash
                         tab(heading="Private")
                             br
                             .row

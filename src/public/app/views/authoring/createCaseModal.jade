@@ -1,11 +1,90 @@
-.modal-content
-	.row.mmwr-content
-		//LEFT COLUMN
-		.col-lg-8.col-md-8.col-sm-12.zero-padding-margin
-			div(ui-view='caseName')
-			div(ui-view='caseContent')
-		//RIGHT COLUMN
-		.col-lg-4.col-md-4.col-sm-12.zero-padding-margin
-			div(ui-view='casePublish')
-			div(ui-view='caseCMECredit')
-			div(ui-view='caseFeatureImage')
+div(ng-controller="createCaseCtrl" style="background-color:#f2f2f2;")
+	.modal-content-create
+		.modal-header
+			.row
+				.col-lg-12
+					.create-new-case-cont
+						h2 Create New Case
+					.save-draft-cont(style='position:absolute; float:left; margin-left:-30px;')
+						button.btn.btn-default.btn-circle.glyphicon.glyphicon-remove(type="button" ng-click="cancel()")
+		.modal-body
+			.row
+				//LEFT COLUMN
+				.col-lg-8.col-md-8.col-sm-12.zero-padding-margin
+					.well
+						.row
+							.col-lg-12
+								h4 Case Name
+								br
+								input.form-control(type="text" placeholder="Enter case name" ng-model="case.case_title")
+								br
+								input.form-control(type="text" placeholder="Enter tag line " ng-model="case.tag_line")
+
+					.well
+						.row
+							.col-lg-12
+								h4 Content
+						.row(style='background-color:#f2f2f2; height:100vh;')
+							.col-lg-12.col-md-12.col-sm-12
+								.tab-container
+									tabset
+										tab(heading="The Case" )
+											.row
+										tab(heading="Pre-Test")
+											.row
+										tab(heading="The Abstract")
+											.row
+										tab(heading="Images")
+											.row
+										tab(heading="Post-Test")
+											.row
+										tab(heading="Additional Info")
+											.row
+						.clear-divs
+				//RIGHT COLUMN
+				.col-lg-4.col-md-4.col-sm-12.zero-padding-margin
+					.well
+						.row
+							.col-lg-12
+								h4 Publish
+						.row
+							.col-lg-6
+								button.btn.btn-primary.pull-left(type="button" ng-click="saveDraftCase('clicked')")
+									| Save Draft
+							.col-lg-6
+								button.btn.btn-primary.pull-right(type="button" ng-click="previewDraftCase('clicked')")
+									| Preview Draft
+						hr(style="border-top: 1px solid #000")
+						.row
+							.col-lg-12
+								.form-comp-cont-toprow
+									label Status:
+									select.form-control(placeholder='Select a development status' ng-model='case.development_status' ng-options='devStatus.description for devStatus in developmentStatuses' )
+										option(value="") - Select a development status -
+									label Status Notes:
+									input.form-control(type="text" ng-model = 'case.development_status_notes' placeholder='Enter status note')
+									br
+									label Visibility:
+									select.form-control(placeholder='Select a visibility status' ng-model='case.display_status' ng-options='displayStatus.description for displayStatus in displayStatuses' )
+										option(value="") - Select a visibility status -
+									br
+									label Scheduled Publish Date:
+									.dropdown
+											a#dropdown1.dropdown-toggle(role='button', data-toggle='dropdown', data-target='#', href='')
+												.input-group
+													div.form-control(type='text')
+														| {{publication_date | date:'MMM d, yyyy'}}
+													span.input-group-addon
+														i.glyphicon.glyphicon-calendar
+											ul.dropdown-menu(role='menu', aria-labelledby='dLabel')
+												datetimepicker(data-on-set-time="publicationDateChanged(newDate, oldDate)" data-ng-model='publication_date', data-datetimepicker-config="{ dropdownSelector: '#dropdown1',startView:'day', minView:'day' }")
+								br
+								.create-btn-cont
+									button.btn.btn-success(type="button" ng-click="publishCase()")
+										| Publish Now	
+					.well
+						.row
+							| CME Credit box
+					.well
+						.row
+							| Feature Image Box

@@ -1,4 +1,4 @@
-angular.module('app').controller('dashboardCtrl', function($scope, ngCase) {
+angular.module('app').controller('dashboardCtrl', function($scope, ngCase,$modal) {
 	
 
 	$scope.developmentStatus;
@@ -82,4 +82,48 @@ angular.module('app').controller('dashboardCtrl', function($scope, ngCase) {
 			});
 	}
 
+	//MODAL
+	$scope.animationsEnabled = true;
+
+	$scope.createCase = function(size,displayStatus,developmentStatus) {
+
+		var modalInstance = $modal.open({
+			animation: $scope.animationsEnabled,
+			templateUrl: 'partials/authoring/createCaseModal',
+			controller: createCaseModalInstanceCtrl,
+			size: 'lg',
+			keyboard : false,
+			backdrop	:'static'
+			// resolve :  { 
+			// 	displayStatus : function() {
+			// 		return displayStatus;
+			// 	},
+			// 	developmentStatus : function() {
+			// 		return developmentStatus;
+			// 	}
+			// }
+		});
+
+		modalInstance.result.then(function() {
+
+		});
+	}
+
 });
+
+var createCaseModalInstanceCtrl = function ($scope,$modalInstance,$animate) {
+ 
+ $scope.ok = function () {
+    $animate.enabled(true);
+    $modalInstance.close();
+   
+  };
+
+ $scope.cancel = function () {
+    $animate.enabled(true);
+    $modalInstance.dismiss('cancel');
+    // if (reload) {
+    //   $timeout($route.reload,500);
+    // }
+  };
+};
