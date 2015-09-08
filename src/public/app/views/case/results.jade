@@ -3,7 +3,8 @@
 		.main-content
 			.row
 				.col-lg-12
-					span.title-type Pre-test: 
+					span.title-type(ng-show='questions.question.post_pre == "pre"') Pre-test:  
+					span.title-type(ng-show='questions.question.post_pre == "post"') Post-test:  
 					span.title-case {{case.title}}
 					span.title-date {{case.publication_date | date}}
 			.row
