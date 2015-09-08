@@ -1,6 +1,6 @@
-angular.module('app').controller('resultsCtrl', function($scope, ngTest, ngCase, $stateParams) {
+angular.module('app').controller('resultsCtrl', function($scope, ngTest, ngCase, $stateParams,$state) {
 	//ngTest.getQuestions($stateParams.caseID).then(function(data) {
-	ngTest.getQuestions($stateParams.caseID, 'pre').then(function(data) {
+	ngTest.getQuestions($stateParams.caseID, $stateParams.testType).then(function(data) {
 		$scope.questions = data;
 	  //console.log($scope.questions);
 	});
@@ -16,6 +16,20 @@ angular.module('app').controller('resultsCtrl', function($scope, ngTest, ngCase,
 		console.log('Unable to retrieve case data: '+err);
 	});
 
+
+	$scope.goNext = function() {
+		if ($scope.moreQuestions) {
+	   		$state.go('test',{caseID : $stateParams.caseID, questionID :$scope.questions.question.question_id});
+	   	}
+		else {
+			if ($scope.questions.question.post_pre == 'pre') {
+				$state.go('abstract',{caseID : $stateParams.caseID});
+			}
+			else {
+				$state.go('endTest',{caseID : $stateParams.caseID});
+			}
+		}
+	};
 
 
 });

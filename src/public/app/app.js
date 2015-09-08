@@ -73,7 +73,7 @@ mmwrcase.config(['$stateProvider', '$urlRouterProvider',
         url:'/results/:caseID',
         templateUrl: 'partials/case/results',
         controller:'resultsCtrl',
-        params : {questionID : null, selectedAnswerID : null}
+        params : {testType: null, questionID : null, selectedAnswerID : null}
       })
       .state('abstract', {
         url:'/abstract/:caseID',

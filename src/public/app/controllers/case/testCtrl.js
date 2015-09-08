@@ -29,6 +29,6 @@ angular.module('app').controller('testCtrl', function($scope, ngTest, ngCase, $s
         		}
        	} 
 		
-       	$state.go('results',{caseID : $stateParams.caseID, questionID :$scope.questions.question.question_id, selectedAnswerID :  $scope.questions.selectedAnswer});
+       	$state.go('results',{caseID : $stateParams.caseID, testType: $stateParams.testType, questionID :$scope.questions.question.question_id, selectedAnswerID :  $scope.questions.selectedAnswer});
 	};
 });
