@@ -1,4 +1,4 @@
-angular.module('app').controller('testCtrl', function($scope, ngTest, ngCase, $stateParams) {
+angular.module('app').controller('testCtrl', function($scope, ngTest, ngCase, $stateParams, $state) {
 	$scope.case;
 	$scope.input = {};
 	console.log($stateParams);
@@ -17,7 +17,18 @@ angular.module('app').controller('testCtrl', function($scope, ngTest, ngCase, $s
 	
 
 	$scope.checkAnswer = function() {
-		console.log($scope.questions[0]);
-		console.log($scope.input.selectedAnswer);
+	//	console.log($scope.questions);
+	//	console.log($scope.questions.selectedAnswer);
+		// may need to update hit counter here pending clarification.  
+		ngCase.updateHitCounter($stateParams.caseID,$scope.questions.question.question_id,$scope.questions.selectedAnswer);
+        for(var i = 0; i < $scope.questions.answers.length; i++){
+        	if ($scope.questions.answers[i].answer_id == $scope.questions.selectedAnswer){
+        			// found matching answer
+        	//		return $scope.questions.answers[i].correct == 1;
+    	    		// or do something else here		
+        		}
+       	} 
+		
+       	$state.go('results',{caseID : $stateParams.caseID, questionID :$scope.questions.question.question_id, selectedAnswerID :  $scope.questions.selectedAnswer});
 	};
 });

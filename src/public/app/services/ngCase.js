@@ -17,6 +17,12 @@ angular.module('app').factory('ngCase', function($http) {
 		},
 		getDisplayStatus : function() {
 			return $http.get('/api/mmwrcase/getDisplayStatus/');
+		},
+		getAnswerStats : function(caseId,questionId) {
+			return $http.get('/api/mmwrcase/getAnswerStatistic/'+caseId+'/'+questionId);
+		},
+		updateHitCounter : function(caseId,questionId,answerId) {
+			return $http.post('/api/mmwrcase/updateHitCounter/'+caseId+'/'+questionId+'/'+answerId);
 		}
 	}
 

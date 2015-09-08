@@ -11,16 +11,29 @@
 					hr(style='margin-bottom: 30px;')
 			.row
 				.col-lg-12
-					p {{questions[0].question.question}}
+					p {{questions.question.question}}
 					br
-					.well(ng-repeat='answers in questions[0].answers')
+					.well(ng-repeat='answers in answerStats')
 						.row
 							.col-lg-1.col-md-1.col-sm-1.col-xs-2(align='center')
-								label
-									input(type='radio' name='answer' value='{{answers.answer_id}}' ng-model='input.selectedAnswer')
+								label(ng-show='questions.question.post_pre == "pre" && answers.correct == 1 ')
+									i.fa.fa-3x.text-success.fa-check-circle
+									span.text-success Correct Answer
+								label(ng-show='questions.question.post_pre=="pre" &&  answers.answer_id == selectedAnswer && answers.correct != 1')
+									i.fa.fa-3x.text-danger.fa-times-circle
+									span.text-danger  Your Answer
 							.col-lg-11.col-md-11.col-sm-11.col-xs-10
-								{{answers.answer}}
+								.row
+									.col-lg-11.col-md-11.col-sm-11.col-xs-10
+										{{answers.answer}}
+								br
+								.row
+									.col-lg-11.col-md-11.col-sm-11.col-xs-10
+										progressbar(animate='false', value='answers.distribution')
+											| {{answers.distribution | number:1}}%
 					br
 					.row
 						.col-lg-12.col-md-12.col-sm-12(align='center')
-							button.btn.btn-mmwr.btn-lg(type='button' style='width:150px;' ng-click='checkAnswer()') Submit
+							button.btn.btn-mmwr.btn-lg.pull-right(type='button' style='width:150px;' ui-sref='abstract({caseID:case.case_id})')
+								| Next
+								span.glyphicon.glyphicon-chevron-right

@@ -237,7 +237,7 @@ exports.updateHitCounter = function(req,res) {
 	var caseId = req.params.caseId;
 	var questionId = req.params.questionId;
 	var answerId = req.params.answerId;
-	connection.query('update answer set hit_counter = hit_counter+1 where case_id = ? and question_id=? and ? and answer_id = ?',[caseId,questionId,answerId],function(err,result) {
+	connection.query('update answer set hit_counter = hit_counter+1 where case_id = ? and question_id=? and answer_id = ?',[caseId,questionId,answerId],function(err,result) {
 		if (err) {
 			res.send(err);
 		}
