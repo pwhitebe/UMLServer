@@ -31,4 +31,13 @@ angular.module('app').controller('testCtrl', function($scope, ngTest, ngCase, $s
 		
        	$state.go('results',{caseID : $stateParams.caseID, testType: $stateParams.testType, questionID :$scope.questions.question.question_id, selectedAnswerID :  $scope.questions.selectedAnswer});
 	};
+
+	$scope.exit = function() {
+		var answer = confirm('You are attempting to exit the case before completion and will lose all progress. Do you want to continue?');
+		if (!answer) {
+          event.preventDefault();
+      	} else {
+      		$state.go('home');
+      	}
+	};
 });

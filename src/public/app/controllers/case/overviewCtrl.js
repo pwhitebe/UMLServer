@@ -1,4 +1,4 @@
-angular.module('app').controller('overviewCtrl', function($scope, ngCase, $stateParams) {
+angular.module('app').controller('overviewCtrl', function($scope, ngCase, $stateParams,$state) {
 	$scope.case;
 
 	(function(){
@@ -11,4 +11,13 @@ angular.module('app').controller('overviewCtrl', function($scope, ngCase, $state
 			});
 		function getCase() {}
 	})();
+
+	$scope.exit = function() {
+		var answer = confirm('You are attempting to exit the case before completion and will lose all progress. Do you want to continue?');
+		if (!answer) {
+          event.preventDefault();
+      	} else {
+      		$state.go('home');
+      	}
+	};
 });

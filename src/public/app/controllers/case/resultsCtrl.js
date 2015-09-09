@@ -4,8 +4,10 @@ angular.module('app').controller('resultsCtrl', function($scope, ngTest, ngCase,
 		$scope.questions = data;
 	  //console.log($scope.questions);
 	});
+	
 	$scope.answerStats={};
 	$scope.selectedAnswer = $stateParams.selectedAnswerID;
+
 	ngCase.getCaseById($stateParams.caseID).success(function(caseData){
 		$scope.case = caseData;
 		//console.log($scope.case);
@@ -31,5 +33,13 @@ angular.module('app').controller('resultsCtrl', function($scope, ngTest, ngCase,
 		}
 	};
 
+	$scope.exit = function() {
+		var answer = confirm('You are attempting to exit the case before completion and will lose all progress. Do you want to continue?');
+		if (!answer) {
+          event.preventDefault();
+      	} else {
+      		$state.go('home');
+      	}
+	};
 
 });

@@ -34,4 +34,13 @@ angular.module('app').controller('abstractCtrl', function($scope,$stateParams, n
 		});
 	};
 
+	$scope.exit = function() {
+	var answer = confirm('You are attempting to exit the case before completion and will lose all progress. Do you want to continue?');
+	if (!answer) {
+      event.preventDefault();
+  	} else {
+  		$state.go('home');
+    }
+	};
+
 });
