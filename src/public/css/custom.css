@@ -74,7 +74,7 @@ html,body {
   background-color:#f8f6f6;
   margin:0 0 0px 0;
   padding:15px 0 0 15px;
-  height:100%;
+  min-height:750px;
   overflow: hidden;
 }
 .btn-mmwr { 
@@ -148,7 +148,7 @@ fieldset[disabled] .btn-mmwr.active {
   margin:15px;
 }
 .people-liked {
-  margin-top:100px;
+  margin-top:55px;
 }
 .people-liked-text {
   font-style:oblique;
@@ -388,12 +388,9 @@ fieldset[disabled] .btn-mmwr.active {
   font-size: 12px;
   line-height: 1.428571429;
   border-radius: 15px;
-  border: 2px solid #ffffff;
-  -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
-  box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
-  background-color:#000000;
-  color:#ffffff;
+  /*border: 2px solid #ffffff;*/
+  /*background-color:#000000;*/
+  color:#000000;
 }
 
 .button-cont {
