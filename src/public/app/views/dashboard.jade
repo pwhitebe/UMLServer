@@ -23,8 +23,9 @@
                             div(ng-repeat='case in draftCases')
                                 .well(style='background-color:#ffffff;')
                                     .row
-                                        .col-sm-1
-                                            img(src='img/note.png', width='45', height='40')
+                                        .col-lg-1.col-md-1.col-sm-1
+                                            label.pull-right
+                                                i.fa.fa-file-text.fa-3x(style="color:#428bca")
                                         .col-md-3
                                             span.title-case(style="color:black")
                                                 {{case.title}}  
@@ -51,8 +52,9 @@
                             div(ng-repeat='case in currentCases')
                                 .well(style='background-color:#ffffff;')
                                     .row
-                                        .col-sm-1
-                                            img(src='img/note.png', width='45', height='40')
+                                        .col-lg-1.col-md-1.col-sm-1
+                                            label.pull-right
+                                                i.fa.fa-file-text.fa-3x(style="color:#428bca")
                                         .col-md-3
                                             span.title-case(style="color:black")
                                                 {{case.title}}  
@@ -80,8 +82,9 @@
                             div(ng-repeat='case in upcomingCases')
                                 .well(style='background-color:#ffffff;')
                                     .row
-                                        .col-sm-1
-                                            img(src='img/note.png', width='45', height='40')
+                                        .col-lg-1.col-md-1.col-sm-1
+                                            label.pull-right
+                                                i.fa.fa-file-text.fa-3x(style="color:#428bca")
                                         .col-md-3
                                             span.title-case(style="color:black")
                                                 {{case.title}}  
@@ -108,8 +111,9 @@
                             div(ng-repeat='case in previousCases')
                                 .well(style='background-color:#ffffff;')
                                     .row
-                                        .col-sm-1
-                                            img(src='img/note.png', width='45', height='40')
+                                        .col-lg-1.col-md-1.col-sm-1
+                                            label.pull-right
+                                                i.fa.fa-file-text.fa-3x(style="color:#428bca")
                                         .col-md-3
                                             span.teaser-title(style="color:black")
                                                 {{case.title}}  

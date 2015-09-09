@@ -23,6 +23,7 @@ module.exports = function(app) {
   app.get('/api/mmwrcase/getAnswerStatistic/:caseId/:questionId',mmwrCase.getAnswerStatistic);
   app.get('/api/mmwrcase/getDevStatus',mmwrCase.getDevStatus);
   app.get('/api/mmwrcase/getDisplayStatus',mmwrCase.getDisplayStatus);
+  app.get('/api/mmwrcase/getRating/:caseId', mmwrCase.getRating);
   
   app.post('/api/mmwrcase/updateHitCounter/:caseId/:questionId/:answerId', mmwrCase.updateHitCounter);
   app.post('/api/mmwrcase/createCase',mmwrCase.createCase);
@@ -30,6 +31,8 @@ module.exports = function(app) {
   app.post('/api/mmwrcase/createQuestionAnswer',mmwrCase.createQuestionAnswer);
   app.post('/api/mmwrcase/createQuestion',mmwrCase.createQuestion);
   app.post('/api/mmwrcase/createAnswer',mmwrCase.createQuestion);
+  app.delete('/api/mmwrcase/deleteCase/:caseId', mmwrCase.deleteCase);
+  app.post('/api/mmwrcase/updateRating',mmwrCase.updateRating);
 
 
 

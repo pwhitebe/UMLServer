@@ -313,6 +313,19 @@ exports.updateCase = function(req,res) {
 	})
 }
 
+exports.deleteCase = function(req,res) {
+
+	var caseId = req.params.caseId;
+	connection.query('call delete_case(?)',[caseId], function(err, result) {
+	    if (err) {
+	    		res.send(err);
+	    }
+	    else {
+	       res.send("delete success");
+	     }
+	});
+}
+
 exports.createQuestion = function(req,res) {
 	var data = req.body;
 	connection.query('insert into question set ? ',data,function(err,result){
@@ -486,7 +499,31 @@ exports.checkCaseExist = function(req,res) {
 }
 
 exports.getRating = function(req,res) {
-  // implementation pending
+  	var case_id = req.params.caseId;
+  	connection.query('select case_id, ROUND(((rating_1 + rating_2+ rating_3 + rating_4 + rating_5) / 5),0)  as rated from rating where case_ID = ?',[case_id],function(err,result){
+  		if (err) {
+				res.send(err);
+		}
+		else {
+			 	res.send(result);
+		}
+  	});
+}
+
+exports.updateRating = function(req,res) {
+	var data = req.body;
+	var case_id = data.caseId;
+	var rating =  data.rating;
+	var  rateColumn = 'rating_'+ rating;
+	var sqlStr = 'update rating set '+ rateColumn + ' = IFNULL(' + rateColumn + ',0) + 1 where case_id = ' + case_id;
+	connection.query(sqlStr,function(err,result){
+		if (err) {
+				res.send(err);
+		}
+		else {
+			 	res.send('rating added');
+		}
+	});
 }
 
 exports.getAnswerStatistic = function(req, res) {

@@ -22,15 +22,18 @@
 DROP TABLE IF EXISTS `rating`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `rating` (
-  `rating_id` int(11) NOT NULL,
+CREATE TABLE `Rating` (
+  `rating_id` int(11) DEFAULT NULL,
   `case_id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `rating` int(11) NOT NULL,
-  PRIMARY KEY (`rating_id`),
-  UNIQUE KEY `rating_id_UNIQUE` (`rating_id`),
-  KEY `fk_Rating_Case_Main1_idx` (`case_id`),
-  CONSTRAINT `fk_Rating_Case_Main1` FOREIGN KEY (`case_id`) REFERENCES `case_main` (`case_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `rating` int(11) DEFAULT 0,
+  `rating_1` int(11) DEFAULT 0,
+  `rating_2` int(11) DEFAULT 0,
+  `rating_3` int(11) DEFAULT 0,
+  `rating_4` int(11) DEFAULT 0,
+  `rating_5` int(11) DEFAULT 0,
+  PRIMARY KEY (`case_id`),
+  KEY `fk_Rating_Case_Main1_idx` (`case_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
