@@ -28,7 +28,7 @@ angular.module('app').controller('resultsCtrl', function($scope, ngTest, ngCase,
 				$state.go('abstract',{caseID : $stateParams.caseID});
 			}
 			else {
-				$state.go('endTest',{caseID : $stateParams.caseID});
+				$state.go('additionalInfo',{caseID : $stateParams.caseID});
 			}
 		}
 	};
