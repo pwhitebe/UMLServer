@@ -520,8 +520,27 @@ exports.updateRating = function(req,res) {
 		if (err) {
 				res.send(err);
 		}
-		else {
-			 	res.send('rating added');
+		else {	
+			connection.query('select case_id, ROUND(((rating_1 + rating_2+ rating_3 + rating_4 + rating_5) / 5),0)  as rated from rating where case_ID = ?',[case_id],function(err,result){
+		  		if (err) {
+						res.send(err);
+				}
+				else {
+					// update rating to case_main  
+						connection.query('update case_main set rating = ? where case_id = ?',[result[0].rated,case_id],function(err,updateResult){
+							if (err) {
+								res.send(err);
+							}
+							else {
+
+								res.send('rating added');
+							}
+						});
+						
+					}
+		  	});
+
+			 	
 		}
 	});
 }
