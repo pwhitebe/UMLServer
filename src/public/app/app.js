@@ -80,6 +80,11 @@ mmwrcase.config(['$stateProvider', '$urlRouterProvider',
         templateUrl: 'partials/case/abstract',
         controller: 'abstractCtrl'
       })
+      .state('additionalInfo', {
+        url:'/additionalInfo/:caseID',
+        templateUrl: 'partials/case/additionalInfo',
+        controller: 'additionalInfoCtrl'
+      })
       .state('dashboard', {
         url:'/dashboard',
         templateUrl : 'partials/dashboard',
