@@ -435,6 +435,12 @@ fieldset[disabled] .btn-mmwr.active {
   overflow-y: auto;
 }
 
+.correct-text {
+  color : #008F51;
+}
+.wrong-text {
+  color : #CD3333;
+}
 
 @media only screen and (max-width: 420px) {
 
