@@ -55,6 +55,9 @@ mmwrcase.config(['$stateProvider', '$urlRouterProvider',
           'upcomingCase@home':{
             templateUrl: 'partials/home/upcomingCase',
             controller:'upcomingCaseCtrl'
+          },
+          'footer@home':{
+            templateUrl:'partials/footer'
           }
         }
         

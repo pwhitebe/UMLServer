@@ -1,4 +1,4 @@
-angular.module('app').controller('abstractCtrl', function($scope,$stateParams, ngCase, $modal) {
+angular.module('app').controller('abstractCtrl', function($scope,$stateParams, ngCase, $modal, $state) {
 	$scope.case;
 
 	(function(){

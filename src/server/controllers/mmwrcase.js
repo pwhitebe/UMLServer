@@ -521,7 +521,7 @@ exports.updateRating = function(req,res) {
 				res.send(err);
 		}
 		else {	
-			connection.query('select case_id, ROUND(((rating_1 + rating_2+ rating_3 + rating_4 + rating_5) / 5),0)  as rated from rating where case_ID = ?',[case_id],function(err,result){
+			connection.query('select case_id, ROUND((rating_1 + (rating_2*2)+ (rating_3*3) + (rating_4*4) + (rating_5*5)) / (rating_1 + rating_2+ rating_3 + rating_4 + rating_5),0)  as rated from rating where case_ID = ?',[case_id],function(err,result){
 		  		if (err) {
 						res.send(err);
 				}
