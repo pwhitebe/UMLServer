@@ -11,7 +11,7 @@
 					span.title-date {{case.publication_date | date}}
 			.row
 				.col-lg-12.col-md-12.col-sm-12
-					hr(style='margin-bottom: 30px;')
+					hr.line-margin
 			.row
 				.col-lg-12
 					p {{questions.question.question}}
@@ -39,6 +39,6 @@
 					br
 					.row
 						.col-lg-12.col-md-12.col-sm-12(align='center')
-							button.btn.btn-mmwr.btn-lg.pull-right(type='button' style='width:150px;' ng-click='goNext({caseID:case.case_id})')
+							button.btn.btn-mmwr.btn-lg.pull-right.nav-button(type='button' ng-click='goNext({caseID:case.case_id})')
 								| Next
 								span.glyphicon.glyphicon-chevron-right

@@ -446,6 +446,9 @@ fieldset[disabled] .btn-mmwr.active {
   margin-bottom: 30px;
 }
 
+.nav-button {
+  width: 150px;
+}
 
 @media only screen and (max-width: 420px) {
 

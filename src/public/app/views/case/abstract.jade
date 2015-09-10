@@ -10,7 +10,7 @@
 					span.title-date {{case.publication_date | date}}
 			.row
 				.col-lg-12.col-md-12.col-sm-12
-					hr(style='margin-bottom:30px;')
+					hr.line-margin
 			.row
 				.col-lg-12
 					p(ng-bind-html='case.abstract_text')
@@ -24,6 +24,6 @@
 									p.thumbnail-title {{image.title}}
 			.row
 				.col-lg-12.col-md-12.col-sm-12
-					button.btn.btn-mmwr.btn-lg.pull-right(type='button', style='width: 150px;' ui-sref='test({caseID:case.case_id, testType:"post"})')
+					button.btn.btn-mmwr.btn-lg.pull-right.nav-button(type='button', ui-sref='test({caseID:case.case_id, testType:"post"})')
 						| Next
 						span.glyphicon.glyphicon-chevron-right
