@@ -1,7 +1,8 @@
-angular.module('app').controller('additionalInfoCtrl', function($scope,$stateParams, ngCase, $modal) {
+angular.module('app').controller('additionalInfoCtrl', function($scope,$stateParams, ngCase, $modal, $http) {
 	$scope.case;
 	$scope.max = 5;
 	$scope.isReadOnly = false;
+	$scope.caseRating = null;
 	
 	$scope.hoveringOver = function(value) {
 		$scope.overStar = value;
@@ -18,4 +19,15 @@ angular.module('app').controller('additionalInfoCtrl', function($scope,$statePar
 			});
 		function getCase() {}
 	})();
+
+	$scope.rateCase = function() {
+		if($scope.caseRating != null){
+			var data = {caseId: $scope.case.case_id, rating: $scope.caseRating};
+
+			$http.post('/api/mmwrcase/updateRating', data).then(function(res){
+				console.log(res);
+			});
+		}
+		
+	}
 });
