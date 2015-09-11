@@ -1,5 +1,5 @@
 .row.mmwr-content
-	//.button-cont
+	.button-cont
 		.btn.btn-default.btn-circle.glyphicon.glyphicon-remove.pull-right(type='button')
 	.col.zero-padding-margin
 		.main-content
@@ -7,7 +7,6 @@
 				.col-lg-8
 					span.title-type Additional Information: 
 					span.title-case {{case.title}}
-					span.title-date {{case.publication_date | date}}
 				.col-lg-4.col-md-6.col-sm-6.col-xs-6.rating-sty
 					p Rate this case
 					rating(ng-model='caseRating' max ='max' readOnly='isReadOnly' on-hover='hoveringOver(value)' on-leave='overStar = null')
@@ -20,5 +19,5 @@
 			.row
 				.col-lg-12.col-md-12.col-sm-12
 					button.btn.btn-mmwr.btn-lg.pull-right.nav-button(type='button' ui-sref='home' ng-click='rateCase()')
-						| Finish 
+						| Close case
 						span.glyphicon.glyphicon-chevron-right
