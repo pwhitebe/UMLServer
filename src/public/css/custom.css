@@ -370,10 +370,12 @@ fieldset[disabled] .btn-mmwr.active {
   display: block;
   width:200px;
   min-height:130px;
+  margin-right: 0px;
 }
 
 .thumb {
   margin-bottom: 30px;
+  width: 20%;
 }
 
 .center {
@@ -449,6 +451,7 @@ fieldset[disabled] .btn-mmwr.active {
 .nav-button {
   width: 150px;
 }
+
 
 @media only screen and (max-width: 420px) {
 
