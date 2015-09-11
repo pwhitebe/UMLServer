@@ -29,11 +29,11 @@ div(ng-controller="createCaseCtrl" style="background-color:#f2f2f2;")
 								.tab-container
 									tabset
 										tab(heading="The Case" )
-											.row
+											div(text-angular='',  ng-model="case.case_text")
 										tab(heading="Pre-Test")
 											.row
 										tab(heading="The Abstract")
-											.row
+											div(text-angular='',  ng-model='case.abstract_text')
 										tab(heading="Images")
 											.row
 										tab(heading="Post-Test")

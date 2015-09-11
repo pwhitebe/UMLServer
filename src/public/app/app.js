@@ -9,7 +9,8 @@ var mmwrcase = angular.module('app', [
   ,'ui.bootstrap.datetimepicker'
   ,'chieffancypants.loadingBar'
   ,'angulartics'
-  ,'angulartics.google.analytics'
+  ,'angulartics.google.analytics',
+  ,'textAngular'  
 ]);
 
 
@@ -93,7 +94,11 @@ mmwrcase.config(['$stateProvider', '$urlRouterProvider',
         templateUrl : 'partials/dashboard',
         controller  : 'dashboardCtrl' 
       })
-
+      .state('edit', {
+        url:'/edit/:caseID',
+        templateUrl : 'partials/authoring/editCase',
+        controller  : 'editCaseCtrl' 
+      })
 }]);
 
 // angular.module('app').run(function($rootScope,$location) {
