@@ -583,3 +583,16 @@ exports.getDisplayStatus = function(req,res) {
 		}
 	})
 }
+
+exports.getTopRatedCases = function(req,res) {
+	var numberToGet = req.params.numberToGet; 
+	var sqlStr =  'select case_id, title, overview, rating from case_main order by rating DESC limit ' + numberToGet
+	connection.query(sqlStr, function(err,result){
+		if (err) {
+		res.send(err);
+		}
+		else {
+		res.send(result);
+		}
+	})
+}

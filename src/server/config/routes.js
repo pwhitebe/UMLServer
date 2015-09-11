@@ -24,6 +24,7 @@ module.exports = function(app) {
   app.get('/api/mmwrcase/getDevStatus',mmwrCase.getDevStatus);
   app.get('/api/mmwrcase/getDisplayStatus',mmwrCase.getDisplayStatus);
   app.get('/api/mmwrcase/getRating/:caseId', mmwrCase.getRating);
+  app.get('/api/mmwrcase/getTopRatedCases/:numberToGet', mmwrCase.getTopRatedCases);
   
   app.post('/api/mmwrcase/updateHitCounter/:caseId/:questionId/:answerId', mmwrCase.updateHitCounter);
   app.post('/api/mmwrcase/createCase',mmwrCase.createCase);
