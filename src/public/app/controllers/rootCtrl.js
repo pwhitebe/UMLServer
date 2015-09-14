@@ -1,6 +1,5 @@
-angular.module('app').controller('rootCtrl', function($scope, $http, ngCase) {
+angular.module('app').controller('rootCtrl', function($scope, $http, ngCase, $state) {
 	getAvailableCases();
-	$scope.selected = '';
 
 	function getAvailableCases() {
 		ngCase.getAllAvailCases()
@@ -11,5 +10,9 @@ angular.module('app').controller('rootCtrl', function($scope, $http, ngCase) {
 				console.log('Case data unvailable');
 			});
 	}
+
+	$scope.selected = function($item){
+		$state.go('overview',{caseID:$item.case_id});
+	};
 
 });
