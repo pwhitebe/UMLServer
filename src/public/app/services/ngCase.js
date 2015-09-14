@@ -23,6 +23,9 @@ angular.module('app').factory('ngCase', function($http) {
 		},
 		updateHitCounter : function(caseId,questionId,answerId) {
 			return $http.post('/api/mmwrcase/updateHitCounter/'+caseId+'/'+questionId+'/'+answerId);
+		},
+		getTopRateCases : function(number) {
+			return $http.get('/api/mmwrcase/getTopRatedCases/'+number);
 		}
 	}
 

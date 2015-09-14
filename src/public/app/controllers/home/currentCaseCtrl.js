@@ -2,7 +2,7 @@ angular.module('app').controller('currentCaseCtrl', function($scope, ngCase) {
 	//ratings
 	$scope.max = 5;
 	$scope.isReadOnly = true;
-	
+	$scope.numberTopCases = 3;
 
 	$scope.hoveringOver = function(value) {
 		$scope.overStar = value;
@@ -24,6 +24,18 @@ angular.module('app').controller('currentCaseCtrl', function($scope, ngCase) {
 				console.log('Case data unvailable');
 			});
 		function getCurrentCase() {}
+	})();
+
+	(function(){
+		ngCase.getTopRateCases($scope.numberTopCases)
+			.success(function(topCases) {
+				$scope.topCases = topCases;
+				console.log(topCases);
+			})
+			.error(function(err) {
+				console.log('Case data unvailable');
+			});
+		function getTopRatedCases() {}
 	})();
 
 

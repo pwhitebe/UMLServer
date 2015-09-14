@@ -4,8 +4,7 @@ body
 	.modal-body
 		.row(ng-repeat='case in upcomingCases')
 			.col-lg-7.col-md-8.col-sm-8.col-xs-8
-				span.teaser-title
-					a(href='#') {{case.title}}
+				span.teaser-title.link-color {{case.title}}
 				br
 				span.teaser-date {{case.publication_date | date}}
 			.col-lg-12.col-md-12.col-sm-12

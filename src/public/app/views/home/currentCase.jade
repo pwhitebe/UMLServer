@@ -24,23 +24,18 @@
 			img.img-thumbnail(src='{{featuredImageUrl}}')
 	.row
 		.col-lg-12.col-md-12.col-sm-12.people-liked
-			span.people-liked-text People who liked this case also liked...
+			span.people-liked-text Other highly rated cases...
 			.well
-				span.teaser-title
-					a(href='#') Salmonella in Texas
-				span.teaser-date  07/23/2015
-				br
-				| Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet cursus mauris.
-				hr
-				span.teaser-title
-					a(href='#') Heart Disease Guideline
-				span.teaser-date  07/23/2015
-				br
-				| Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet cursus mauris.
-				hr
-				span.teaser-title
-					a(href='#') Measles vs Rubeola
-				span.teaser-date  07/23/2015
-				br
-				| Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet cursus mauris.
+				div(ng-repeat='case in topCases')
+					span.teaser-title
+						a(ui-sref='overview({caseID:case.case_id})') {{case.title}}&nbsp;
+						rating(ng-model='case.rating' max ='max' readOnly='isReadOnly' on-hover='hoveringOver(value)' on-leave='overStar = null')
+					br
+					span.teaser-date {{case.publication_date | date}}
+					br
+					| {{case.tag_line}}
+					br
+					br
+
 			
+				
