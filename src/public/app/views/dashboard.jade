@@ -20,7 +20,10 @@
                             .row
                                 .col-lg-12.col-md-8.col-sm-8.col-xs-6
                                     h4 Draft Cases
-                            div(ng-repeat='case in draftCases')
+                                .col-lg-4.col-md-4.col-sm-4.col-xs-4
+                                    label Filter: 
+                                        select(ng-model='selectedFilter' ng-options='caseFilter.option as caseFilter.display for caseFilter in caseFilters' )
+                            div(ng-repeat='case in draftCases | orderBy : selectedFilter')
                                 .well(style='background-color:#ffffff;')
                                     .row
                                         .col-lg-1.col-md-1.col-sm-1
@@ -29,7 +32,7 @@
                                         .col-md-3
                                             span.title-case(style="color:black")
                                                 {{case.title}}  
-                                                a(ui-sref='editCase({caseID:case.case_id})')
+                                                a(ui-sref='editDraft({caseID:case.case_id})')
                                                     span.teaser-title Edit/View
                                             br
                                             rating(ng-model='case.rating' max ='max' readOnly='isReadOnly' on-hover='hoveringOver(value)' on-leave='overStar = null')
@@ -79,7 +82,10 @@
                             .row
                                 .col-lg-8.col-md-6.col-sm-6.col-xs-6
                                     h4 Upcoming Cases
-                            div(ng-repeat='case in upcomingCases')
+                                .col-lg-4.col-md-4.col-sm-4.col-xs-4
+                                    label Filter: 
+                                        select(ng-model='selectedFilter' ng-options='caseFilter.option as caseFilter.display for caseFilter in caseFilters' )
+                            div(ng-repeat='case in upcomingCases | orderBy : selectedFilter')
                                 .well(style='background-color:#ffffff;')
                                     .row
                                         .col-lg-1.col-md-1.col-sm-1
@@ -106,9 +112,13 @@
                         tab(heading="Previous")
                             br
                             .row
-                                .col-lg-8.col-md-6.col-sm-6.col-xs-6
+                                .col-lg-8.col-md-8.col-sm-8.col-xs-8
                                     h4 Previous Cases  
-                            div(ng-repeat='case in previousCases')
+                                .col-lg-4.col-md-4.col-sm-4.col-xs-4
+                                    label Filter: 
+                                        select(ng-model='selectedFilter' ng-options='caseFilter.option as caseFilter.display for caseFilter in caseFilters' )
+                            //option(value='{{case.development_status}}') - Select a development status -
+                            div(ng-repeat='case in previousCases | orderBy : selectedFilter')
                                 .well(style='background-color:#ffffff;')
                                     .row
                                         .col-lg-1.col-md-1.col-sm-1

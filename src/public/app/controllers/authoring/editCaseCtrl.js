@@ -2,6 +2,13 @@ angular.module('app').controller('editCaseCtrl', function ($scope,$http, ngCase,
 
 $scope.developmentStatuses;
 $scope.displayStatuses;
+$scope.caseFilterOptions = [
+	 {'display':'By Publication Date', 'option': 'publication_date'}
+ 	,{'display':'By Created Date', 'option': 'created_date'}
+ 	,{'display':'By Rating', 'option': 'rating'}
+ 	,{'display':'By Title', 'option': 'title'}	
+ 	,{'display':'By Tag Line', 'option': 'tag_line'}			
+]
 
 
 getDisplayStatus();

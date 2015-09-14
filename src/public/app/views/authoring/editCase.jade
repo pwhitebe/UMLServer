@@ -2,7 +2,7 @@ div(style="background-color:#f2f2f2;")
 	.row
 		.col-lg-12
 			.create-new-case-cont
-				h2 Create New Case
+				h2 Edit Case
 			.save-draft-cont(style='position:absolute; float:left; margin-left:-30px;')
 				button.btn.btn-default.btn-circle.glyphicon.glyphicon-remove(type="button" ng-click="cancel()")
 	.row
@@ -11,7 +11,7 @@ div(style="background-color:#f2f2f2;")
 				.well(style="padding-left:10px;")
 					h4 Case Name
 					br
-					input.form-control(type="text" placeholder="Enter case name" ng-model="case.case_title")
+					input.form-control(type="text" placeholder="Enter case name" ng-model="case.title")
 					br
 					input.form-control(type="text" placeholder="Enter tag line " ng-model="case.tag_line")
 				.well
@@ -29,7 +29,7 @@ div(style="background-color:#f2f2f2;")
 							tab(heading="Post-Test")
 								.row
 							tab(heading="Additional Info")
-								.row
+								div(text-angular='',  ng-model='case.additional_information')
 					.clear-divs
 			//RIGHT COLUMN
 		.col-lg-4.col-md-4.col-sm-4.zero-padding-margin
@@ -37,29 +37,30 @@ div(style="background-color:#f2f2f2;")
 				.row
 					.col-lg-12
 						h4 Publish
+				hr(style="border-top: 1px solid #000")
 				.row
 					.col-lg-6
 						button.btn.btn-primary.pull-left(type="button" ng-click="saveDraftCase('clicked')")
-							| Save Draft
+							| Save
 					.col-lg-6
 						button.btn.btn-primary.pull-right(type="button" ng-click="previewDraftCase('clicked')")
 							| Preview Draft
-				hr(style="border-top: 1px solid #000")
+				hr(style="border-top: 1px solid #fbfbfb")
 				.row
-					.col-lg-12
+					.col-lg-8
 						.form-comp-cont-toprow
 							label Status:
-							select.form-control(placeholder='Select a development status' ng-model='case.development_status' ng-options='devStatus.description for devStatus in developmentStatuses' )
-								option(value="") - Select a development status -
+							select.form-control(placeholder='Select a development status' ng-model='case.development_status' ng-options='devStatus.development_status_id as devStatus.description for devStatus in developmentStatuses' )
+							//option(value='{{case.development_status}}') - Select a development status -
 							label Status Notes:
 							input.form-control(type="text" ng-model = 'case.development_status_notes' placeholder='Enter status note')
 							br
 							label Visibility:
-							select.form-control(placeholder='Select a visibility status' ng-model='case.display_status' ng-options='displayStatus.description for displayStatus in displayStatuses' )
+							select.form-control(placeholder='Select a visibility status' ng-model='case.display_status' ng-options='displayStatus.display_status_id as displayStatus.description for displayStatus in displayStatuses' )
 								option(value="") - Select a visibility status -
 							br
 							label Scheduled Publish Date:
-							.dropdown
+								.dropdown
 									a#dropdown1.dropdown-toggle(role='button', data-toggle='dropdown', data-target='#', href='')
 										.input-group
 											div.form-control(type='text')
@@ -74,7 +75,44 @@ div(style="background-color:#f2f2f2;")
 								| Publish Now	
 			.well
 				.row
-					| CME Credit box
+					.col-lg-12.col-md-12.col-sm-12
+						h4 CME Credit
+						hr(style="border-top: 1px solid #000")
+						label Add CME Credit:
+							br
+							label
+								input(type="radio" ng-model='case.available_cme_credits' ng-value="1")
+								|&nbsp; Yes   
+							label.pull-right
+								input(type="radio" ng-model='case.available_cme_credits' ng-value="0")
+								|&nbsp;No
+				.row
+					.col-lg-8
+						label CME Credit Hours:
+							br
+							input(type="number" max = '5' min = '1' ng-model = 'case.number_cme_credits_available' ng-disabled = 'case_available_cme_credits==0')
+						br
+						label Release Date:
+							.dropdown
+								a#dropdown2.dropdown-toggle(role='button', data-toggle='dropdown', data-target='#', href='')
+									.input-group
+										div.form-control(type='text')
+											| {{case.cme_release_date | date:'MMM d, yyyy'}}
+										span.input-group-addon
+											i.glyphicon.glyphicon-calendar
+								ul.dropdown-menu(role='menu', aria-labelledby='dLabel')
+									datetimepicker(data-on-set-time="cmeReleaseChanged(newDate, oldDate)" data-ng-model='case.cme_release_date', data-datetimepicker-config="{ dropdownSelector: '#dropdown2',startView:'day', minView:'day' }")
+						br
+						label Expiration Date: 
+							.dropdown
+								a#dropdown3.dropdown-toggle(role='button', data-toggle='dropdown', data-target='#', href='')
+									.input-group
+										div.form-control(type='text')
+											| {{case.cme_valid_until | date:'MMM d, yyyy'}}
+										span.input-group-addon
+											i.glyphicon.glyphicon-calendar
+								ul.dropdown-menu(role='menu', aria-labelledby='dLabel')
+									datetimepicker(data-on-set-time="cmeValidChanged(newDate, oldDate)" data-ng-model='case.cme_valid_until', data-datetimepicker-config="{ dropdownSelector: '#dropdown3',startView:'day', minView:'day' }")
 			.well
 				.row
 					| Feature Image Box

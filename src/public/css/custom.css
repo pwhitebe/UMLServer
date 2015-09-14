@@ -463,6 +463,17 @@ fieldset[disabled] .btn-mmwr.active {
 a, img {
   cursor:pointer;
 }
+
+.tab-content {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-bottom : 1px solid #ddd;
+    padding: 10px;
+}
+
+.nav-tabs {
+    margin-bottom: 0;
+
 @media only screen and (max-width: 420px) {
 
    body { font-size: 1.6em; }

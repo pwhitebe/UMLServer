@@ -10,7 +10,16 @@ angular.module('app').controller('dashboardCtrl', function($scope, ngCase,$modal
 	$scope.currentCases;
 	$scope.upcomingCases;
 	$scope.previousCases;
-	
+	$scope.selectedFilter = 'publication_date';
+	$scope.caseFilters = [
+	 {'display':'By Publication Date', 'option': 'publication_date'}
+ 	,{'display':'By Created Date', 'option': 'created_date'}
+ 	,{'display':'By Last Edited Date', 'option': 'last_edited'}					
+ 	,{'display':'By Rating', 'option': 'rating'}
+ 	,{'display':'By Title', 'option': 'title'}	
+ 	,{'display':'By Tag Line', 'option': 'tag_line'}
+
+	];
 
 
 	getDisplayStatus();
