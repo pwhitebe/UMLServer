@@ -51,7 +51,7 @@ html(lang="en" ng-app="app")
             .col-lg-3.col-md-3.col-sm-4.col-xs-6
                 div(style='search-box')
                     .input-group
-                        input.form-control(type='text' placeholder='Search Cases' ng-model='selected' typeahead='case as case.title for case in searchableCases| filter:$viewValue | limitTo:10')
+                        input.form-control(type='text' placeholder='Search Cases' ng-model='query' typeahead-on-select='selected($item)' typeahead='case as case.title for case in searchableCases| filter:$viewValue | limitTo:10')
                         span.input-group-btn
                             button.btn.btn-default(type='submit')
                                 i.glyphicon.glyphicon-search

@@ -460,6 +460,10 @@ fieldset[disabled] .btn-mmwr.active {
   width: 150px;
 }
 
+.link-color {
+  color:#0062ab;
+}
+
 a, img {
   cursor:pointer;
 }

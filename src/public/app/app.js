@@ -51,7 +51,8 @@ mmwrcase.config(['$stateProvider', '$urlRouterProvider',
             controller:'previousCaseCtrl'
           },
           'linkBox@home': {
-            templateUrl: 'partials/home/linkBox'
+            templateUrl: 'partials/home/linkBox',
+            controller: 'linkBoxCtrl'
           },
           'upcomingCase@home':{
             templateUrl: 'partials/home/upcomingCase',
