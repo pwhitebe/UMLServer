@@ -289,6 +289,10 @@ fieldset[disabled] .btn-mmwr.active {
   color:#f0d743;
 }
 
+.glyphicon-star-empty {
+  color: #a3a2a2;
+}
+
 .title-type {
   font-size:24px;
   color:#0062ab;
@@ -444,6 +448,10 @@ fieldset[disabled] .btn-mmwr.active {
   color : #CD3333;
 }
 
+.user-answer-text {
+  color: #3071a9;
+}
+
 .line-margin {
   margin-bottom: 30px;
 }
@@ -452,17 +460,9 @@ fieldset[disabled] .btn-mmwr.active {
   width: 150px;
 }
 
-.tab-content {
-    border-left: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-    border-bottom : 1px solid #ddd;
-    padding: 10px;
+a, img {
+  cursor:pointer;
 }
-
-.nav-tabs {
-    margin-bottom: 0;
-}
-
 @media only screen and (max-width: 420px) {
 
    body { font-size: 1.6em; }
