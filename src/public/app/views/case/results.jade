@@ -13,6 +13,7 @@
 					hr.line-margin
 			.row
 				.col-lg-12
+					p The results below illustrate how your peers have responded to the Case of the Week at this point in the activity.
 					p {{questions.question.question}}
 					br
 					.well(ng-repeat='answers in answerStats')
@@ -26,6 +27,10 @@
 									i.fa.fa-3x.fa-times-circle.wrong-text
 									br
 									span.wrong-text  Your Answer
+								label(ng-show='questions.question.post_pre=="pre" && answers.answer_id == selectedAnswer')
+									i.fa.fa-3x.fa-chevron-circle-right.user-answer-text
+									br
+									span.user-answer-text Your Answer
 							.col-lg-11.col-md-11.col-sm-11.col-xs-10
 								.row
 									.col-lg-11.col-md-11.col-sm-11.col-xs-10
