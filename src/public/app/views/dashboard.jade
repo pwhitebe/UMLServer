@@ -76,7 +76,6 @@
                                         .col-md-3
                                             a.del-edit-btn.btn.btn-default.btn-lg( href='', data-nodrag='', ng-click="delete(case)")
                                                 .glyphicon.glyphicon-trash
-
                         tab(heading="Upcoming")
                             br
                             .row
@@ -99,7 +98,7 @@
                                             br
                                             rating(ng-model='case.rating' max ='max' readOnly='isReadOnly' on-hover='hoveringOver(value)' on-leave='overStar = null')
                                         .col-md-3
-                                            span.teaser-title(style="color:black") Published Date: 
+                                            span.teaser-title(style="color:black") Scheduled Date: 
                                             span.teaser-date
                                                 {{case.publication_date | date}}
                                             br

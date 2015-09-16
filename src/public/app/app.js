@@ -5,6 +5,7 @@ var mmwrcase = angular.module('app', [
   ,'ngAnimate'
   ,'ngSanitize'
   ,'LocalStorageModule'
+  ,'ui.tree'
   ,'ui.bootstrap'
   ,'ui.bootstrap.datetimepicker'
   ,'chieffancypants.loadingBar'

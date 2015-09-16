@@ -44,10 +44,10 @@ angular.module('textAngularSetup', [])
 	keyMappings : [],
 	toolbar: [
 		['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote'],
-		['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],
+		['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear','fontSize', 'fontName'],
 		['justifyLeft','justifyCenter','justifyRight','justifyFull','indent','outdent'],
 		['html', 'insertImage', 'insertLink', 'insertVideo', 'wordcount', 'charcount'],
-		['fontSize', 'fontName']
+		
 	],
 	classes: {
 		focussed: "focussed",
@@ -782,18 +782,18 @@ angular.module('textAngularSetup', [])
 	});
 // newly added options
 	    taRegisterTool('fontName', {
-        display: "<span class='bar-btn-dropdown dropdown'>" +
-                "<button class='btn btn-blue dropdown-toggle' type='button' ng-disabled='showHtml()' style='padding-top: 4px'><i class='fa fa-font'></i><i class='fa fa-caret-down'></i></button>" +
-                "<ul class='dropdown-menu'><li ng-repeat='o in options'><button class='btn btn-blue checked-dropdown' style='font-family: {{o.css}}; width: 100%' type='button' ng-click='action($event, o.css)'><i ng-if='o.active' class='fa fa-check'></i>{{o.name}}</button></li></ul></span>",
-        action: function (event, font) {
-            //Ask if event is really an event.
-            if (!!event.stopPropagation) {
-                //With this, you stop the event of textAngular.
-                event.stopPropagation();
-                //Then click in the body to close the dropdown.
-                $("body").trigger("click");
-            }
-            return this.$editor().wrapSelection('fontName', font);
+        display: "<span class='btn-group dropdown' style='padding: 0px 0px 0px 0px'>" +
+                "<button class='btn btn-default dropdown-toggle' type='button' ng-disabled='showHtml()'><i class='fa fa-font'></i><i class='fa fa-caret-down'></i></button>" +
+                "<ul class='dropdown-menu'><li ng-repeat='o in options'><a style='font-family: {{o.css}}; width: 100%' ng-click='action(o.css)'><i ng-if='o.active' class='fa fa-check'></i>{{o.name}}</a></li></ul></span>",
+        action: function (font) {
+            // //Ask if event is really an event.
+            // if (!!event.stopPropagation) {
+            //     //With this, you stop the event of textAngular.
+            //     event.stopPropagation();
+            //     //Then click in the body to close the dropdown.
+            //   //  $("body").trigger("click");
+            // }
+             return this.$editor().wrapSelection('fontName', font);
         },
         options: [
             { name: 'Sans-Serif', css: 'Arial, Helvetica, sans-serif' },
@@ -813,18 +813,19 @@ angular.module('textAngularSetup', [])
     });
 
     taRegisterTool('fontSize', {
-        display:"<div class='dropdown'>" +
-                "<button class='btn dropdown-toggle' type='button' ng-disabled='showHtml()'><i class='fa fa-text-height'></i><i class='fa fa-caret-down'></i></button>" +
-                "<ul class='dropdown-menu' role='menu'><li ng-repeat='o in options'><button class='btn checked-dropdown' style='font-size: {{o.css}}; width: 100%' type='button' ng-click='action($event, o.value)'><i ng-if='o.active' class='fa fa-check'></i> {{o.name}}</button></li></ul>" +
-                "</div>",
+        display:"<span class='btn-group dropdown' style='padding: 0px 0px 0px 0px'>" + 
+                "<button class='btn btn-default dropdown-toggle' type='button' ng-disabled='showHtml()'><i class='fa fa-text-height'></i><i class='fa fa-caret-down'></i></button>" +
+                "<ul class='dropdown-menu' role='menu'><li ng-repeat='o in options'><a style='font-size: {{o.css}}; width: 100%' ng-click='action($event, o.value)'><i ng-if='o.active' class='fa fa-check'></i> {{o.name}}</a></li></ul>" +
+                "</div>"+
+                "</span>",
         action: function (event, size) {
-            //Ask if event is really an event.
-            if (!!event.stopPropagation) {
-                //With this, you stop the event of textAngular.
-                event.stopPropagation();
-                //Then click in the body to close the dropdown.
-                $("body").trigger("click");
-            }
+            // //Ask if event is really an event.
+            // if (!!event.stopPropagation) {
+            //     //With this, you stop the event of textAngular.
+            //     event.stopPropagation();
+            //     //Then click in the body to close the dropdown.
+            //     $("body").trigger("click");
+            // }
             return this.$editor().wrapSelection('fontSize', parseInt(size));
         },
         options: [
@@ -855,3 +856,11 @@ angular.module('textAngularSetup', [])
     });
 
 }]);
+
+      $('body').on('mouseenter', '.ta-toolbar.btn-toolbar .btn-group .dropdown', function(){
+      $(this).addClass('open');
+      $(this).children('button').css('pointer-events', 'none');
+      });
+      $('body').on('mouseleave', '.ta-toolbar.btn-toolbar .btn-group .dropdown', function(){
+      $(this).removeClass('open');
+      });
