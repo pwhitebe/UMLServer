@@ -12,6 +12,7 @@ var mmwrcase = angular.module('app', [
   ,'angulartics'
   ,'angulartics.google.analytics',
   ,'textAngular'  
+  ,'dialogs.main'
 ]);
 
 

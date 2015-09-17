@@ -464,6 +464,12 @@ fieldset[disabled] .btn-mmwr.active {
   color:#0062ab;
 }
 
+.feedback-area {
+  width: 100%;
+  min-height: 250px;
+  resize: none;
+}
+
 a, img {
   cursor:pointer;
 }

@@ -1,6 +1,6 @@
 .row.mmwr-content
 	.button-cont
-		.btn.btn-default.btn-circle.glyphicon.glyphicon-remove.pull-right(type='button')
+		.btn.btn-default.btn-circle.glyphicon.glyphicon-remove.pull-right(type='button' ng-click='exit()')
 	.col.zero-padding-margin
 		.main-content
 			.row
@@ -19,5 +19,4 @@
 			.row
 				.col-lg-12.col-md-12.col-sm-12
 					button.btn.btn-mmwr.btn-lg.pull-right.nav-button(type='button' ui-sref='home' ng-click='rateCase()')
-						| Close case 
-						span.glyphicon.glyphicon-chevron-right
+						| Close Case 

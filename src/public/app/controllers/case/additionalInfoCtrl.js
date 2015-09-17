@@ -1,4 +1,4 @@
-angular.module('app').controller('additionalInfoCtrl', function($scope,$stateParams, ngCase, $modal, $http) {
+angular.module('app').controller('additionalInfoCtrl', function($scope,$stateParams, ngCase, $modal, $http, dialogs) {
 	$scope.case;
 	$scope.max = 5;
 	$scope.isReadOnly = false;
@@ -32,11 +32,11 @@ angular.module('app').controller('additionalInfoCtrl', function($scope,$statePar
 	};
 
 	$scope.exit = function() {
-		var answer = confirm('You are attempting to exit the case before completion and will lose all progress. Do you want to continue?');
-		if (!answer) {
-	      event.preventDefault();
-	  	} else {
-	  		$state.go('home');
-	    }
+		var dlg = dialogs.confirm();
+		dlg.result.then(function(btn){
+			$state.go('home');
+		}, function(btn){
+			//No
+		});
 	};
 });
