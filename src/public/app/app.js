@@ -10,9 +10,9 @@ var mmwrcase = angular.module('app', [
   ,'ui.bootstrap.datetimepicker'
   ,'chieffancypants.loadingBar'
   ,'angulartics'
-  ,'angulartics.google.analytics',
-  ,'textAngular'  
+  ,'angulartics.google.analytics'
   ,'dialogs.main'
+  ,'textAngular' 
 ]);
 
 
