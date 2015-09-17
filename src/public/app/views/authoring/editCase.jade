@@ -19,36 +19,40 @@
 							hr
 							.row
 								.col-lg-12(ui-tree='options')
-									ol(ui-tree-nodes='', ng-model='qa', data-type='topic')
-										li(ng-repeat="question in qa" , ui-tree-node='')
-											.topic-title.angular-ui-tree-handle(ng-show='!question.editing' ng-mouseenter="hoverTopic = true" ng-mouseleave="hoverTopic = false")
-												a.del-edit-btn.btn.btn-default.btn-xs.pull-right(ng-show="hoverTopic" href='', data-nodrag='', ng-click='removeTopic(qa,question)')
+									ol(ui-tree-nodes='', ng-model='qa.pre', data-type='question')
+										li(ng-repeat="question in qa.pre | filter : byQuestionType('pre') track by $index " , ui-tree-node='')
+											.topic-title.angular-ui-tree-handle(ng-show='!question.editing' ng-mouseenter="hoveQuestion = true" ng-mouseleave="hoveQuestion = false")
+												a.del-edit-btn.btn.btn-default.btn-xs.pull-right(ng-show="hoveQuestion" href='', data-nodrag='', ng-click='removeQuestion(qa.pre,question)')
 													i.glyphicon.glyphicon-trash
-												a.del-edit-btn.btn.btn-default.btn-xs.pull-right(ng-show="hoverTopic" href='', data-nodrag='', ng-click='editTopic(question)')
+												a.del-edit-btn.btn.btn-default.btn-xs.pull-right(ng-show="hoveQuestion" href='', data-nodrag='', ng-click='editQuestion(question)')
 													i.glyphicon.glyphicon-pencil
 												div  {{question.question.question}}
 											.topic-title.angular-ui-tree-handle(data-nodrag='', ng-show='question.editing')
 												label.sr-only(for='questionText') Question Text
-												textarea.form-control(rows='2' cols='100' , placeholder='Question Text', ng-model='question.question' ng-keyup='$event.keyCode==13 ? saveTopic(question,$event) : null' ng-blur='saveTopic(question,$event)')
-											ol(ui-tree-nodes='', ng-model='question.answers', data-type='subTopic')
+												textarea.form-control(rows='2' cols='100' , placeholder='Question Text', ng-model='question.question' ng-keyup='$event.keyCode==13 ? saveQuestion(question,$event) : null' ng-blur='saveQuestion(question,$event)')
+											ol(ui-tree-nodes='', ng-model='question.answers', data-type='answer')
 												li(ng-repeat='answer in question.answers', ui-tree-node='')
 													.subTopic-title.angular-ui-tree-handle(ng-show='!answer.editing' ng-mouseenter="hoverSubTopic = true" ng-mouseleave="hoverSubTopic = false")
-														a.del-edit-btn.btn.btn-default.btn-xs.pull-right(ng-show="hoverSubTopic" href='', data-nodrag='', ng-click='removeSubTopic(question, answer)')
+														a.del-edit-btn.btn.btn-default.btn-xs.pull-right(ng-show="hoverSubTopic" href='', data-nodrag='', ng-click='removeAnswer(question, answer)')
 															i.glyphicon.glyphicon-trash
-														a.del-edit-btn.btn.btn-default.btn-xs.pull-right(ng-show="hoverSubTopic" href='', data-nodrag='', ng-click='editSubTopic(answer)')
+														a.del-edit-btn.btn.btn-default.btn-xs.pull-right(ng-show="hoverSubTopic" href='', data-nodrag='', ng-click='editAnswer(answer)')
 															i.glyphicon.glyphicon-pencil
-														div
-															| {{answer.answer}}
+														.well
+															.row
+																.col-lg-1.col-md-1.col-sm-1.col-xs-2(align='center')
+																	input(type='radio' name='{{question.question.question_id}}' ng-value='1' ng-model='answer.correct' ng-change='setCorrectAnswer(question,answer)')
+																.col-lg-10.col-md-10.col.sm-10.col-xs-9
+																	| {{answer.answer}}
 													.subTopic-title.angular-ui-tree-handle(data-nodrag='', ng-show='answer.editing')
 														label.sr-only(for='subTopicName') SubTopic name
-														textarea.form-control(rows='2' cols='60', ng-model='answer.answer', placeholder='Enter answer Text to add answer' ng-keyup='$event.keyCode==13 ? saveSubTopic(answer,$event) : null' ng-blur='saveSubTopic(answer,$event)')
+														textarea.form-control(rows='2' cols='60', ng-model='answer.answer', placeholder='Enter answer text to add answer' ng-keyup='$event.keyCode==13 ? saveAnswer(answer,$event) : null' ng-blur='saveAnswer(answer,$event)')
 											ol.angular-ui-tree-nodes(data-nodrag='')
 												li.angular-ui-tree-node
 													.subTopic-title.angular-ui-tree-handle
 														form.form-inline(role='form')
 															.form-topic
 																label.sr-only(for='subTopicName') SubTopic name
-																textarea.form-control(rows='2' cols='60', ng-model='question.newAnswer', placeholder='Enter answer Text to add answer' ng-keyup='$event.keyCode==13 ? addSubTopic(question,$event) : null' ng-blur='addSubTopic(question,$event)')
+																textarea.form-control(rows='2' cols='60', ng-model='question.newAnswerText', placeholder='Enter answer text to add answer' ng-keyup='$event.keyCode==13 ? addAnswer(question,$event) : null' ng-blur='addAnswer(question,$event)')
 									br
 									ol.angular-ui-tree-nodes
 										li.angular-ui-tree-node
@@ -56,7 +60,14 @@
 												form.form-inline(role='form')
 													.form-topic
 														label.sr-only(for='questionText' ) Question Text
-														textarea#topicName.form-control(rows='2' cols='100'   placeholder='Enter Question Text to add new question' ng-model="qa.newQuestion" ng-keyup='$event.keyCode==13 ? addTopic(qa,$event) : null' ng-blur='addTopic(qa,$event)')
+														textarea#topicName.form-control(rows='2' cols='100'   placeholder='Enter question text to add new question' ng-model="qa.pre.newQuestionText" ng-keyup='$event.keyCode==13 ? addQuestion(qa.pre,"pre",$event) : null' ng-blur='addQuestion(qa.pre,"pre",$event)')
+							.row
+								.col-lg-6
+									h3 Data binding
+									.info
+										| {{  }}
+									pre.code.
+										{{ qa | json }}	
 						tab(heading="The Abstract")
 							div(text-angular='',  ng-model='case.abstract_text')
 						tab(heading="Images")
@@ -66,36 +77,40 @@
 							hr
 							.row
 								.col-lg-12(ui-tree='options')
-									ol(ui-tree-nodes='', ng-model='qa.questions', data-type='topic')
-										li(ng-repeat='question in qa.questions', ui-tree-node='')
-											.topic-title.angular-ui-tree-handle(ng-show='!question.editing' ng-mouseenter="hoverTopic = true" ng-mouseleave="hoverTopic = false")
-												a.del-edit-btn.btn.btn-default.btn-xs.pull-right(ng-show="hoverTopic" href='', data-nodrag='', ng-click='removeTopic(qa,question)')
+									ol(ui-tree-nodes='', ng-model='qa.post', data-type='question')
+										li(ng-repeat="question in qa.post | filter : byQuestionType('post') track by $index " , ui-tree-node='')
+											.topic-title.angular-ui-tree-handle(ng-show='!question.editing' ng-mouseenter="hoveQuestion = true" ng-mouseleave="hoveQuestion = false")
+												a.del-edit-btn.btn.btn-default.btn-xs.pull-right(ng-show="hoveQuestion" href='', data-nodrag='', ng-click='removeQuestion(qa.post,question)')
 													i.glyphicon.glyphicon-trash
-												a.del-edit-btn.btn.btn-default.btn-xs.pull-right(ng-show="hoverTopic" href='', data-nodrag='', ng-click='editTopic(question)')
+												a.del-edit-btn.btn.btn-default.btn-xs.pull-right(ng-show="hoveQuestion" href='', data-nodrag='', ng-click='editQuestion(question)')
 													i.glyphicon.glyphicon-pencil
-												div  {{question.question}}
+												div  {{question.question.question}}
 											.topic-title.angular-ui-tree-handle(data-nodrag='', ng-show='question.editing')
 												label.sr-only(for='questionText') Question Text
-												textarea.form-control(rows='2' cols='100' , placeholder='Question Text', ng-model='question.question' ng-keyup='$event.keyCode==13 ? saveTopic(question,$event) : null' ng-blur='saveTopic(question,$event)')
-											ol(ui-tree-nodes='', ng-model='question.answers', data-type='subTopic')
+												textarea.form-control(rows='2' cols='100' , placeholder='Question Text', ng-model='question.question' ng-keyup='$event.keyCode==13 ? saveQuestion(question,$event) : null' ng-blur='saveQuestion(question,$event)')
+											ol(ui-tree-nodes='', ng-model='question.answers', data-type='answer')
 												li(ng-repeat='answer in question.answers', ui-tree-node='')
 													.subTopic-title.angular-ui-tree-handle(ng-show='!answer.editing' ng-mouseenter="hoverSubTopic = true" ng-mouseleave="hoverSubTopic = false")
-														a.del-edit-btn.btn.btn-default.btn-xs.pull-right(ng-show="hoverSubTopic" href='', data-nodrag='', ng-click='removeSubTopic(question, answer)')
+														a.del-edit-btn.btn.btn-default.btn-xs.pull-right(ng-show="hoverSubTopic" href='', data-nodrag='', ng-click='removeAnswer(question, answer)')
 															i.glyphicon.glyphicon-trash
-														a.del-edit-btn.btn.btn-default.btn-xs.pull-right(ng-show="hoverSubTopic" href='', data-nodrag='', ng-click='editSubTopic(answer)')
+														a.del-edit-btn.btn.btn-default.btn-xs.pull-right(ng-show="hoverSubTopic" href='', data-nodrag='', ng-click='editAnswer(answer)')
 															i.glyphicon.glyphicon-pencil
-														div
-															| {{answer.answer}}
+														.well
+															.row
+																.col-lg-1.col-md-1.col-sm-1.col-xs-2(align='center')
+																	input(type='radio' name='{{question.question.question_id}}' ng-value='1' ng-model='answer.correct'  ng-change='setCorrectAnswer(question,answer)')
+																.col-lg-10.col-md-10.col.sm-10.col-xs-9
+																	| {{answer.answer}}
 													.subTopic-title.angular-ui-tree-handle(data-nodrag='', ng-show='answer.editing')
 														label.sr-only(for='subTopicName') SubTopic name
-														textarea.form-control(rows='2' cols='60', ng-model='answer.answer', placeholder='Enter answer Text to add answer' ng-keyup='$event.keyCode==13 ? saveSubTopic(answer,$event) : null' ng-blur='saveSubTopic(answer,$event)')
+														textarea.form-control(rows='2' cols='60', ng-model='answer.answer', placeholder='Enter answer text to add answer' ng-keyup='$event.keyCode==13 ? saveAnswer(answer,$event) : null' ng-blur='saveAnswer(answer,$event)')
 											ol.angular-ui-tree-nodes(data-nodrag='')
 												li.angular-ui-tree-node
 													.subTopic-title.angular-ui-tree-handle
 														form.form-inline(role='form')
 															.form-topic
 																label.sr-only(for='subTopicName') SubTopic name
-																textarea.form-control(rows='2' cols='60', ng-model='question.newAnswer', placeholder='Enter answer Text to add answer' ng-keyup='$event.keyCode==13 ? addSubTopic(question,$event) : null' ng-blur='addSubTopic(question,$event)')
+																textarea.form-control(rows='2' cols='60', ng-model='question.newAnswerText', placeholder='Enter answer text to add answer' ng-keyup='$event.keyCode==13 ? addAnswer(question,$event) : null' ng-blur='addAnswer(question,$event)')
 									br
 									ol.angular-ui-tree-nodes
 										li.angular-ui-tree-node
@@ -103,7 +118,14 @@
 												form.form-inline(role='form')
 													.form-topic
 														label.sr-only(for='questionText' ) Question Text
-														textarea#topicName.form-control(rows='2' cols='100'   placeholder='Enter Question Text to add new question' ng-model="qa.newQuestion" ng-keyup='$event.keyCode==13 ? addTopic(qa,$event) : null' ng-blur='addTopic(qa,$event)')
+														textarea#topicName.form-control(rows='2' cols='100'   placeholder='Enter question text to add new question' ng-model="qa.post.newQuestionText" ng-keyup='$event.keyCode==13 ? addQuestion(qa.post,"post",$event) : null' ng-blur='addQuestion(qa.post,"post",$event)')
+							.row
+								.col-lg-6
+									h3 Data binding
+									.info
+										| {{  }}
+									pre.code.
+										{{ qa | json }}	
 						tab(heading="Additional Info")
 							div(text-angular='',  ng-model='case.additional_information')
 					.clear-divs
