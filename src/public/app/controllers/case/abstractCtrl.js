@@ -1,4 +1,4 @@
-angular.module('app').controller('abstractCtrl', function($scope,$stateParams, ngCase, $modal, $state) {
+angular.module('app').controller('abstractCtrl', function($scope,$stateParams, ngCase, $modal, $state, dialogs) {
 	$scope.case;
 
 	(function(){
@@ -35,12 +35,12 @@ angular.module('app').controller('abstractCtrl', function($scope,$stateParams, n
 	};
 
 	$scope.exit = function() {
-	var answer = confirm('You are attempting to exit the case before completion and will lose all progress. Do you want to continue?');
-	if (!answer) {
-      event.preventDefault();
-  	} else {
-  		$state.go('home');
-    }
+		var dlg = dialogs.confirm();
+		dlg.result.then(function(btn){
+			$state.go('home');
+		}, function(btn){
+			//No
+		});
 	};
 
 });

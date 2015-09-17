@@ -10,6 +10,7 @@ var mmwrcase = angular.module('app', [
   ,'chieffancypants.loadingBar'
   ,'angulartics'
   ,'angulartics.google.analytics'
+  ,'dialogs.main'
 ]);
 
 
