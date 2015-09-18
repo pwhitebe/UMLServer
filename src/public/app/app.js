@@ -93,12 +93,12 @@ mmwrcase.config(['$stateProvider', '$urlRouterProvider',
         controller: 'additionalInfoCtrl'
       })
       .state('dashboard', {
-        url:'/dashboard',
+        url:'/admin/dashboard',
         templateUrl : 'partials/dashboard',
         controller  : 'dashboardCtrl' 
       })
-      .state('editCase', {
-        url:'/editCase/:caseID',
+      .state('editcase', {
+        url:'/admin/editcase/:caseID',
         templateUrl : 'partials/authoring/editCase',
         controller  : 'editCaseCtrl' 
       })
