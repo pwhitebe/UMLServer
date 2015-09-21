@@ -1,20 +1,35 @@
 var passport = require('passport'),
-  mongoose = require('mongoose'),
-  LocalStrategy = require('passport-local').Strategy,
-  User = mongoose.model('User');
+  LocalStrategy = require('passport-local').Strategy;
+var properties = require('../lib/envProperties');
+
+var knex = require('knex')({
+  client: 'mysql',
+  connection: {
+    host     : properties.mysqlhost,
+    user     : properties.mysqluser,
+    password : properties.mysqlpassword,
+    database : properties.mysqldatabase
+  }
+});
 
 module.exports = function() {
-  passport.use(new LocalStrategy(
-    function(username, password, done) {
-      User.findOne({username:username}).exec(function(err, user) {
-        if(user && user.authenticate(password)) {
-          return done(null, user);
-        } else {
-          return done(null, false);
-        }
-      })
-    }
-  ));
+
+  // passport.use(new LocalStrategy(
+  //   function(username, password, done) {
+  //     User.findOne({username:username}).exec(function(err, user) {
+  //       if(user && user.authenticate(password)) {
+  //         return done(null, user);
+  //       } else {
+  //         return done(null, false);
+  //       }
+  //     })
+  //   }
+  // ));
+  
+  //====================================================================
+  // passport session setup
+  // required for persistent login session
+  //====================================================================
 
   passport.serializeUser(function(user, done) {
     if(user) {
@@ -23,13 +38,30 @@ module.exports = function() {
   });
 
   passport.deserializeUser(function(id, done) {
-    User.findOne({_id:id}).exec(function(err, user) {
+    knex.select().table('user').then(function(err,user){
       if(user) {
         return done(null, user);
       } else {
         return done(null, false);
       }
-    })
-  })
+    });
+  });
 
+  //====================================================================
+  // local login
+  //====================================================================
+
+  passport.use(new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password'
+  },
+  function(email, password, done) {
+    knex.select().from('user').where({email:email}).then(function(err,user) {
+      if(user && user.authenticate(password)) {
+        return done(null, user);
+      } else {
+        return done(null, false);
+      }
+    });
+  }));
 }
