@@ -598,3 +598,24 @@ exports.getTopRatedCases = function(req,res) {
 		}
 	})
 }
+exports.getSortOptions = function(req,res) {
+	db.query('select * from case_sorting_options',function(err,result){
+		if (err) {
+		res.send(err);
+		}
+		else {
+		res.send(result);
+		}
+	})
+}
+exports.getCaseRatingStats = function(req,res) {
+	console.log('api hit');
+	db.query('SELECT concat("Cases with rating ",rating) as "name", COUNT(*) AS "y" FROM case_main where display_status <> 3 and development_status = 5 GROUP BY name', function(err, result){
+		if (err) {
+		res.send(err);
+		}
+		else {
+		res.send(result);
+		}
+	})
+}

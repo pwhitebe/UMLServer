@@ -12,7 +12,8 @@ var mmwrcase = angular.module('app', [
   ,'angulartics'
   ,'angulartics.google.analytics'
   ,'dialogs.main'
-  ,'textAngular' 
+  ,'textAngular'
+  ,'highcharts-ng'
 ]);
 
 
@@ -91,6 +92,11 @@ mmwrcase.config(['$stateProvider', '$urlRouterProvider',
         url:'/additionalInfo/:caseID',
         templateUrl: 'partials/case/additionalInfo',
         controller: 'additionalInfoCtrl'
+      })
+      .state('admin', {
+        url:'/admin',
+        templateUrl : 'partials/dashboard',
+        controller  : 'dashboardCtrl' 
       })
       .state('dashboard', {
         url:'/admin/dashboard',

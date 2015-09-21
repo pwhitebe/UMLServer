@@ -29,7 +29,7 @@
 												div  {{question.question.question}}
 											.topic-title.angular-ui-tree-handle(data-nodrag='', ng-show='question.editing')
 												label.sr-only(for='questionText') Question Text
-												textarea.form-control(rows='2' cols='100' , placeholder='Question Text', ng-model='question.question' ng-keyup='$event.keyCode==13 ? saveQuestion(question,$event) : null' ng-blur='saveQuestion(question,$event)')
+												textarea.form-control(rows='2' cols='100' , placeholder='Question Text', ng-model='question.question.question' ng-keyup='$event.keyCode==13 ? saveQuestion(question,$event) : null' ng-blur='saveQuestion(question,$event)')
 											ol(ui-tree-nodes='', ng-model='question.answers', data-type='answer')
 												li(ng-repeat='answer in question.answers', ui-tree-node='')
 													.subTopic-title.angular-ui-tree-handle(ng-show='!answer.editing' ng-mouseenter="hoverSubTopic = true" ng-mouseleave="hoverSubTopic = false")

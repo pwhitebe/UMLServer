@@ -26,6 +26,12 @@ angular.module('app').factory('ngCase', function($http) {
 		},
 		getTopRateCases : function(number) {
 			return $http.get('/api/mmwrcase/getTopRatedCases/'+number);
+		},
+		getSortOptions : function() {
+			return $http.get('/api/mmwrcase/getSortOptions/');
+		},
+		getCaseRatingStats : function() {
+			return $http.get('/api/mmwrcase/getCaseRatingStats');
 		}
 	}
 
