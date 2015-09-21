@@ -1,18 +1,5 @@
 var db = require('../lib/dbConnection');
 
-// var mysql      = require('mysql');
-// var properties = require('../lib/envProperties');
-// var  = mysql.createConnection({
-//   host     : properties.mysqlhost,
-//   user     : properties.mysqluser,
-//   password : properties.mysqlpassword,
-//   database : properties.mysqldatabase,
-//   //port     : '/tmp/mysql.sock',
-//   multipleStatements : true
-// });
-
-
-
 exports.getCasesByStatus = function(req,res) {
 	//connection.connect();
 	var devStatus = req.params.devStatus;
