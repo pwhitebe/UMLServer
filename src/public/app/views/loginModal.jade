@@ -1,0 +1,13 @@
+body
+	.modal-header
+		button.close(type='button' ng-click='cancel()')
+			.fa.fa-times
+		h4.modal-title Login
+	.modal-body
+		.well
+			form
+				.form-group
+					input.form-control.input-lg(type='text' placeholder = 'Email' ng-model='email')
+				.form-group
+					input.form-control.input-lg(type='password' placeholder = 'Password' ng-model='password')
+				button.btn.btn-success.btn-lg(type='submit', style='width:100%;' ng-click="login(email, password)") Login
