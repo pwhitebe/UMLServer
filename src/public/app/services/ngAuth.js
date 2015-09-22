@@ -1,12 +1,12 @@
-angular.module('app').factory('ngAuth', function($http, mvIdentity, $q, mvUser) {
+angular.module('app').factory('ngAuth', function($http, ngIdentity, $q, ngUser) {
   return {
-    authenticateUser: function(username, password) {
+    authenticateUser: function(email, password) {
       var dfd = $q.defer();
-      $http.post('/login', {username:username, password:password}).then(function(response) {
+      $http.post('/login', {email:email, password:password}).then(function(response) {
         if(response.data.success) {
-          var user = new mvUser();
+          var user = new ngUser();
           angular.extend(user, response.data.user);
-          mvIdentity.currentUser = user;
+          ngIdentity.currentUser = user;
           dfd.resolve(true);
         } else {
           dfd.resolve(false);
@@ -15,44 +15,44 @@ angular.module('app').factory('ngAuth', function($http, mvIdentity, $q, mvUser) 
       return dfd.promise;
     },
 
-    createUser: function(newUserData) {
-      var newUser = new mvUser(newUserData);
-      var dfd = $q.defer();
+    // createUser: function(newUserData) {
+    //   var newUser = new ngUser(newUserData);
+    //   var dfd = $q.defer();
 
-      newUser.$save().then(function() {
-        mvIdentity.currentUser = newUser;
-        dfd.resolve();
-      }, function(response) {
-        dfd.reject(response.data.reason);
-      });
+    //   newUser.$save().then(function() {
+    //     ngIdentity.currentUser = newUser;
+    //     dfd.resolve();
+    //   }, function(response) {
+    //     dfd.reject(response.data.reason);
+    //   });
 
-      return dfd.promise;
-    },
+    //   return dfd.promise;
+    // },
 
-    updateCurrentUser: function(newUserData) {
-      var dfd = $q.defer();
+    // updateCurrentUser: function(newUserData) {
+    //   var dfd = $q.defer();
 
-      var clone = angular.copy(mvIdentity.currentUser);
-      angular.extend(clone, newUserData);
-      clone.$update().then(function() {
-        mvIdentity.currentUser = clone;
-        dfd.resolve();
-      }, function(response) {
-        dfd.reject(response.data.reason);
-      });
-      return dfd.promise;
-    },
+    //   var clone = angular.copy(ngIdentity.currentUser);
+    //   angular.extend(clone, newUserData);
+    //   clone.$update().then(function() {
+    //     ngIdentity.currentUser = clone;
+    //     dfd.resolve();
+    //   }, function(response) {
+    //     dfd.reject(response.data.reason);
+    //   });
+    //   return dfd.promise;
+    // },
 
     logoutUser: function() {
       var dfd = $q.defer();
       $http.post('/logout', {logout:true}).then(function() {
-        mvIdentity.currentUser = undefined;
+        ngIdentity.currentUser = undefined;
         dfd.resolve();
       });
       return dfd.promise;
     },
     authorizeCurrentUserForRoute: function(role) {
-      if(mvIdentity.isAuthorized(role)) {
+      if(ngIdentity.isAuthorized(role)) {
         return true;
       } else {
         return $q.reject('not authorized');
@@ -60,7 +60,7 @@ angular.module('app').factory('ngAuth', function($http, mvIdentity, $q, mvUser) 
 
     },
     authorizeAuthenticatedUserForRoute: function() {
-      if(mvIdentity.isAuthenticated()) {
+      if(ngIdentity.isAuthenticated()) {
         return true;
       } else {
         return $q.reject('not authorized');
