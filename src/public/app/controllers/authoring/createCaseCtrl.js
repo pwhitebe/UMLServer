@@ -28,6 +28,36 @@ $scope.case = {
 }
 
 
+$scope.qa = {
+	'pre' :[],
+	'post' : []
+}
+
+$scope.images = [];
+
+$scope.saveDraft = function() {
+		$http.post('/api/mmwrcase/createCase',$scope.case).then(function(res){
+			if (res.hasOwnProperty('message') { // create was success
+				 newCaseId = result.caseId;  // retreive newly inserted case id
+				 // using the new id for the QAs
+				 var combinedQA = $scope.qa.pre.concat($scope.qa.post);
+				 for (var i=0; i < combinedQA.length; i++) {
+				 	combinedQA[i].question.case_id = newCaseId;
+				 	combinedQA[i].question.question_id = i;
+				 	for (var j = 0 ; j < combinedQA[i].answers.length; j ++) {
+				 		combinedQA[i].answers[j].case_id = newCaseId;
+				 		combinedQA[i].answers[j].question_id = i;
+				 		combinedQA[i].answers[j].answer_id = k;
+				 	}
+				 }
+				 // saving QA to database
+				 	$http.post('/api/mmwrcase/createQuestionAnswer',combinedQA).then(function(res){
+
+				 	}
+			}
+		});
+	}
+
 
 	function getDisplayStatus() {
 		ngCase.getDisplayStatus()
@@ -48,6 +78,7 @@ $scope.case = {
 				console.log('Unable to load statuses');
 			});
 	}
+
 
 
 $scope.publication_date = moment().format();

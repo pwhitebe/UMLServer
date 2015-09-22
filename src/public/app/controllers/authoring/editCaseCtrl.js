@@ -222,7 +222,16 @@ $scope.options = {
 
 $scope.saveCase = function(editMode) {
 	if (editMode == 'edit') {
-		// update case
+		//update case
+    $http.post('/api/mmwrcase/updateCase',$scope.case).then(function(res){
+        if (res.success) {
+
+        }
+        else {
+          
+        }
+
+    })
 	}
 	else if (editMode == 'new') {
 		// save case

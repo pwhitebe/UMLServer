@@ -26,6 +26,7 @@ module.exports = function(app) {
   app.get('/api/mmwrcase/getTopRatedCases/:numberToGet', mmwrCase.getTopRatedCases);
   app.get('/api/mmwrcase/getSortOptions/', mmwrCase.getSortOptions);
   app.get('/api/mmwrcase/getCaseRatingStats', mmwrCase.getCaseRatingStats);
+
   
   app.post('/api/mmwrcase/updateHitCounter/:caseId/:questionId/:answerId', mmwrCase.updateHitCounter);
   app.post('/api/mmwrcase/createCase',mmwrCase.createCase);
@@ -35,7 +36,7 @@ module.exports = function(app) {
   app.post('/api/mmwrcase/createAnswer',mmwrCase.createQuestion);
   app.delete('/api/mmwrcase/deleteCase/:caseId', mmwrCase.deleteCase);
   app.post('/api/mmwrcase/updateRating',mmwrCase.updateRating);
-
+  app.post('/api/mmwrcase/testReformatted', mmwrCase.testReformatted);
 
 
   app.get('/partials/*', function(req, res) {

@@ -272,19 +272,23 @@ exports.createCase = function(req,res) {
 //     "tag_line": null
 // }
 	db.query('insert into case_main set ?',caseData,function(err,result){
-		if(err) {
-  			res.send(err);
-  		} 
-  		else {
+			if(err) {
+	        	res.send(err);
+  			} 
+  			else {
   			   res.send({'message':'case added','caseId': result.insertId});
  		 	}
 	})
-
 
 }
 
 exports.updateCase = function(req,res) {
 	var caseData = req.body;
+	var QA = caseData.QA;
+	var images = caseData.images;
+	delete caseData.QA;
+	delete caseData.images;
+
 		// test data
 //	caseData = 
 // 	{  "case_id": 5, 
@@ -305,11 +309,13 @@ exports.updateCase = function(req,res) {
 //     "tag_line": null
 // }
 	var case_id = caseData.case_id;
+
 	db.query('update case_main set ? where case_id = ?',[caseData,case_id],function(err,updateResult){
 		if (err) {
 			res.send(err);
 		}
 		else {
+
 			res.send('Update success');
 		}
 	})
@@ -355,6 +361,20 @@ exports.updateQuestion = function(req,res) {
 	})
 }
 
+function updateQuestion(question) {
+	var case_id = question.case_id;
+	var question_id = question.question_id;
+
+	db.query('update question set ? where case_id = ? and question_id = ?',[case_id,question_id],function(err,updateResult){
+		if (err) {
+			return err;
+		}
+		else {
+			return {'success':true}
+		}
+	})
+}
+
 exports.createAnswer = function(req,res) {
 	var data = req.body;
 	db.query('insert into answer set ?',data,function(err,result){
@@ -383,7 +403,23 @@ exports.updateAnswer = function(req,res) {
 	})
 }
 
-exports.createQuestionAnswer = function(req,res) {
+function updateAnswer(answer) {
+	var data = answer;
+	var case_id = data.case_id;
+	var question_id = data.question_id;
+	var answer_id = data.answer_id;
+
+	db.query('update answer set ? where case_id = ? and question_id = ? and answer_id = ?',[case_id,question_id,answer_id],function(err,updateResult){
+		if (err) {
+			return err;
+		}
+		else {
+			return {'success': 'Update success'});
+		}
+	})
+}
+
+exports.createQuestionAnswer= function(req,res) {
 
 
 	var data = req.body;
@@ -618,4 +654,27 @@ exports.getCaseRatingStats = function(req,res) {
 		res.send(result);
 		}
 	})
+}
+
+exports.testReformatted = function(req,res) {
+	var data = req.body;
+	console.log(data);
+	var reformatted = reformatForMySQL(data);
+	res.send(reformatted);
+}
+
+function reformatForMySQL(arrayObject) {
+	// this function reformat json data into format usable for insert and upddate records to mySql database
+
+			var colNames = Object.keys(arrayObject[0]);
+			var newValueSet = [];
+			var newValues =[];
+			for(var i = 0; i < arrayObject.length; i++){
+				for (j=0; j < colNames.length; j++) {
+					newValues.push(arrayObject[i][colNames[j]]);
+				}
+				newValueSet.push('("' + newValues.join('","') + '")');
+				newValues=[];
+			}
+	return { 'colNames': colNames, 'valueSet': newValueSet} ;
 }
