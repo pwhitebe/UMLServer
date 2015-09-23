@@ -401,7 +401,7 @@ function updateAnswer(answer) {
 			return err;
 		}
 		else {
-			return {'success': 'Update success'});
+			return {'success':true};
 		}
 	})
 }
