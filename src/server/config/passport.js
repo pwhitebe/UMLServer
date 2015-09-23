@@ -2,6 +2,8 @@ var passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy;
 var properties = require('../lib/envProperties');
 
+var db = require('../lib/dbConnection');
+
 var knex = require('knex')({
   client: 'mysql',
   connection: {
@@ -13,40 +15,7 @@ var knex = require('knex')({
 });
 
 module.exports = function() {
-
-  // passport.use(new LocalStrategy(
-  //   function(username, password, done) {
-  //     User.findOne({username:username}).exec(function(err, user) {
-  //       if(user && user.authenticate(password)) {
-  //         return done(null, user);
-  //       } else {
-  //         return done(null, false);
-  //       }
-  //     })
-  //   }
-  // ));
   
-  //====================================================================
-  // passport session setup
-  // required for persistent login session
-  //====================================================================
-
-  passport.serializeUser(function(user, done) {
-    if(user) {
-      done(null, user._id);
-    }
-  });
-
-  passport.deserializeUser(function(id, done) {
-    knex.select().table('user').then(function(err,user){
-      if(user) {
-        return done(null, user);
-      } else {
-        return done(null, false);
-      }
-    });
-  });
-
   //====================================================================
   // local login
   //====================================================================
@@ -56,12 +25,45 @@ module.exports = function() {
     passwordField: 'password'
   },
   function(email, password, done) {
-    knex.select().from('user').where({email:email}).then(function(err,user) {
-      if(user && user.authenticate(password)) {
+    knex.select().from('user').where({email:email})
+    .then(function(user) {
+      //console.log(user);
+      if(user) {
         return done(null, user);
       } else {
         return done(null, false);
       }
+    })
+    .catch(function(e){
+      return done(null,false);
+      console.error(e);
     });
   }));
+
+  //====================================================================
+  // passport session setup
+  // required for persistent login session
+  //====================================================================
+
+  passport.serializeUser(function(user,done) {
+      done(null, user[0].user_id);
+  });
+
+  passport.deserializeUser(function(id,done) {
+    knex.select().from('user').where({user_id:id})
+      .then(function(user) {
+        if(user) {
+          return done(null, user[0]);
+        }
+      })
+      .catch(function(e){
+        return done(null, false);
+      });
+    // db.query("select * from user where user_id ="+id, function(err, user) {
+    //     done(err, user[0]);
+    // });
+  });
+
+
+
 }

@@ -11,6 +11,7 @@ var properties = require('../lib/envProperties');
 
 module.exports = function(app, config) {
     app.configure(function() {
+        var done = false;
         app.use(express.static(config.rootPath + '/public'));
         app.set('views', config.rootPath + '/server/views');
         app.set('view engine', 'jade');

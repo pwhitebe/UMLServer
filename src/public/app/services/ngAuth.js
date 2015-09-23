@@ -1,8 +1,8 @@
 angular.module('app').factory('ngAuth', function($http, ngIdentity, $q, ngUser) {
   return {
-    authenticateUser: function(username, password) {
+    authenticateUser: function(email, password) {
       var dfd = $q.defer();
-      $http.post('/login', {username:username, password:password}).then(function(response) {
+      $http.post('/login', {email:email, password:password}).then(function(response) {
         if(response.data.success) {
           var user = new ngUser();
           angular.extend(user, response.data.user);
