@@ -2,7 +2,7 @@
 var index = require('../controllers/index');
 var mmwrCase = require('../controllers/mmwrcase');
 // var users = require('../controllers/users');
-// var auth = require('./auth');
+var auth = require('./auth');
 
 
 module.exports = function(app) {
@@ -10,7 +10,7 @@ module.exports = function(app) {
   // app.get('/api/users', auth.requiresRole('admin'), users.getUsers);
   // app.post('/api/users', users.createUser);
   // app.put('/api/users', users.updateUser);
-  // app.post('/login', auth.authenticate);
+  app.post('/login', auth.authenticate);
 
   app.get('/api/mmwrcase/currentCase/',mmwrCase.getCurrentCase);
   app.get('/api/mmwrcase/getCasesByStatus/:devStatus/:displayStatus',mmwrCase.getCasesByStatus);
