@@ -296,16 +296,44 @@ exports.updateCase = function(req,res) {
 //     "tag_line": null
 // }
 	var case_id = caseData.case_id;
-	console.log('case_id ',case_id, 'case data: ', caseData);
-	db.query('update case_main set ? where case_id = ?',[caseData,case_id],function(err,updateResult){
-		if (err) {
-			res.send(err);
-		}
-		else {
+//	console.log('case_id ',case_id, 'case data: ', caseData);
+	// setup a transaction to make sure that all db operation completed with no error
+	db.beginTransaction(function(err) {
+	  if (err) { throw err; }
+	  db.query('update case_main set ? where case_id = ?',[caseData,case_id],function(err,updateResult){
+	    if (err) {
+	      return connection.rollback(function() {
+	        throw err;
+	      });
+	    }
+		//	createQuestionAnswer(QA);
+			res.send({'success':true});
+			// remove all question and answer before re-insert with the new order (if changed)
+			// db.query('delete from question where case_id = ? ; delete from answer where case_id = ?',[case_id,case_id],function(err,qDeleteResult){
+			// 	if (err) {
+			// 		return connection.rollback(function() {
+			// 			throw err;
+			// 		});
+			// 	}
+			// 	db.query('update question set ? where case_id = ? and question_id = ?',[case_id,question_id],function(err,updateResult){
+		 //    		if (err) {
+			//         	return connection.rollback(function() {
+			//           		throw err;
+			//         	});
+			//         }
+			//         connection.commit(function(err) {
+			// 	        if (err) {
+			// 	          return connection.rollback(function() {
+			// 	            throw err;
+			// 	          });
+		 //        		}
+		 //        		console.log('success!');	
+		 //      		})
+			// 	});
+	  //     	});
+	    });
+	  });
 
-			res.send(updateResult);
-		}
-	})
 }
 
 exports.deleteCase = function(req,res) {
@@ -409,7 +437,7 @@ function updateAnswer(answer) {
 exports.createQuestionAnswer= function(req,res) {
 
 
-	var data = req.body;
+	var allQA = req.body;
 // test data
 // 	{   
 //     "question": {"question_id":1,"case_id":5,"sequence_id":1,"post_pre":"pre","question":"this is question 1"} ,
@@ -421,11 +449,32 @@ exports.createQuestionAnswer= function(req,res) {
 //     ]
 // }
 	// var case_id = data.case_id;
-	 var question = data.question;
-	 var answers =  data.answers;
-	 db.beginTransaction(function(err) {
-	  if (err) { throw err; }
-	   		db.query('insert into question set ? ON DUPLICATE KEY UPDATE question_id = question_id + 1',question,function(err,questionResult){
+	 var questions = [];
+	 var answers = [];
+	 for (var i=0; i < allQA.length; i++) { // iterate and build the sql data values for insert
+	 	questions.push(allQA[i].question);
+	 	for (var j = 0; j < allQA[i].answers.length; j++) {
+	 		answers.push(allQA[i].answers[j]);
+	 	}
+	 	
+	 }
+	 if (questions.length > 0) {
+	 	//console.log(answers);
+	 	
+	 	var case_id = questions[0].case_id;
+	 	db.beginTransaction(function(err) {
+	  	if (err) { throw err; }
+	  	// remove all existing questions and answers and replace with the ones from the page (if the order changed)
+	  		db.query('delete from question where case_id = ? ; delete from answer where case_id = ?',[case_id,case_id], function(err,deleteResult){
+	  			if (err) {
+	  					return db.rollback(function() {
+	  					throw err;
+	  				})
+	  				
+	  			}
+	  		var questionValueSet = reformatForMySQL(questions);
+	  		var sqlStr = 'insert into question (' + questionValueSet.colNames.join(',') + ') VALUES ' + questionValueSet.valueSet.join(',');
+	   		db.query(sqlStr,function(err,questionResult){
 		   		if (err) {
 		   			  	return db.rollback(function() {
 	        			throw err;
@@ -433,18 +482,9 @@ exports.createQuestionAnswer= function(req,res) {
 		   				res.send({'error location':'question','error msg':err});
 		   		}
 		   		else {
-		   				var colNames = Object.keys(answers[0]);
-						var newValueSet = [];
-						var newValues =[];
-						for(var i = 0; i < answers.length; i++){
-							for (j=0; j < colNames.length; j++) {
-								newValues.push(answers[i][colNames[j]]);
-							}
-							newValueSet.push('("' + newValues.join('","') + '")');
-							newValues=[];
-						}
-						db.query('INSERT INTO answer (' + colNames.join(',') + ') VALUES ' + newValueSet.join(',') , function(err, rows, fields) {
-  
+		   				var answerValueSet = reformatForMySQL(answers);
+						var sqlStr = 'insert into answer (' + answerValueSet.colNames.join(',') + ') VALUES ' + answerValueSet.valueSet.join(',');
+						db.query(sqlStr, function(err, rows, fields) {
 			   				if (err) {
 			   					 return db.rollback(function() {
 						          throw err;
@@ -457,13 +497,16 @@ exports.createQuestionAnswer= function(req,res) {
 							            throw err;
 							          });
 							        }
-							        res.send('insert success!');
+							        res.send({'success':true});
 							      });
 							}		
-			   			})
-		   		}
-  		   	})
-	   	})
+			   			});
+		   			}
+  		   		});	
+	  		});
+	  		
+	   	});
+	}
 }
 
 exports.checkQuestionExist = function(req,res) {

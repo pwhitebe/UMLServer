@@ -40,6 +40,7 @@ angular.module('app').controller('dashboardCtrl', function($scope, ngCase,$modal
 	getPreviousCases();
 	createChart1();
 	createChart2();
+	createChart3();
 
 	function getSortOptions() {
 		ngCase.getSortOptions()
@@ -239,6 +240,74 @@ angular.module('app').controller('dashboardCtrl', function($scope, ngCase,$modal
 		                                // },
 		                                title: {
 		                                          text: "Top 5 viewed",
+		                                          style : {fontWeight: 'bold', fontSize:20}
+		                                },
+		                                //function (optional)
+		                                func: function (chart) {
+		                                 // $timeout(chart.reflow(),200);
+		                                }
+                              };    
+			})
+			.error(function(err) {
+				console.log('Unable to load case data');
+			});
+	 
+	}
+
+	function createChart3() {
+			
+			var chartCategories= [];
+			var chartCategoriesHeading= [];
+			var series = [];
+			var serieData = [];
+			var chartData = {};
+		
+
+			ngCase.getCaseRatingStats()
+			.success(function(result) {
+				serieData = result;
+				var newSerie = {name: 'Times Viewed', data : serieData}
+				series.push(newSerie);
+				chartData['series'] =  series;
+			 $scope.chartConfig3 = { options: {
+      //This is the Main Highcharts chart config. Any Highchart options are valid here.
+      //will be overriden by values specified below.
+		                                chart: {
+		                                    type: 'bar',
+		                                    polar: false
+		                                    },
+		                                tooltip: {
+		                                	formatter: function() {
+        										return '<b> count = ' + this.y + '</b>';
+        									},
+		                                    style: {
+		                                        padding: 10,
+		                                        fontWeight: 'bold'
+		                                    }
+		                                },
+		                                plotOptions: {
+											            pie: {
+											                allowPointSelect: true,
+											                cursor: 'pointer',
+											                dataLabels: {
+											                    enabled: true,
+											                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+											                    style: {
+											                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+											                    }
+											                }
+											            }
+											        }
+		                       },
+		                                series: chartData.series,
+		                                loading: false,
+		                              //size (optional) if left out the chart will default to size of the div or something sensible.
+		                                 //size: {
+		                                 //  width: 450,
+		                                //   height: 200
+		                                // },
+		                                title: {
+		                                          text: "Top 3 cases with highest wrong answer selected",
 		                                          style : {fontWeight: 'bold', fontSize:20}
 		                                },
 		                                //function (optional)

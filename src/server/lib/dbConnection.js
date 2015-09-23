@@ -7,7 +7,7 @@ var connection = mysql.createConnection({
   password : properties.mysqlpassword,
   database : properties.mysqldatabase,
   multipleStatements: true,
-  debug  : true 
+  //debug  : true 
   //port     : '/tmp/mysql.sock' 
 });
 connection.connect( function(err) {

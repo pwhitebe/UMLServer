@@ -224,9 +224,27 @@ $scope.saveCase = function(editMode) {
 	if (editMode == 'edit') {
 		//update case
  //   console.log('case data ', $scope.case)
+
     $http.post('/api/mmwrcase/updateCase',$scope.case).then(function(res){
         if (res.data.success) {
-            alert('update success')
+           var combinedQA = $scope.qa.pre.concat($scope.qa.post);
+            for (var i=0; i < combinedQA.length; i++) {
+              combinedQA[i].question.case_id = $scope.case.case_id;
+              combinedQA[i].question.question_id = i;
+              for (var j = 0 ; j < combinedQA[i].answers.length; j ++) {
+                combinedQA[i].answers[j].case_id = $scope.case.case_id;
+                combinedQA[i].answers[j].question_id = i;
+                combinedQA[i].answers[j].answer_id = j;
+              }
+           }
+            $http.post('/api/mmwrcase/createQuestionAnswer',combinedQA).then(function(res){
+               if (res.data.success) {
+                  alert('update success');
+                }
+                else {
+                  alert('update failed')
+                }
+              });
         }
         else {
             console.log(res.data)
