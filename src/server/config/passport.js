@@ -5,8 +5,8 @@ var passport = require('passport'),
 
 module.exports = function() {
   passport.use(new LocalStrategy(
-    function(username, password, done) {
-      User.findOne({username:username}).exec(function(err, user) {
+    function(email, password, done) {
+      User.findOne({email:email}).exec(function(err, user) {
         if(user && user.authenticate(password)) {
           return done(null, user);
         } else {
