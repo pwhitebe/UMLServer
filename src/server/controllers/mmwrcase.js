@@ -309,14 +309,14 @@ exports.updateCase = function(req,res) {
 //     "tag_line": null
 // }
 	var case_id = caseData.case_id;
-
+	console.log('case_id ',case_id, 'case data: ', caseData);
 	db.query('update case_main set ? where case_id = ?',[caseData,case_id],function(err,updateResult){
 		if (err) {
 			res.send(err);
 		}
 		else {
 
-			res.send('Update success');
+			res.send(updateResult);
 		}
 	})
 }
@@ -414,7 +414,7 @@ function updateAnswer(answer) {
 			return err;
 		}
 		else {
-			return {'success': 'Update success'});
+			return {'success': 'Update success'};
 		}
 	})
 }
@@ -645,7 +645,7 @@ exports.getSortOptions = function(req,res) {
 	})
 }
 exports.getCaseRatingStats = function(req,res) {
-	console.log('api hit');
+//	console.log('api hit');
 	db.query('SELECT concat("Cases with rating ",rating) as "name", COUNT(*) AS "y" FROM case_main where display_status <> 3 and development_status = 5 GROUP BY name', function(err, result){
 		if (err) {
 		res.send(err);

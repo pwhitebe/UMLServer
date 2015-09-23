@@ -37,7 +37,7 @@ $scope.images = [];
 
 $scope.saveDraft = function() {
 		$http.post('/api/mmwrcase/createCase',$scope.case).then(function(res){
-			if (res.hasOwnProperty('message') { // create was success
+			if (res.hasOwnProperty('message')) { // create was success
 				 newCaseId = result.caseId;  // retreive newly inserted case id
 				 // using the new id for the QAs
 				 var combinedQA = $scope.qa.pre.concat($scope.qa.post);
@@ -53,7 +53,7 @@ $scope.saveDraft = function() {
 				 // saving QA to database
 				 	$http.post('/api/mmwrcase/createQuestionAnswer',combinedQA).then(function(res){
 
-				 	}
+				 	})
 			}
 		});
 	}

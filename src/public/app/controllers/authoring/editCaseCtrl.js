@@ -223,12 +223,14 @@ $scope.options = {
 $scope.saveCase = function(editMode) {
 	if (editMode == 'edit') {
 		//update case
+ //   console.log('case data ', $scope.case)
     $http.post('/api/mmwrcase/updateCase',$scope.case).then(function(res){
-        if (res.success) {
-
+        if (res.data.success) {
+            alert('update success')
         }
         else {
-          
+            console.log(res.data)
+         //   alert('update failed with error: ', res.error)
         }
 
     })
