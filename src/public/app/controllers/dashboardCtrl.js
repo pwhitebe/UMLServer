@@ -57,7 +57,6 @@ angular.module('app').controller('dashboardCtrl', function($scope, ngCase,$modal
 		ngCase.getDisplayStatus()
 			.success(function(statuses) {
 				$scope.displayStatus = statuses;
-				console.log($scope.displayStatus);
 			})
 			.error(function(err) {
 				console.log('Unable to load statuses');
@@ -132,7 +131,6 @@ angular.module('app').controller('dashboardCtrl', function($scope, ngCase,$modal
 				serieData = result;
 				var newSerie = {name: 'Rating', data : serieData}
 				series.push(newSerie);
-				console.log(series)
 				chartData['series'] =  series;
 			 $scope.chartConfig1 = { options: {
       //This is the Main Highcharts chart config. Any Highchart options are valid here.
@@ -201,7 +199,6 @@ angular.module('app').controller('dashboardCtrl', function($scope, ngCase,$modal
 				serieData = result;
 				var newSerie = {name: 'Times Viewed', data : serieData}
 				series.push(newSerie);
-				console.log(series)
 				chartData['series'] =  series;
 			 $scope.chartConfig2 = { options: {
       //This is the Main Highcharts chart config. Any Highchart options are valid here.
