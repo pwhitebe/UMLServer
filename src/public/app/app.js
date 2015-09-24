@@ -13,6 +13,12 @@ var mmwrcase = angular.module('app', [
   ,'dialogs.main'
 ]);
 
+var stateRoleChecks = {
+  isAdmin:{auth: function(ngAuth){
+    return ngAuth.authorizeCurrentUserForRoute('admin')
+  }}
+};
+
 
 //to prevent IE caching
 mmwrcase.config([
@@ -93,7 +99,8 @@ mmwrcase.config(['$stateProvider', '$urlRouterProvider',
       .state('dashboard', {
         url:'/dashboard',
         templateUrl : 'partials/dashboard',
-        controller  : 'dashboardCtrl' 
+        controller  : 'dashboardCtrl',
+        resolve : stateRoleChecks.isAdmin
       })
 
 }]);
