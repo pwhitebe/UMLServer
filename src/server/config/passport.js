@@ -8,15 +8,8 @@ module.exports = function() {
     passwordField: 'password'
   },
     function(email, password, done) {
-      // User.findOne({email:email}).exec(function(err, user) {
-      //   if(user && user.authenticate(password)) {
-      //     return done(null, user);
-      //   } else {
-      //     return done(null, false);
-      //   }
-      // })
       db.query('select * from user where email = "' + email + '"' , function(err, rows) {
-        console.log(rows);
+        //console.log(rows);
         if(rows[0]  && password === rows[0].hash_password) {
           return done(null, rows[0]);
         } else {

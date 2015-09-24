@@ -1,6 +1,7 @@
-angular.module('app').controller('rootCtrl', function($scope, $http, ngCase, $state, $modal) {
+angular.module('app').controller('rootCtrl', function($scope, $http, ngCase, $state, $modal, ngIdentity, ngAuth, $state) {
 	getAvailableCases();
-
+	$scope.identity = ngIdentity;
+	console.log($scope.identity.currentUser);
 	function getAvailableCases() {
 		ngCase.getAllAvailCases()
 			.success(function(cases){
@@ -27,6 +28,12 @@ angular.module('app').controller('rootCtrl', function($scope, $http, ngCase, $st
 
 		modalInstance.result.then(function() {
 
+		});
+	};
+
+	$scope.logout = function() {
+		ngAuth.logoutUser().then(function() {
+			$state.go('home');
 		});
 	}
 });
