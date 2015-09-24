@@ -470,6 +470,11 @@ fieldset[disabled] .btn-mmwr.active {
   resize: none;
 }
 
+.header-background {
+  background-color: #503608;
+  color:white;
+}
+
 a, img {
   cursor:pointer;
 }
