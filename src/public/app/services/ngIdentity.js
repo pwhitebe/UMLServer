@@ -10,7 +10,7 @@ angular.module('app').factory('ngIdentity', function($window, ngUser) {
       return !!this.currentUser;
     },
     isAuthorized: function(role) {
-      return !!this.currentUser && this.currentUser.roles.indexOf(role) > -1;
+      return !!this.currentUser && this.currentUser.type.indexOf(role) > -1;
     }
   }
 })

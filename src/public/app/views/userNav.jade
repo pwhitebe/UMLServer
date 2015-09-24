@@ -1,19 +1,20 @@
-ul.nav.navbar-nav.navbar-right
-    a.dropdown-toggle(href='' data-toggle='dropdown')
-        |  {{identity.currentUser.displayName}}
-        b.caret
-    ul.dropdown-menu.pull-right.user-dd
-        li
-            a(href='#')
-                | My Activity 
-                i.fa.fa-check-square.user-icon
-        li
-            a(ui-sref='dashboard' ng-show='identity.isAuthenticated()')
-                | Dashboard 
-                i.fa.fa-tachometer.user-icon
-        li
-            hr.dd-hr
-        li
-            a(href='#' ng-click='logout()')
-                | Log off 
-                i.fa.fa-power-off.user-icon
+.navbar-right
+    ul.nav.navbar-nav.navbar-right(ng-controller='loginCtrl')
+        a.dropdown-toggle(href='' data-toggle='dropdown')
+            | {{identity.currentUser.display_name}} 
+            b.caret
+        ul.dropdown-menu.pull-right.user-dd
+            li
+                a(href='#')
+                    | My Activity 
+                    i.fa.fa-check-square.user-icon
+            li
+                a(ui-sref='dashboard' ng-show='identity.currentUser.isAdmin()')
+                    | Dashboard 
+                    i.fa.fa-tachometer.user-icon
+            li
+                hr.dd-hr
+            li
+                a(href='#' ng-click='logout()')
+                    | Log off 
+                    i.fa.fa-power-off.user-icon
