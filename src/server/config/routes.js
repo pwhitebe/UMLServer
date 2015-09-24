@@ -37,7 +37,7 @@ module.exports = function(app) {
   app.post('/api/mmwrcase/createQuestionAnswer',mmwrCase.createQuestionAnswer);
   app.post('/api/mmwrcase/createQuestion',mmwrCase.createQuestion);
   app.post('/api/mmwrcase/createAnswer',mmwrCase.createQuestion);
-  app.delete('/api/mmwrcase/deleteCase/:caseId', mmwrCase.deleteCase);
+  app.delete('/api/mmwrcase/admin/deleteCase/:caseId', mmwrCase.deleteCase);
   app.post('/api/mmwrcase/updateRating',mmwrCase.updateRating);
   app.post('/api/mmwrcase/testReformatted', mmwrCase.testReformatted);
 

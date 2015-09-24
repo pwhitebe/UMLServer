@@ -55,7 +55,7 @@
                                             span.teaser-date
                                                 {{case.last_edited | date}}
                                         .col-lg-2.col-md-2.col-sm-2.col-xs-2(align='center')
-                                            a.del-edit-btn.btn.btn-default.btn-lg( href='', data-nodrag='', ng-click="delete(case)")
+                                            a.del-edit-btn.btn.btn-default.btn-lg( href='', data-nodrag='', ng-click="deleteCase(case)")
                                                 .glyphicon.glyphicon-trash
                         tab(heading="Current")
                             br
@@ -84,7 +84,7 @@
                                             span.teaser-date
                                                 {{case.last_edited | date}}
                                         .col-lg-2.col-md-2.col-sm-2.col-xs-2(align='center')
-                                            a.del-edit-btn.btn.btn-default.btn-lg( href='', data-nodrag='', ng-click="delete(case)")
+                                            a.del-edit-btn.btn.btn-default.btn-lg( href='', data-nodrag='', ng-click="deleteCase(case)")
                                                 .glyphicon.glyphicon-trash
                         tab(heading="Upcoming")
                             br
@@ -115,7 +115,7 @@
                                             span.teaser-date
                                                 {{case.last_edited | date}}
                                         .col-lg-2.col-md-2.col-sm-2.col-xs-2(align='center')
-                                            a.del-edit-btn.btn.btn-default.btn-lg( href='', data-nodrag='', ng-click="delete(case)")
+                                            a.del-edit-btn.btn.btn-default.btn-lg( href='', data-nodrag='', ng-click="deleteCase(case)")
                                                 .glyphicon.glyphicon-trash
                         tab(heading="Previous")
                             br
@@ -148,7 +148,7 @@
                                             span.teaser-date
                                                 {{case.last_edited | date}}
                                         .col-lg-2.col-md-2.col-sm-2.col-xs-2(align='center')
-                                            a.del-edit-btn.btn.btn-default.btn-lg( href='', data-nodrag='', ng-click="delete(case)")
+                                            a.del-edit-btn.btn.btn-default.btn-lg( href='', data-nodrag='', ng-click="deleteCase(case)")
                                                 .glyphicon.glyphicon-trash
                         tab(heading="Private")
                             br

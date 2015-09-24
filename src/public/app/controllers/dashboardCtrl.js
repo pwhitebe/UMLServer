@@ -1,4 +1,4 @@
-angular.module('app').controller('dashboardCtrl', function($scope, ngCase,$modal) {
+angular.module('app').controller('dashboardCtrl', function($scope, ngCase,$modal,$window,$http,$state) {
 	
 	$scope.max = 5;
 	$scope.developmentStatus;
@@ -41,6 +41,24 @@ angular.module('app').controller('dashboardCtrl', function($scope, ngCase,$modal
 	createChart1();
 	createChart2();
 	createChart3();
+
+
+	$scope.deleteCase = function(oneCase) {
+		var deleteConfirm = $window.confirm('Are you sure you want to delete case: ' + oneCase.title +' created on ' + oneCase.created_date + '? ');
+		 if (deleteConfirm) {
+			$http.delete('/api/mmwrcase/admin/deleteCase/'+oneCase.case_id).then(function(res){
+       			if(res.data) {
+           		 // delete success
+            	$state.reload();
+         		} 
+         		else {
+             		alert('delete failed');
+         		}
+    		});
+         
+    	}
+		
+	}
 
 	function getSortOptions() {
 		ngCase.getSortOptions()
@@ -349,8 +367,9 @@ angular.module('app').controller('dashboardCtrl', function($scope, ngCase,$modal
 
 		});
 	}
-
 });
+
+
 
 var createCaseModalInstanceCtrl = function ($scope,$modalInstance,$animate) {
  
