@@ -5,8 +5,7 @@ angular.module('app').controller('loginCtrl',function($scope,$http,ngIdentity,ng
 		ngAuth.authenticateUser(email,password).then(function(success) {  
 			
 			if(success) {
-				console.log('Logged In!');
-				console.log($scope.identity.currentUser.display_name);
+				$state.go('home');
 				$scope.ok();
 			} else {
 				//$log.debug(success);
