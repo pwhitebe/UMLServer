@@ -473,16 +473,6 @@ fieldset[disabled] .btn-mmwr.active {
 a, img {
   cursor:pointer;
 }
-
-#header_wrap {
-  position: relative;
-  z-index: 10;
-}
-
-.highcharts-container{width:100% !important; height:100% !important;}
-
-
-
 @media only screen and (max-width: 420px) {
 
    body { font-size: 1.6em; }

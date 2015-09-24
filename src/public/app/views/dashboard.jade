@@ -42,7 +42,7 @@
                                         .col-lg-5.col-md-5.col-sm-5.col-xs-5
                                             span.title-case(style="color:black")
                                                 {{case.title}}  
-                                                a(ui-sref='editDraft({caseID:case.case_id})')
+                                                a(ui-sref='editcase({caseID:case.case_id})')
                                                     span.teaser-title Edit/View
                                             br
                                             rating(ng-model='case.rating' max ='max' readOnly='isReadOnly' on-hover='hoveringOver(value)' on-leave='overStar = null')
@@ -133,7 +133,7 @@
                                             label.pull-right
                                                 i.fa.fa-file-text.fa-3x(style="color:#428bca")
                                         .col-lg-5
-                                            span.teaser-title(style="color:black")
+                                            span.title-case(style="color:black")
                                                 {{case.title}}  
                                                 a(ui-sref='editcase({caseID:case.case_id})')
                                                     span.teaser-title Edit/View

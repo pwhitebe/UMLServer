@@ -302,7 +302,7 @@ exports.updateCase = function(req,res) {
 	  if (err) { throw err; }
 	  db.query('update case_main set ? where case_id = ?',[caseData,case_id],function(err,updateResult){
 	    if (err) {
-	      return connection.rollback(function() {
+	      return db.rollback(function() {
 	        throw err;
 	      });
 	    }

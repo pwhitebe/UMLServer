@@ -259,11 +259,29 @@ color:#ffffff;
 .clear-divs {
 	clear:both;
 }
-.modal-dialog {
+
+.create-case-modal > .modal-dialog {
+    width:90% !important;
+}
+
+.create-case-modal > .modal-body {
+    overflow-y: auto;
+}
+
+.modal-wide .modal-body {
+  overflow-y: auto;
+}
+
+.create-case-modal > .modal-dialog {
+  float:right;
+  margin-top:-15px;
+  margin-bottom:-10px;
+}
+/*.modal-dialog {
 	float:right;
 	margin-top:-15px;
 	margin-bottom:-10px;
-}
+}*/
 
 .dateTimePicker{
 	max-width:300px;

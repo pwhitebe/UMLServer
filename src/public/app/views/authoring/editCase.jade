@@ -61,7 +61,7 @@
 													.form-topic
 														label.sr-only(for='questionText' ) Question Text
 														textarea#topicName.form-control(rows='2' cols='100'   placeholder='Enter question text to add new question' ng-model="qa.pre.newQuestionText" ng-keyup='$event.keyCode==13 ? addQuestion(qa.pre,"pre",$event) : null' ng-blur='addQuestion(qa.pre,"pre",$event)')
-							.row
+							//.row
 								.col-lg-6
 									h3 Data binding
 									.info
@@ -119,7 +119,7 @@
 													.form-topic
 														label.sr-only(for='questionText' ) Question Text
 														textarea#topicName.form-control(rows='2' cols='100'   placeholder='Enter question text to add new question' ng-model="qa.post.newQuestionText" ng-keyup='$event.keyCode==13 ? addQuestion(qa.post,"post",$event) : null' ng-blur='addQuestion(qa.post,"post",$event)')
-							.row
+							//.row
 								.col-lg-6
 									h3 Data binding
 									.info

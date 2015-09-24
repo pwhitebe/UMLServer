@@ -331,7 +331,8 @@ angular.module('app').controller('dashboardCtrl', function($scope, ngCase,$modal
 			animation: $scope.animationsEnabled,
 			templateUrl: 'partials/authoring/createCaseModal',
 			controller: createCaseModalInstanceCtrl,
-			size: 'lg',
+			//size: 'wide',
+			windowClass : 'create-case-modal',
 			keyboard : false,
 			backdrop	:'static'
 			// resolve :  { 
