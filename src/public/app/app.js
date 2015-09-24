@@ -16,6 +16,12 @@ var mmwrcase = angular.module('app', [
   ,'highcharts-ng'
 ]);
 
+var stateRoleChecks = {
+  isAdmin:{auth: function(ngAuth){
+    return ngAuth.authorizeCurrentUserForRoute('admin')
+  }}
+};
+
 
 //to prevent IE caching
 mmwrcase.config([
@@ -101,7 +107,8 @@ mmwrcase.config(['$stateProvider', '$urlRouterProvider',
       .state('dashboard', {
         url:'/admin/dashboard',
         templateUrl : 'partials/dashboard',
-        controller  : 'dashboardCtrl' 
+        controller  : 'dashboardCtrl',
+        resolve : stateRoleChecks.isAdmin
       })
       .state('editcase', {
         url:'/admin/editcase/:caseID',

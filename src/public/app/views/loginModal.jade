@@ -5,7 +5,7 @@ body
 		h4.modal-title Login
 	.modal-body
 		.well
-			form
+			form(ng-controller='loginCtrl')
 				.form-group
 					input.form-control.input-lg(type='text' placeholder = 'Email' ng-model='email')
 				.form-group

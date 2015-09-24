@@ -1,6 +1,7 @@
-angular.module('app').controller('rootCtrl', function($scope, $http, ngCase, $state, $modal) {
+angular.module('app').controller('rootCtrl', function($scope, $http, ngCase, $state, $modal, ngIdentity, ngAuth, $state) {
 	getAvailableCases();
-
+	$scope.identity = ngIdentity;
+	
 	function getAvailableCases() {
 		ngCase.getAllAvailCases()
 			.success(function(cases){
@@ -17,16 +18,7 @@ angular.module('app').controller('rootCtrl', function($scope, $http, ngCase, $st
 
 	$scope.animationEnabled = true;
 
-	$scope.openLogin = function(size) {
-		var modalInstance = $modal.open({
-			animation: $scope.animationEnabled,
-			templateUrl: 'partials/loginModal',
-			controller: 'loginModalCtrl',
-			size:size
-		});
+	
 
-		modalInstance.result.then(function() {
-
-		});
-	}
+	
 });

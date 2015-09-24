@@ -4,7 +4,7 @@ angular.module('app').factory('ngUser', function($resource) {
   });
 
   UserResource.prototype.isAdmin = function() {
-    return this.roles && this.roles.indexOf('admin') > -1;
+    return this.type && this.type.indexOf('admin') > -1;
   }
 
   return UserResource;

@@ -1,17 +1,20 @@
 //references to controllers go here
 var index = require('../controllers/index');
 var mmwrCase = require('../controllers/mmwrcase');
-// var users = require('../controllers/users');
+var users = require('../controllers/users');
 var auth = require('./auth');
 
 
 module.exports = function(app) {
 
-  // app.get('/api/users', auth.requiresRole('admin'), users.getUsers);
+  app.get('/api/users', users.getUsers);
   // app.post('/api/users', users.createUser);
   // app.put('/api/users', users.updateUser);
   app.post('/login', auth.authenticate);
-
+  app.post('/logout', function(req, res) {
+    req.logout();
+    res.end();
+  });
   app.get('/api/mmwrcase/currentCase/',mmwrCase.getCurrentCase);
   app.get('/api/mmwrcase/getCasesByStatus/:devStatus/:displayStatus',mmwrCase.getCasesByStatus);
   app.get('/api/mmwrcase/getCaseById/:caseId',mmwrCase.getCaseById);
@@ -43,10 +46,7 @@ module.exports = function(app) {
     res.render('../../public/app/views/' + req.params);
   });
 
-  // app.post('/logout', function(req, res) {
-  //   req.logout();
-  //   res.end();
-  // });
+ 
 
   app.all('/api/*', function(req, res) {
     res.send(404);
