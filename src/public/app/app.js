@@ -99,11 +99,11 @@ mmwrcase.config(['$stateProvider', '$urlRouterProvider',
         templateUrl: 'partials/case/additionalInfo',
         controller: 'additionalInfoCtrl'
       })
-      .state('admin', {
-        url:'/admin',
-        templateUrl : 'partials/dashboard',
-        controller  : 'dashboardCtrl' 
-      })
+      // .state('admin', {
+      //   url:'/admin',
+      //   templateUrl : 'partials/dashboard',
+      //   controller  : 'dashboardCtrl' 
+      // })
       .state('dashboard', {
         url:'/admin/dashboard',
         templateUrl : 'partials/dashboard',
@@ -113,7 +113,8 @@ mmwrcase.config(['$stateProvider', '$urlRouterProvider',
       .state('editcase', {
         url:'/admin/editcase/:caseID',
         templateUrl : 'partials/authoring/editCase',
-        controller  : 'editCaseCtrl' 
+        controller  : 'editCaseCtrl',
+        resolve : stateRoleChecks.isAdmin
       })
 }]);
 
