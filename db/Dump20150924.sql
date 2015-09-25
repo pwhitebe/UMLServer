@@ -93,7 +93,7 @@ UNLOCK TABLES;
 -- Table structure for table `development_Status`
 --
 
-DROP TABLE IF EXISTS `development_Status`;
+DROP TABLE IF EXISTS `development_status`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `development_Status` (
@@ -107,9 +107,9 @@ CREATE TABLE `development_Status` (
 -- Dumping data for table `development_Status`
 --
 
-LOCK TABLES `development_Status` WRITE;
+LOCK TABLES `development_status` WRITE;
 /*!40000 ALTER TABLE `development_Status` DISABLE KEYS */;
-INSERT INTO `development_Status` VALUES (0,'In Development'),(1,'On Hold'),(2,'Completed'),(3,'Awaiting CME Accreditation'),(4,'Approved for Publication'),(5,'Published');
+INSERT INTO `development_status` VALUES (0,'In Development'),(1,'On Hold'),(2,'Completed'),(3,'Awaiting CME Accreditation'),(4,'Approved for Publication'),(5,'Published');
 /*!40000 ALTER TABLE `development_Status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -117,7 +117,7 @@ UNLOCK TABLES;
 -- Table structure for table `display_Status`
 --
 
-DROP TABLE IF EXISTS `display_Status`;
+DROP TABLE IF EXISTS `display_status`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `display_Status` (
@@ -131,9 +131,9 @@ CREATE TABLE `display_Status` (
 -- Dumping data for table `display_Status`
 --
 
-LOCK TABLES `display_Status` WRITE;
+LOCK TABLES `display_status` WRITE;
 /*!40000 ALTER TABLE `display_Status` DISABLE KEYS */;
-INSERT INTO `display_Status` VALUES (0,'Current Case of the Week'),(1,'Upcoming Case'),(2,'Previously Case Archive'),(3,'Do not Display Case');
+INSERT INTO `display_status` VALUES (0,'Current Case of the Week'),(1,'Upcoming Case'),(2,'Previously Case Archive'),(3,'Do not Display Case');
 /*!40000 ALTER TABLE `display_Status` ENABLE KEYS */;
 UNLOCK TABLES;
 
