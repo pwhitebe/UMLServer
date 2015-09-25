@@ -149,8 +149,9 @@ CREATE TABLE `image` (
   `case_id` int(11) NOT NULL,
   `sequence_id` varchar(45) NOT NULL,
   `image_url` varchar(250) NOT NULL,
-  `featured` tinyint(1) NOT NULL,
+  `featured` tinyint(1),
   `title` varchar(140) NOT NULL,
+  `caption` varchar(140),
   PRIMARY KEY (`image_id`),
   UNIQUE KEY `image_id_UNIQUE` (`image_id`),
   KEY `fk_Image_Case_Main1_idx` (`case_id`),
@@ -259,7 +260,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'kta@cdc.gov','1','kta',NULL,'admin','Michael','Ta','Michael Ta',1,NULL),(2,'user@cdc.gov','2','user',NULL,'user','User','Test','User Test',1,NULL),(3,'tsavel@cdc.gov','3','tsavel',NULL,'admin','Tom ','Savel','Tom Savel',1,NULL),(4,'sdavid@cdc.gov','4','sdavid',NULL,'admin','Sanjith','David','Sanjith David',1,NULL),(5,'tnguyrn@cdc.gov','5','tnguyen',NULL,'admin','Trung ','Nguyen','Trung Nguyen',1,NULL);
+INSERT INTO `user` VALUES (1,'kta@cdc.gov','1','kta',NULL,'admin','Michael','Ta','Michael Ta',1,NULL),(2,'user@cdc.gov','2','user',NULL,'user','User','Test','User Test',1,NULL),(3,'tsavel@cdc.gov','3','tsavel',NULL,'admin','Tom ','Savel','Tom Savel',1,NULL),(4,'sdavid@cdc.gov','4','sdavid',NULL,'admin','Sanjith','David','Sanjith David',1,NULL),(5,'tnguyen@cdc.gov','5','tnguyen',NULL,'admin','Trung ','Nguyen','Trung Nguyen',1,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 

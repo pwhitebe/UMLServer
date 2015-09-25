@@ -129,19 +129,57 @@ $scope.saveDraft = function() {
 
 $scope.publication_date = moment().format();
 
+$scope.uploadFile = function(files) {
+  if(files) {
+    // for(var i = 0; i < files.length; i++) {
+      var file = files;
+      //console.log('FILES********',file);
+      Upload.upload({
+        url:'/api/fileUpload',
+        file: file,
+        fields: {
+          'case_id': $scope.case.case_id,
+        }
+      }).progress(function(evt) {
+        var progressPercentage = parseInt(100.0*evt.loaded / evt.total);
+        //console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+      }).success(function(data, status, header, config) {
+        //file is uploaded successfully, attach to $scope.files
+        $scope.files.unshift(data[0]);
+        $scope.galleryStatus.open = true;
+        ngNotifier.notify('Image uploaded successfully.');
+        //console.log('file uploaded successfully. Response: ', data);
+      }).error(function(data, status, header, config){
+        console.log('error in uploading file' + file.$error);
+      });
+      $('#uploadThumb').attr('src','');
+    }
+  // }
+};
+
+  $scope.deleteFile = function(image, index) {
+    var deleteConfirm = $window.confirm('Are you sure you want to delete this image?');
+    //console.log(image);\
+    if (deleteConfirm) {
+      $http.post('/api/fileUpload/delete/', image).then(function(res) {
+        if (res.data.success) {
+          $scope.files.splice(index, 1);
+          ngNotifier.notify('Image successfully deleted.')
+        } else {
+          console.log('Deletion Failed');
+          ngNotifier.notifyError('Error. Image unabled to be deleted.')
+        }
+      });
+    }
+
+
+  };
 
 $scope.publicationDateChanged = function (newDate, oldDate) {
     //console.log(newDate);
     //console.log(oldDate);
     $scope.pulication_date = newDate;
 }
-
-$scope.publicationDateChanged = function (newDate, oldDate) {
-    //console.log(newDate);
-    //console.log(oldDate);
-    $scope.pulication_date = newDate;
-}
-
 
 $scope.addQuestion = function(qa,type,e) {
     if (!qa.newQuestionText || qa.newQuestionText.length === 0) {

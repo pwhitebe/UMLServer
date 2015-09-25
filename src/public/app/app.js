@@ -14,6 +14,7 @@ var mmwrcase = angular.module('app', [
   ,'dialogs.main'
   ,'textAngular'
   ,'highcharts-ng'
+  ,'ngFileUpload'
 ]);
 
 var stateRoleChecks = {
