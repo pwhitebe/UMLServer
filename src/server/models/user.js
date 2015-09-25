@@ -1,9 +1,9 @@
-var db =  require('../lib/dbConnection');
+// var db =  require('../lib/dbConnection');
 
-module.exports = {
-	table:'user',
+// module.exports = {
+// 	table:'user',
 
-	find: function(condition, cb) {
-		var query
-	}
-}
+// 	find: function(condition, cb) {
+// 		var query
+// 	}
+// }
