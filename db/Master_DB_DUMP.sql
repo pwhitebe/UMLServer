@@ -261,7 +261,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'kta@cdc.gov','1','kta',NULL,'admin','Michael','Ta','Michael Ta',1,NULL),(2,'user@cdc.gov','2','user',NULL,'user','User','Test','User Test',1,NULL),(3,'tsavel@cdc.gov','3','tsavel',NULL,'admin','Tom ','Savel','Tom Savel',1,NULL),(4,'sdavid@cdc.gov','4','sdavid',NULL,'admin','Sanjith','David','Sanjith David',1,NULL),(5,'tnguyrn@cdc.gov','5','tnguyen',NULL,'admin','Trung ','Nguyen','Trung Nguyen',1,NULL);
+INSERT INTO `user` VALUES (1,'kta@cdc.gov','1','kta',NULL,'admin','Michael','Ta','Michael Ta',1,NULL),(2,'user@cdc.gov','2','user',NULL,'user','User','Test','User Test',1,NULL),(3,'tsavel@cdc.gov','3','tsavel',NULL,'admin','Tom ','Savel','Tom Savel',1,NULL),(4,'sdavid@cdc.gov','4','sdavid',NULL,'admin','Sanjith','David','Sanjith David',1,NULL),(5,'tnguyen@cdc.gov','5','tnguyen',NULL,'admin','Trung ','Nguyen','Trung Nguyen',1,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -299,4 +299,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-09-28 11:55:40
+-- Dump completed on 2015-09-28 12:07:10
