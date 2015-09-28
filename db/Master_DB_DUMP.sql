@@ -149,10 +149,11 @@ DROP TABLE IF EXISTS `image`;
 CREATE TABLE `image` (
   `image_id` int(11) NOT NULL,
   `case_id` int(11) NOT NULL,
-  `sequence_id` varchar(45) NOT NULL,
+  `sequence_id` varchar(45) NOT NULL DEFAULT 0,
   `image_url` varchar(250) NOT NULL,
-  `featured` tinyint(1) NOT NULL,
+  `featured` tinyint(1) NOT NULL DEFAULT 0,
   `title` varchar(140) NOT NULL,
+  `caption` varchar(255), 
   PRIMARY KEY (`image_id`),
   UNIQUE KEY `image_id_UNIQUE` (`image_id`),
   KEY `fk_Image_Case_Main1_idx` (`case_id`),

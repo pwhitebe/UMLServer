@@ -1,8 +1,8 @@
-angular.module('app').controller('createCaseCtrl', function ($scope,$http, ngCase,$log) {
+angular.module('app').controller('createCaseCtrl', function ($scope,$http, ngCase,$log,Upload,ngNotifier) {
 
 $scope.developmentStatuses;
 $scope.displayStatuses;
-
+$scope.galleryStatus = {'open':false};
 
 getDisplayStatus();
 getDevStatus();
@@ -129,23 +129,31 @@ $scope.saveDraft = function() {
 
 $scope.publication_date = moment().format();
 
-$scope.uploadFile = function(files) {
+$scope.uploadFile = function(files,imageTitle,imageCaption) {
   if(files) {
     // for(var i = 0; i < files.length; i++) {
       var file = files;
+      console.log('file data ', file);
       //console.log('FILES********',file);
       Upload.upload({
         url:'/api/fileUpload',
         file: file,
         fields: {
-          'case_id': $scope.case.case_id,
+          'image_id': 0,
+          'case_id': 0,
+          'sequence_id' : 0,
+          'image_url':'',
+          'featured'	: 0,
+          'title'	: imageTitle,
+          'caption'	: imageCaption
         }
       }).progress(function(evt) {
         var progressPercentage = parseInt(100.0*evt.loaded / evt.total);
         //console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
       }).success(function(data, status, header, config) {
-        //file is uploaded successfully, attach to $scope.files
-        $scope.files.unshift(data[0]);
+        //file is uploaded successfully, attach to $scope.images
+        console.log('image data ',data);
+        $scope.images.unshift(data);
         $scope.galleryStatus.open = true;
         ngNotifier.notify('Image uploaded successfully.');
         //console.log('file uploaded successfully. Response: ', data);
@@ -163,7 +171,7 @@ $scope.uploadFile = function(files) {
     if (deleteConfirm) {
       $http.post('/api/fileUpload/delete/', image).then(function(res) {
         if (res.data.success) {
-          $scope.files.splice(index, 1);
+          $scope.images.splice(index, 1);
           ngNotifier.notify('Image successfully deleted.')
         } else {
           console.log('Deletion Failed');
