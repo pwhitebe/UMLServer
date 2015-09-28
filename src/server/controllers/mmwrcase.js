@@ -642,7 +642,7 @@ exports.getDevStatus = function(req,res) {
 
 exports.getDisplayStatus = function(req,res) {
 
-	db.query('select * from Display_Status', function(err,result){
+	db.query('select * from display_status', function(err,result){
 		if (err) {
 			res.send(err);
 		}

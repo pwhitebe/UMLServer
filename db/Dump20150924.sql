@@ -75,6 +75,7 @@ CREATE TABLE `case_main` (
   `cme_valid_until` datetime DEFAULT NULL,
   `number_cme_credits_available` int(11) DEFAULT NULL,
   `tag_line` varchar(140) DEFAULT NULL,
+  `view_counter` int(11) default 0,
   PRIMARY KEY (`case_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
