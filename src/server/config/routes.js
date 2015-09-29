@@ -32,13 +32,14 @@ module.exports = function(app) {
   app.get('/api/mmwrcase/getTopRatedCases/:numberToGet', mmwrCase.getTopRatedCases);
   app.get('/api/mmwrcase/getSortOptions/', mmwrCase.getSortOptions);
   app.get('/api/mmwrcase/getCaseRatingStats', mmwrCase.getCaseRatingStats);
+  app.get('/api/mmwrcase/getNextCaseId',mmwrCase.getNextCaseId);
 
 
 // image upload section
   app.post('/api/fileUpload', media.uploadFile);
   app.get('/api/fileUpload/:id', media.getFile);
   app.post('/api/fileUpload/delete', media.deleteFile);
-  app.post('/api/fileUpload/update', media.updateFileChecked);
+  //app.post('/api/fileUpload/update', media.updateFileChecked);
   
   app.post('/api/mmwrcase/updateHitCounter/:caseId/:questionId/:answerId', mmwrCase.updateHitCounter);
   app.post('/api/mmwrcase/createCase',mmwrCase.createCase);
