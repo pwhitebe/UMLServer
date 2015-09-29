@@ -56,11 +56,11 @@ DROP TABLE IF EXISTS `case_main`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `case_main` (
-  `case_id` int(11) NOT NULL AUTO_INCREMENT,
+  `case_id` int(11) NOT NULL,
   `title` varchar(140) NOT NULL,
   `overview` text,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `publication_date` timestamp NULL DEFAULT NULL,
+  `publication_date` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   `case_text` longtext,
   `abstract_text` longtext,
   `additional_information` mediumtext,
@@ -292,6 +292,10 @@ LOCK TABLES `user_history` WRITE;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
+CREATE TABLE `master_controls` (
+  `next_case_id` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`next_case_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
