@@ -302,8 +302,9 @@ exports.updateCase = function(req,res) {
 	  if (err) { throw err; }
 	  db.query('update case_main set ? where case_id = ?',[caseData,case_id],function(err,updateResult){
 	    if (err) {
-	      return db.rollback(function() {
-	        throw err;
+	    	throw err;
+	      	return db.rollback(function() {
+	        
 	      });
 	    }
 		//	createQuestionAnswer(QA);
@@ -693,6 +694,16 @@ exports.testReformatted = function(req,res) {
 	res.send(reformatted);
 }
 
+exports.getNextCaseId = function(req,res) {
+	db.query('UPDATE master_controls SET next_case_id = LAST_INSERT_ID(next_case_id + 1) where next_case_id >= 0;',function(err,result){
+		if (err) {
+			res.send(err);
+		}
+		else {
+			res.send(result);
+		}
+	})
+}
 function reformatForMySQL(arrayObject) {
 	// this function reformat json data into format usable for insert and upddate records to mySql database
 
@@ -708,3 +719,4 @@ function reformatForMySQL(arrayObject) {
 			}
 	return { 'colNames': colNames, 'valueSet': newValueSet} ;
 }
+
