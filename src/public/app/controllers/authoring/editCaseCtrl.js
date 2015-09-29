@@ -1,4 +1,4 @@
-angular.module('app').controller('editCaseCtrl', function ($log,$scope,$http, ngCase, $stateParams, $state) {
+angular.module('app').controller('editCaseCtrl', function ($log,$scope,$http, ngCase, $stateParams, $state,ngNotifier) {
 
 $scope.developmentStatuses;
 $scope.displayStatuses;
@@ -237,6 +237,7 @@ $scope.saveCase = function(editMode) {
                 combinedQA[i].answers[j].answer_id = j;
               }
            }
+           if (combinedQA.length > 0) {
             $http.post('/api/mmwrcase/createQuestionAnswer',combinedQA).then(function(res){
                if (res.data.success) {
                   alert('update success');
@@ -245,6 +246,8 @@ $scope.saveCase = function(editMode) {
                   alert('update failed')
                 }
               });
+          }
+            ngNotifier.notify('case saved successfully');
         }
         else {
             console.log(res.data)

@@ -704,6 +704,38 @@ exports.getNextCaseId = function(req,res) {
 		}
 	})
 }
+
+exports.saveImages = function(req,res) {
+	var images = req.body;
+	console.log('images ',images)
+	var case_id = images[0].case_id;
+	 	db.beginTransaction(function(err) {
+	  	if (err) { throw err; }
+	  	// remove all existing images and replace with the ones from the page (if the order changed)
+	  		db.query('delete from image where case_id = ?',[case_id], function(err,deleteResult){
+	  			if (err) {
+	  					return db.rollback(function() {
+	  					throw err;
+	  				})
+	  				
+	  			}
+	  		var imageValueSet = reformatForMySQL(images);
+	  		var sqlStr = 'insert into image (' + imageValueSet.colNames.join(',') + ') VALUES ' + imageValueSet.valueSet.join(',');
+	   		db.query(sqlStr,function(err,questionResult){
+		   		if (err) {
+		   			  	return db.rollback(function() {
+	        			throw err;
+	      				});
+		   				res.send({'error location':'images','error msg':err});
+		   		}
+		   		else {
+		   				res.send({'success':true});			
+		   			}
+  		   		});	
+	  		});
+	  		
+	   	});
+}
 function reformatForMySQL(arrayObject) {
 	// this function reformat json data into format usable for insert and upddate records to mySql database
 

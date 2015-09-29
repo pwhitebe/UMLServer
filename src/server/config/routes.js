@@ -50,6 +50,7 @@ module.exports = function(app) {
   app.delete('/api/mmwrcase/admin/deleteCase/:caseId', mmwrCase.deleteCase);
   app.post('/api/mmwrcase/updateRating',mmwrCase.updateRating);
   app.post('/api/mmwrcase/testReformatted', mmwrCase.testReformatted);
+  app.post('/api/mmwrcase/saveImages', mmwrCase.saveImages);
 
 
   app.get('/partials/*', function(req, res) {

@@ -29,38 +29,43 @@ div(ng-controller="createCaseCtrl" style="background-color:#f2f2f2;")
 											.well
 												.form(name='uploadForm')
 													fieldset
-														input(type='file', ngf-select= '', ng-model='imageFile', name='file', accept='image/*', required='' ngf-clear-arq='')
+														input(type='file', ngf-select= '', ng-model='imageUpload.imageFile', name='file', accept='image/*', required='' ngf-clear-arq='' ngf-reset-on-click='')
 														br
 														.col-xs-6.col-md-4.col-lg-3
 															div.preview-thumbnail
 																a.thumbnail
-																	img(id='uploadThumb' ng-show='imageFile != null', ngf-src='imageFile' src='')
+																	img(id='uploadThumb' ng-show='imageUpload.imageFile != null', ngf-src='imageUpload.imageFile' src='')
 														.col-xs-6.col-md-4.col-lg-3
 															div
 																label Image Title
-																	input.form-control(type='text' placeholder='enter a title' ng-model='imageTitle')
+																	input.form-control(type='text' placeholder='enter a title' ng-model='imageUpload.imageTitle')
 																label Image Caption
-																	input.form-control(type='text' placeholder='Enter image caption (45 characters max)' ng-model='imageCaption' style='width:320px') 
-													button.btn.btn-primary(ng-click='uploadFile(imageFile,imageTitle,imageCaption)') Upload
+																	input.form-control(type='text' placeholder='Enter image caption (45 characters max)' ng-model='imageUpload.imageCaption' style='width:320px')
+													button.btn.btn-primary(ng-click='uploadFile(imageUpload)') Upload
 									br
 									.row
 										.col-lg-12
-											accordion(style='background-color:337ab7; color:#ffffff;')
+											accordion(style='background-color:337ab7; color:#000000;')
 												accordion-group(style='background-color:#f5f5f5;' is-open="galleryStatus.open")
 													accordion-heading(style="cursor:pointer")
 														i(ng-class="{'fa fa-plus-circle': !galleryStatus.open, 'fa fa-minus-circle': galleryStatus.open}")&nbsp;
 														| Uploaded Images
 													.row
-														.col-lg-12
-															div.col-xs-12.col-md-12.col-lg-12.thumb(ng-repeat='image in images track by $index', style="margin-bottom:10px; background-color:#f5f5f5;")
-																a.thumbnail
-																	img.img-responsive(ng-src="{{image.image_url}}")
-																h4.thumbnail-fig {{image.sequence_id}}
-																p.thumbnail-title {{image.title}}
-																p.thumbnail-title {{image.caption}}
-																	br
-															button.btn.btn-default.pull-right(style="color:#337ab7;", ng-click='deleteFile(image,$index)') Delete Image
-															hr(style="color:#dddddd; background-color:#dddddd; height:1px;")
+														div.col-xs-12.col-md-12.col-lg-12(ng-repeat='image in images track by $index', style="margin-bottom:10px; background-color:#f5f5f5;")
+															.well
+																.row
+																	.col-lg-4.col-md-4.col-sm-4.col-xs-4
+																		a.thumbnail
+																			img.img-responsive(ng-src="{{image.image_url}}")
+																		input(type='radio' name='{{image.case_id}}' ng-value='1' ng-model='image.featured' ng-change='setFeatureImage(images,image)')
+																	.col-lg-4.col-md-4.col-sm-4.col-xs-4
+																		h3 {{image.title}}
+																		p {{image.caption}}
+
+																	.col-lg-4.col-md-4.col-sm-4.col-xs-4(align='center')
+																		a.del-edit-btn.btn.btn-default.btn-lg( href='', data-nodrag='', ng-click='deleteFile(image,$index)') 
+																			.glyphicon.glyphicon-trash
+																//hr(style="color:#dddddd; background-color:#dddddd; height:1px;")
 
 							tab(heading="Pre-Test")
 								|   Pre-Test
