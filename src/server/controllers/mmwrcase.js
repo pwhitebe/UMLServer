@@ -466,7 +466,7 @@ exports.createQuestionAnswer= function(req,res) {
 	 	db.beginTransaction(function(err) {
 	  	if (err) { throw err; }
 	  	// remove all existing questions and answers and replace with the ones from the page (if the order changed)
-	  		db.query('delete from question where case_id = ? ; delete from answer where case_id = ?',[case_id,case_id], function(err,deleteResult){
+	  		db.query('delete from answer where case_id = ?; delete from question where case_id = ? ;' ,[case_id,case_id], function(err,deleteResult){
 	  			if (err) {
 	  					return db.rollback(function() {
 	  					throw err;

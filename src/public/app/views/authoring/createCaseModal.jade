@@ -4,7 +4,8 @@ div(ng-controller="createCaseCtrl" style="background-color:#f2f2f2;")
 			.row
 				.col-lg-12
 					.create-new-case-cont
-						h2 Create New Case
+						h2(ng-show='!case.case_id') Create New Case
+						h2(ng-show='case.case_id') Edit Case
 					.save-draft-cont(style='position:absolute; float:left; margin-left:-30px;')
 						button.btn.btn-default.btn-circle.glyphicon.glyphicon-remove(type="button" ng-click="cancel()")
 		.modal-body
@@ -57,14 +58,27 @@ div(ng-controller="createCaseCtrl" style="background-color:#f2f2f2;")
 																	.col-lg-4.col-md-4.col-sm-4.col-xs-4
 																		a.thumbnail
 																			img.img-responsive(ng-src="{{image.image_url}}")
-																		input(type='radio' name='{{image.case_id}}' ng-value='1' ng-model='image.featured' ng-change='setFeatureImage(images,image)')
-																	.col-lg-4.col-md-4.col-sm-4.col-xs-4
-																		h3 {{image.title}}
-																		p {{image.caption}}
-
-																	.col-lg-4.col-md-4.col-sm-4.col-xs-4(align='center')
-																		a.del-edit-btn.btn.btn-default.btn-lg( href='', data-nodrag='', ng-click='deleteFile(image,$index)') 
-																			.glyphicon.glyphicon-trash
+																		label
+																			input(type='radio' name='{{image.case_id}}' ng-value='1' ng-model='image.featured' ng-change='setFeatureImage(images,image)')
+																			|&nbsp Use as featured image 
+																	.col-lg-6.col-md-6.col-sm-6.col-xs-6(align='left')
+																		label
+																			| Image Title:
+																			p(ng-show='!image.editing') {{image.title}}
+																			input.form-control(ng-show='image.editing' type='text', ng-model='image.title')
+																		br
+																		label
+																			| Image Caption:
+																			p(ng-show='!image.editing') {{image.caption}}
+																			input.form-control(ng-show='image.editing' type='text', ng-model='image.caption')
+																		br
+																		button.btn.btn-success(ng-show='image.editing' type='button' ng-click='saveImage(image)')
+																			| Done 	
+																	.col-lg-2.col-md-2.col-sm-2.col-xs-2(align='center')
+																		a.del-edit-btn.btn.btn-default.btn-lg.pull-left(ng-click='editImage(image)')
+																			i.glyphicon.glyphicon-pencil
+																		a.del-edit-btn.btn.btn-default.btn-lg.pull-right( href='', data-nodrag='', ng-click='deleteFile(image,$index)') 
+																			i.glyphicon.glyphicon-trash
 																//hr(style="color:#dddddd; background-color:#dddddd; height:1px;")
 
 							tab(heading="Pre-Test")
@@ -123,8 +137,6 @@ div(ng-controller="createCaseCtrl" style="background-color:#f2f2f2;")
 											{{ qa | json }}	
 							tab(heading="The Abstract")
 								div(text-angular='',  ng-model='case.abstract_text')
-							tab(heading="Images")
-								.row
 							tab(heading="Post-Test")
 								|   Post-Test
 								hr
@@ -140,7 +152,7 @@ div(ng-controller="createCaseCtrl" style="background-color:#f2f2f2;")
 													div  {{question.question.question}}
 												.topic-title.angular-ui-tree-handle(data-nodrag='', ng-show='question.editing')
 													label.sr-only(for='questionText') Question Text
-													textarea.form-control(rows='2' cols='100' , placeholder='Question Text', ng-model='question.question' ng-keyup='$event.keyCode==13 ? saveQuestion(question,$event) : null' ng-blur='saveQuestion(question,$event)')
+													textarea.form-control(rows='2' cols='100' , placeholder='Question Text', ng-model='question.question.question' ng-keyup='$event.keyCode==13 ? saveQuestion(question,$event) : null' ng-blur='saveQuestion(question,$event)')
 												ol(ui-tree-nodes='', ng-model='question.answers', data-type='answer')
 													li(ng-repeat='answer in question.answers', ui-tree-node='')
 														.subTopic-title.angular-ui-tree-handle(ng-show='!answer.editing' ng-mouseenter="hoverSubTopic = true" ng-mouseleave="hoverSubTopic = false")
@@ -264,6 +276,4 @@ div(ng-controller="createCaseCtrl" style="background-color:#f2f2f2;")
 													i.glyphicon.glyphicon-calendar
 										ul.dropdown-menu(role='menu', aria-labelledby='dLabel')
 											datetimepicker(data-on-set-time="cmeValidChanged(newDate, oldDate)" data-ng-model='case.cme_valid_until', data-datetimepicker-config="{ dropdownSelector: '#dropdown3',startView:'day', minView:'day' }")
-					.well
-						.row
-							| Feature Image Box
+					

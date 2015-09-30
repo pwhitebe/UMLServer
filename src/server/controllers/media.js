@@ -54,6 +54,21 @@ exports.deleteFile = function(req,res) {
 					}
 			})
 		}
+	else { // case id not exist,  use the image url 
+
+			db.query('delete from image where image_url = ?',[image_url],function(err,result){
+					if (err) {
+						res.send(err);
+						console.log(err);
+					} else {
+						fs.unlinkSync(filePath);
+						res.send({
+							success: true,
+							result:result
+						});
+					}
+			})
+		}
 };
 
 // exports.updateFileChecked = function(req,res) {

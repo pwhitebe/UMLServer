@@ -31,8 +31,8 @@ $scope.case = {
 
 $scope.imageUpload = {
 	imageFile  : null,
-	imageTitle  : null,
-	imageCaption : null
+	imageTitle  : '',
+	imageCaption : ''
 }
 
 var orgImageUpload = angular.copy($scope.imageUpload);
@@ -43,6 +43,10 @@ $scope.qa = {
 }
 
 $scope.images = [];
+
+if ($scope.caseId) {
+	getCaseData($scope.caseId);
+}
 
 $scope.saveDraft = function() {
 	 	// validate data before save 
@@ -89,6 +93,7 @@ $scope.saveDraft = function() {
 						 		$scope.images[i].case_id = $scope.case.case_id;
 						 		$scope.images[i].sequence_id = i;
 						 		$scope.images[i].image_id = i;
+						 		delete $scope.images[i].editing;
 						 	}
 						 	$http.post('/api/mmwrcase/saveImages',$scope.images).then(function(res){
 				               if (res.data.success) {
@@ -102,12 +107,12 @@ $scope.saveDraft = function() {
 						 	ngNotifier.notify('case saved successfully');
 						}
 						else {
-							alert ('Draf case save failed')
+							alert ('Draft case save failed')
 						}
 					});
 				}
 				else {
-					console.log("could not get a case Id")
+					console.log("could not get a new case Id")
 				}
 
 			})
@@ -136,6 +141,24 @@ $scope.saveDraft = function() {
 			                }
 			              });
 			        	}
+			        	 // saving images.  this could move to the back end.
+						 if ($scope.images.length > 0) {
+						 	// populate values before sending to backing
+						 	for (var i=0; i < $scope.images.length; i ++) {
+						 		$scope.images[i].case_id = $scope.case.case_id;
+						 		$scope.images[i].sequence_id = i;
+						 		$scope.images[i].image_id = i;
+						 		delete $scope.images[i].editing;
+						 	}
+						 	$http.post('/api/mmwrcase/saveImages',$scope.images).then(function(res){
+				               if (res.data.success) {
+				                 // alert('question save success');
+				                }
+				                else {
+				                  alert('images save failed')
+				                }
+				              });
+						 }
 			        	ngNotifier.notify('case saved successfully');
 			        }
 			        else {
@@ -148,6 +171,30 @@ $scope.saveDraft = function() {
 		}
 	}
 
+
+function getCaseData(caseId) {
+	ngCase.getCaseById(caseId)
+			.success(function(caseData){
+				$scope.case = caseData;
+				if ($scope.case.QA.length > 0) {
+					// the case has some questions
+					for (var i = 0; i < $scope.case.QA.length; i++) {
+							var oneQA = {
+								'question' 	: $scope.case.QA[i].question,
+								'answers'	: $scope.case.QA[i].answers 
+							}
+						$scope.qa[$scope.case.QA[i].question.post_pre].push(oneQA);
+						
+					}
+				}
+				if ($scope.case.images.length > 0) {
+					$scope.images = $scope.case.images;
+				}
+			})
+			.error(function(err){
+				console.log('Unable to retrieve case data: '+err);
+	});
+}
 
 	function getDisplayStatus() {
 		ngCase.getDisplayStatus()
@@ -211,7 +258,6 @@ $scope.uploadFile = function(imageUpload) {
 
   $scope.deleteFile = function(image, index) {
     var deleteConfirm = $window.confirm('Are you sure you want to delete this image?');
-    console.log(image);
     if (deleteConfirm) {
       $http.post('/api/fileUpload/delete/', image).then(function(res) {
         if (res.data.success) {
@@ -372,10 +418,18 @@ $scope.setFeatureImage = function(images,image) {
 }
 
 $scope.resetUpload = function() {
-	console.log('i was called');
 	$('#uploadThumb').attr('src','');
 	$scope.imageUpload = angular.copy(orgImageUpload);
 }
+
+ $scope.editImage = function(image) {
+      image.editing=true;
+ }
+
+
+ $scope.saveImage = function(image) {
+      image.editing=false;
+  };
 
 });
 

@@ -343,7 +343,7 @@ angular.module('app').controller('dashboardCtrl', function($scope, ngCase,$modal
 	
 	$scope.animationsEnabled = true;
 
-	$scope.createCase = function(size,displayStatus,developmentStatus) {
+	$scope.createCase = function(size,displayStatus,developmentStatus,caseId) {
 
 		var modalInstance = $modal.open({
 			animation: $scope.animationsEnabled,
@@ -352,7 +352,12 @@ angular.module('app').controller('dashboardCtrl', function($scope, ngCase,$modal
 			//size: 'wide',
 			windowClass : 'create-case-modal',
 			keyboard : false,
-			backdrop	:'static'
+			backdrop	:'static',
+			resolve :  { 
+			 	caseId : function() {
+			 		return caseId;
+			 	}
+			 }
 			// resolve :  { 
 			// 	displayStatus : function() {
 			// 		return displayStatus;
@@ -367,12 +372,35 @@ angular.module('app').controller('dashboardCtrl', function($scope, ngCase,$modal
 
 		});
 	}
+
+
+	$scope.editCase = function(caseId) {
+
+		var modalInstance = $modal.open({
+			animation: $scope.animationsEnabled,
+			templateUrl: 'partials/authoring/createCaseModal',
+			controller: createCaseModalInstanceCtrl,
+			//size: 'wide',
+			windowClass : 'create-case-modal',
+			keyboard : false,
+			backdrop	:'static',
+			resolve :  { 
+			 	caseId : function() {
+			 		return caseId;
+			 	}
+			 }
+		});
+
+		modalInstance.result.then(function() {
+
+		});
+	}
 });
 
 
 
-var createCaseModalInstanceCtrl = function ($scope,$modalInstance,$animate) {
- 
+var createCaseModalInstanceCtrl = function ($scope,$modalInstance,$animate,$state,caseId) {
+ $scope.caseId = caseId;
  $scope.ok = function () {
     $animate.enabled(true);
     $modalInstance.close();
@@ -382,6 +410,7 @@ var createCaseModalInstanceCtrl = function ($scope,$modalInstance,$animate) {
  $scope.cancel = function () {
     $animate.enabled(true);
     $modalInstance.dismiss('cancel');
+    $state.reload();
     // if (reload) {
     //   $timeout($route.reload,500);
     // }
