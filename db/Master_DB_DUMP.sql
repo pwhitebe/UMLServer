@@ -22,31 +22,7 @@
 DROP TABLE IF EXISTS `answer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `answer` (
-  `answer_id` int(11) NOT NULL,
-  `question_id` int(11) NOT NULL,
-  `case_id` int(11) NOT NULL,
-  `answer` varchar(250) NOT NULL,
-  `correct` tinyint(1) NOT NULL,
-  `hit_counter` int(10) unsigned DEFAULT '0',
-  PRIMARY KEY (`case_id`,`question_id`,`answer_id`),
-  UNIQUE KEY `answer_id_UNIQUE` (`answer_id`),
-  KEY `fk_Answer_Question1_idx` (`question_id`),
-  KEY `fk_Answer_Case_Main1_idx` (`case_id`),
-  CONSTRAINT `fk_Answer_Case_Main1` FOREIGN KEY (`case_id`) REFERENCES `case_main` (`case_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Answer_Question1` FOREIGN KEY (`question_id`) REFERENCES `question` (`question_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `answer`
---
-
-LOCK TABLES `answer` WRITE;
-/*!40000 ALTER TABLE `answer` DISABLE KEYS */;
-INSERT INTO `answer` VALUES (1,1,1,'No special precautions are necessary because transmission of Hepatitis B from mother to child is very rare.',1,0),(2,1,1,'The risk to her child of hepatitis B infection and its various sequelae can be virtually eliminated by administration of a single dose of hepatitis B immune globulin shortly after birth ',0,0),(3,1,1,'The current recommendation for prevention of maternal fetal hepatitis B transmission consists of one dose of hepatitis B immune globulin and HepB vaccine at birth followed by completion of the 3 or 4 dose series by age 6 months. ',0,0),(4,1,1,'In addition to receiving hepatitis B immune globulin and a complete, 3-4 dose HepB vaccine series, the baby should undergo serological testing at 9-12 months to determine the need for repeat vaccination.  ',0,0),(5,2,1,'No special precautions are necessary because transmission of Hepatitis B from mother to child is very rare.',0,0),(6,2,1,'The risk to her child of hepatitis B infection and its various sequelae can be virtually eliminated by administration of a single dose of hepatitis B immune globulin shortly after birth ',1,0),(7,2,1,'The current recommendation for prevention of maternal fetal hepatitis B transmission consists of one dose of hepatitis B immune globulin and HepB vaccine at birth followed by completion of the 3 or 4 dose series by age 6 months. ',0,0),(8,2,1,'In addition to receiving hepatitis B immune globulin and a complete, 3-4 dose HepB vaccine series, the baby should undergo serological testing at 9-12 months to determine the need for repeat vaccination.  ',0,0),(9,3,2,'It is more likely than not, given his family history, that your patient’s former primary care physician in Milwaukee counseled him on reducing dietary sodium.',0,2),(10,3,2,'Advising your patient on reducing sodium intake would only be necessary if he were diagnosed with hypertension.',1,1),(11,3,2,'Because she has hypertension, your patient’s wife is more likely to have received advice from her doctor to reduce sodium intake. ',0,0),(12,3,2,'A diagnosis of hypertension would not have changed the likelihood that your patient had taken action to reduce his sodium intake. ',0,0),(13,4,2,'It is more likely than not, given his family history, that your patient’s former primary care physician in Milwaukee counseled him on reducing dietary sodium.',0,0),(14,4,2,'Advising your patient on reducing sodium intake would only be necessary if he were diagnosed with hypertension.',1,0),(15,4,2,'Because she has hypertension, your patient’s wife is more likely to have received advice from her doctor to reduce sodium intake. ',0,1),(16,4,2,'A diagnosis of hypertension would not have changed the likelihood that your patient had taken action to reduce his sodium intake. ',0,0),(17,5,3,'The older son can disregard the letter from his college health service as he is already fully protected from meningitis, having been fully vaccinated with MenACWY',0,4),(18,5,3,'In addition to the second dose of MenACWY, the younger son should also receive a MenB vaccine as part of routine pre-college preventive health care. ',0,12),(19,5,3,'Only the older son requires vaccination with the MenB vaccine as part of his college’s response to an ongoing outbreak of serogroup b meningococcal disease.',1,2),(20,5,3,'The younger son should receive the 2015 formulation of the meningitis vaccine, which now also confers immunity against serogroup b meningococcal disease.',0,0),(21,6,3,'The older son can disregard the letter from his college health service as he is already fully protected from meningitis, having been fully vaccinated with MenACWY',0,0),(22,6,3,'In addition to the second dose of MenACWY, the younger son should also receive a MenB vaccine as part of routine pre-college preventive health care. ',1,1),(23,6,3,'Only the older son requires vaccination with the MenB vaccine as part of his college’s response to an ongoing outbreak of serogroup b meningococcal disease.',0,0),(24,6,3,'The younger son should receive the 2015 formulation of the meningitis vaccine, which now also confers immunity against serogroup b meningococcal disease.',0,6);
-/*!40000 ALTER TABLE `answer` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `case_main`
@@ -154,8 +130,8 @@ CREATE TABLE `image` (
   `featured` tinyint(1) NOT NULL DEFAULT 0,
   `title` varchar(140) NOT NULL,
   `caption` varchar(255), 
-  PRIMARY KEY (`image_id`),
-  UNIQUE KEY `image_id_UNIQUE` (`image_id`),
+  PRIMARY KEY (`case_id`,`image_id`),
+  UNIQUE KEY `image_id_UNIQUE` (`case_id`,`image_id`),
   KEY `fk_Image_Case_Main1_idx` (`case_id`),
   CONSTRAINT `fk_Image_Case_Main1` FOREIGN KEY (`case_id`) REFERENCES `case_main` (`case_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -167,7 +143,7 @@ CREATE TABLE `image` (
 
 LOCK TABLES `image` WRITE;
 /*!40000 ALTER TABLE `image` DISABLE KEYS */;
-INSERT INTO `image` VALUES (1,3,'1','img/bb8.jpg',0,'BB-8 Droid'),(2,3,'2','img/bb8.jpg',0,'BB-8 Droid'),(3,3,'3','img/influenza.jpg',1,'Menigitis'),(4,3,'4','img/bb8.jpg',0,'BB-8 Droid'),(5,3,'5','img/bb8.jpg',0,'BB-8 Droid');
+INSERT INTO `image` VALUES (1,3,'1','img/bb8.jpg',0,'BB-8 Droid',''),(2,3,'2','img/bb8.jpg',0,'BB-8 Droid',''),(3,3,'3','img/influenza.jpg',1,'Menigitis',''),(4,3,'4','img/bb8.jpg',0,'BB-8 Droid',''),(5,3,'5','img/bb8.jpg',0,'BB-8 Droid','');
 /*!40000 ALTER TABLE `image` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -184,7 +160,7 @@ CREATE TABLE `question` (
   `sequence_id` int(11) NOT NULL,
   `post_pre` varchar(5) NOT NULL,
   `question` text NOT NULL,
-  PRIMARY KEY (`question_id`),
+  PRIMARY KEY (`case_id`,`question_id`),
   UNIQUE KEY `quesiton_id_UNIQUE` (`question_id`),
   KEY `fk_Question_Case_Main_idx` (`case_id`),
   CONSTRAINT `fk_Question_Case_Main` FOREIGN KEY (`case_id`) REFERENCES `case_main` (`case_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -201,6 +177,33 @@ INSERT INTO `question` VALUES (1,1,1,'pre','Which of the following should be inc
 /*!40000 ALTER TABLE `question` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
+CREATE TABLE `answer` (
+  `answer_id` int(11) NOT NULL,
+  `question_id` int(11) NOT NULL,
+  `case_id` int(11) NOT NULL,
+  `answer` varchar(250) NOT NULL,
+  `correct` tinyint(1) NOT NULL,
+  `hit_counter` int(10) unsigned DEFAULT '0',
+  PRIMARY KEY (`case_id`,`question_id`,`answer_id`),
+  UNIQUE KEY `answer_id_UNIQUE` (`case_id`,`question_id`,`answer_id`),
+  KEY `fk_Answer_Question1_idx` (`case_id`,`question_id`),
+  KEY `fk_Answer_Case_Main1_idx` (`case_id`),
+  CONSTRAINT `fk_Answer_Case_Main1` FOREIGN KEY (`case_id`) REFERENCES `case_main` (`case_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Answer_Question1` FOREIGN KEY (`case_id`,`question_id`) REFERENCES `question` (`case_id`,`question_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+--
+-- Dumping data for table `answer`
+--
+
+LOCK TABLES `answer` WRITE;
+/*!40000 ALTER TABLE `answer` DISABLE KEYS */;
+INSERT INTO `answer` VALUES (1,1,1,'No special precautions are necessary because transmission of Hepatitis B from mother to child is very rare.',1,0),(2,1,1,'The risk to her child of hepatitis B infection and its various sequelae can be virtually eliminated by administration of a single dose of hepatitis B immune globulin shortly after birth ',0,0),(3,1,1,'The current recommendation for prevention of maternal fetal hepatitis B transmission consists of one dose of hepatitis B immune globulin and HepB vaccine at birth followed by completion of the 3 or 4 dose series by age 6 months. ',0,0),(4,1,1,'In addition to receiving hepatitis B immune globulin and a complete, 3-4 dose HepB vaccine series, the baby should undergo serological testing at 9-12 months to determine the need for repeat vaccination.  ',0,0),(5,2,1,'No special precautions are necessary because transmission of Hepatitis B from mother to child is very rare.',0,0),(6,2,1,'The risk to her child of hepatitis B infection and its various sequelae can be virtually eliminated by administration of a single dose of hepatitis B immune globulin shortly after birth ',1,0),(7,2,1,'The current recommendation for prevention of maternal fetal hepatitis B transmission consists of one dose of hepatitis B immune globulin and HepB vaccine at birth followed by completion of the 3 or 4 dose series by age 6 months. ',0,0),(8,2,1,'In addition to receiving hepatitis B immune globulin and a complete, 3-4 dose HepB vaccine series, the baby should undergo serological testing at 9-12 months to determine the need for repeat vaccination.  ',0,0),(9,3,2,'It is more likely than not, given his family history, that your patient’s former primary care physician in Milwaukee counseled him on reducing dietary sodium.',0,2),(10,3,2,'Advising your patient on reducing sodium intake would only be necessary if he were diagnosed with hypertension.',1,1),(11,3,2,'Because she has hypertension, your patient’s wife is more likely to have received advice from her doctor to reduce sodium intake. ',0,0),(12,3,2,'A diagnosis of hypertension would not have changed the likelihood that your patient had taken action to reduce his sodium intake. ',0,0),(13,4,2,'It is more likely than not, given his family history, that your patient’s former primary care physician in Milwaukee counseled him on reducing dietary sodium.',0,0),(14,4,2,'Advising your patient on reducing sodium intake would only be necessary if he were diagnosed with hypertension.',1,0),(15,4,2,'Because she has hypertension, your patient’s wife is more likely to have received advice from her doctor to reduce sodium intake. ',0,1),(16,4,2,'A diagnosis of hypertension would not have changed the likelihood that your patient had taken action to reduce his sodium intake. ',0,0),(17,5,3,'The older son can disregard the letter from his college health service as he is already fully protected from meningitis, having been fully vaccinated with MenACWY',0,4),(18,5,3,'In addition to the second dose of MenACWY, the younger son should also receive a MenB vaccine as part of routine pre-college preventive health care. ',0,12),(19,5,3,'Only the older son requires vaccination with the MenB vaccine as part of his college’s response to an ongoing outbreak of serogroup b meningococcal disease.',1,2),(20,5,3,'The younger son should receive the 2015 formulation of the meningitis vaccine, which now also confers immunity against serogroup b meningococcal disease.',0,0),(21,6,3,'The older son can disregard the letter from his college health service as he is already fully protected from meningitis, having been fully vaccinated with MenACWY',0,0),(22,6,3,'In addition to the second dose of MenACWY, the younger son should also receive a MenB vaccine as part of routine pre-college preventive health care. ',1,1),(23,6,3,'Only the older son requires vaccination with the MenB vaccine as part of his college’s response to an ongoing outbreak of serogroup b meningococcal disease.',0,0),(24,6,3,'The younger son should receive the 2015 formulation of the meningitis vaccine, which now also confers immunity against serogroup b meningococcal disease.',0,6);
+/*!40000 ALTER TABLE `answer` ENABLE KEYS */;
+UNLOCK TABLES;
 --
 -- Table structure for table `rating`
 --
