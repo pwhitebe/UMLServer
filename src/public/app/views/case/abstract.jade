@@ -20,8 +20,9 @@
 								.thumbnail
 									a(ng-click='openModal("lg",image)')
 										img#imageresource.img-responsive(src='{{image.image_url}}')
-									h4.thumbnail-fig Figure {{image.sequence_id}}
-									p.thumbnail-title {{image.title}}
+									//h4.thumbnail-fig Figure {{image.sequence_id}}
+									h4.thumbnail-title {{image.title}}
+									p.thumbnail-fig {{image.caption}}
 			.row
 				.col-lg-12.col-md-12.col-sm-12
 					button.btn.btn-mmwr.btn-lg.pull-right.nav-button(type='button', ui-sref='test({caseID:case.case_id, testType:"post"})')
