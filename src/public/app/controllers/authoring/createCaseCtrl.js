@@ -3,6 +3,7 @@ angular.module('app').controller('createCaseCtrl', function ($scope,$http,$windo
 $scope.developmentStatuses;
 $scope.displayStatuses;
 $scope.galleryStatus = {'open':false};
+$scope.minAnsRequired = 4;
 
 getDisplayStatus();
 getDevStatus();
@@ -50,11 +51,14 @@ if ($scope.caseId) {
 
 $scope.saveDraft = function() {
 	 	// validate data before save 
+	 if (validateCase()) {
 	 	var date = new Date();  // get the current timestamp
 	 	if ($scope.case.created_date == null) {
 			$scope.case.created_date = date.toISOString();
 		}
 		$scope.case.last_edited = date.toISOString();
+		// build overview text
+		$scope.case.overview = $scope.case.case_text.replace(/<\/?[^>]+>/gi, '').substring(1,400) + '...';
 		if ($scope.case.case_id == null) {
 		//	delete $scope.case.case_id;
 		 $http.get('/api/mmwrcase/getNextCaseId').then(function(getIdRes) {
@@ -170,7 +174,88 @@ $scope.saveDraft = function() {
 
 		}
 	}
+};
 
+$scope.publishCase=function() {
+	// make sure all required fields are populated
+	var currentCaseExist = false;
+	if (isEmpty($scope.case.title)) {
+		ngNotifier.notifyError('Please enter the title for the case');
+	}
+	else if (isEmpty($scope.case.tag_line)) {
+		ngNotifier.notifyError('Please enter a tag line');
+	}
+	else if (isEmpty($scope.case.case_text)) {
+		ngNotifier.notifyError('Please enter the case text');
+	}
+	else if (isEmpty($scope.case.abstract_text)) {
+		ngNotifier.notifyError('Please enter the abstract');
+	}
+	else if (isEmpty($scope.case.additional_information)) {
+		ngNotifier.notifyError('Please enter text for additional information');
+	}
+	else if (isEmpty($scope.case.publication_date)) {
+		ngNotifier.notifyError('Please select a publication date');
+	}
+	else if ($scope.case.available_cme_credits && number_cme_credits_available == 0 ) {
+		ngNotifier.notifyError('Please enter a valid CME credit');
+	}
+	else if ($scope.case.available_cme_credits && cme_release_date == null ) {
+		ngNotifier.notifyError('Please enter a valid CME release date');
+	}
+	else if ($scope.case.available_cme_credits && cme_valid_until == null ) {
+		ngNotifier.notifyError('Please enter a valid CME expiration date');
+	}
+	else if (!validQA($scope.qa.pre)) {
+		ngNotifier.notifyError('Please enter some pre-test question and a minimum of '+ $scope.minAnsRequired + ' answers and select a correct answer');
+	}
+	else if (!validQA($scope.qa.post)) {
+		ngNotifier.notifyError('Please enter some post-test question and a minimum of ' + $scope.minAnsRequired + ' answers and select a correct answer');
+	}
+	else if ($scope.images.length == 0) {
+		ngNotifier.notifyError('Please enter at least 1 image for the case');
+	}
+
+	else {
+		var publishOk = true;
+		
+		if ($scope.case.display_status == 1)  {  // future case,  make sure publication date is in the future
+			var d1 = new Date($scope.case.publication_date);
+			var curDate = new Date();
+			if (d1 <= curDate ) {
+				publishOk = false;
+				ngNotifier.notifyError('You are publishing an upcoming case, Please select a future publication date.');
+						
+			}
+		}
+		// checking for conflicting status
+		if (!validStatus($scope.case.development_status,$scope.case.display_status)) {
+			publishOk = false;
+			ngNotifier.notifyError('You have selected an invalid combination of development status and display status.  Please verify and retry');
+		}
+
+		if ($scope.case.display_status == 0) { 
+			ngCase.getCurrentCase()
+				.success(function(caseData){
+				 	if (caseData.case_id) {
+						ngNotifier.notifyError('Only one current case allowed.  Pleaes de-activate the current case and retry');
+						
+					}
+					else { // no current case exist, check publish ok flag
+						if (publishOk) {	  // validate completed, save the case with valid flags
+							$scope.case.development_status = 5;
+					 		$scope.saveDraft();
+					 	}
+					}
+				})
+				.error(function(err){
+					console.log('Unable to retrieve case data, not sure of the status of the case: '+err);
+				});
+		}
+		
+	}
+	
+}
 
 function getCaseData(caseId) {
 	ngCase.getCaseById(caseId)
@@ -430,6 +515,63 @@ $scope.resetUpload = function() {
  $scope.saveImage = function(image) {
       image.editing=false;
   };
+
+ function validateCase() {
+ 	var noError = true;
+ 	if (isEmpty($scope.case.title)){
+ 		ngNotifier('Please enter a title for the case');
+ 		noError = false;
+ 	}
+ 	return noError
+ }
+
+function isEmpty(inputStr) { 
+	if ( inputStr == null || inputStr =='' )
+		 { return true; }
+	return false;
+}
+ 
+function validQA(qa) {
+	var correctSelected = false;
+	if (qa.length == 0) {
+		return false;
+	}
+	else {
+		for (var i = 0; i < qa.length; i ++) {
+			if (qa[i].answers.length  < $scope.minAnsRequired) {
+				return false;
+			}
+			else {
+				for (var j = 0; j < qa[i].answers.length; j++) {
+					if (qa[i].answers[j].correct == 1) {
+						 correctSelected = true;
+						 break;
+					}
+				}
+				if (!correctSelected) {
+					return false
+				}
+			}
+		}
+		return true;
+	}
+}
+function validStatus(development_status, display_status) {
+	if (development_status == 5 && display_status == 3) {
+		return false;
+	}
+	else if (development_status == 0 && display_status < 3 ) { 
+		return false;
+	}
+	return true;
+}
+
+$scope.copyQuestion = function(frm,to) {
+		$scope.qa[to] = angular.copy($scope.qa[frm]);
+		for (var i = 0; i < $scope.qa[to].length ; i++){
+			$scope.qa[to][i].question.post_pre = to;
+		}
+}
 
 });
 
