@@ -25,7 +25,7 @@ angular.module('app').controller('additionalInfoCtrl', function($scope,$statePar
 			var data = {caseId: $scope.case.case_id, rating: $scope.caseRating};
 
 			$http.post('/api/mmwrcase/updateRating', data).then(function(res){
-				console.log(res);
+//				console.log(res);
 			});
 		}
 		

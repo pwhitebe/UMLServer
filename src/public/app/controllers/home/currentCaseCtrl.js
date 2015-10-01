@@ -30,7 +30,7 @@ angular.module('app').controller('currentCaseCtrl', function($scope, ngCase) {
 		ngCase.getTopRateCases($scope.numberTopCases)
 			.success(function(topCases) {
 				$scope.topCases = topCases;
-				console.log(topCases);
+	//			console.log(topCases);
 			})
 			.error(function(err) {
 				console.log('Case data unvailable');
