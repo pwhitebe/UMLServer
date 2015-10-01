@@ -161,7 +161,7 @@ CREATE TABLE `question` (
   `post_pre` varchar(5) NOT NULL,
   `question` text NOT NULL,
   PRIMARY KEY (`case_id`,`question_id`),
-  UNIQUE KEY `quesiton_id_UNIQUE` (`question_id`),
+  /*UNIQUE KEY `quesiton_id_UNIQUE` (`case_id`,`question_id`),*/
   KEY `fk_Question_Case_Main_idx` (`case_id`),
   CONSTRAINT `fk_Question_Case_Main` FOREIGN KEY (`case_id`) REFERENCES `case_main` (`case_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
