@@ -239,6 +239,7 @@ exports.updateHitCounter = function(req,res) {
 
 exports.createCase = function(req,res) {
 	var caseData = req.body;
+	var case_id = caseData.case_id;
 	// test data
 //	caseData = 
 // 	{   
@@ -263,6 +264,18 @@ exports.createCase = function(req,res) {
 	        	res.send(err);
   			} 
   			else {
+  			 	// create a rating record for this case
+  			 	var rating_record = {
+  			 		'case_id' : case_id
+  			 	}
+  			 	db.query('insert into rating set ? ',[rating_record],function(err,ratingResult){
+  			 		if (err) {
+  			 			res.send(err);
+  			 		}
+  			 		else {
+
+  			 		}
+  			 	})
   			   res.send({'message':'case added','caseId': result.insertId});
  		 	}
 	})
