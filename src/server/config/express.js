@@ -16,7 +16,7 @@ module.exports = function(app, config) {
         app.set('view engine', 'jade');
         app.use(cookieParser());
         //app.use(express.bodyParser());
-        app.use(express.bodyParser({uploadDir: config.rootPath+'/public/img/uploads'}));
+        app.use(express.bodyParser({uploadDir: config.rootPath+'/public/img'}));
         app.use(session({secret:'use the force',resave:false,saveUninitialized:false}));
        app.use(passport.initialize());
        app.use(passport.session());
