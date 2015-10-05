@@ -251,6 +251,8 @@ exports.updateHitCounter = function(req,res) {
 exports.createCase = function(req,res) {
 	var caseData = req.body;
 	var case_id = caseData.case_id;
+	var currentId= caseData.replaceCurrent;
+	delete caseData.replaceCurrent;
 	// test data
 //	caseData = 
 // 	{   
@@ -284,10 +286,23 @@ exports.createCase = function(req,res) {
   			 			res.send(err);
   			 		}
   			 		else {
-
+  			 			if (currenId) {
+  			 				db.query('update case_main set display_status = 2 where case_id = ?'[currentId],function(err,updatedResult){
+  			 					if (err) {
+  			 						res.send(err);
+  			 					}
+  			 					else {
+  			 					 	res.send({'message':'case added','caseId': result.insertId});
+  			 					}
+  			 				})
+  			 			}
+  			 			else 
+  			 			{
+  			 				 res.send({'message':'case added','caseId': result.insertId});
+  			 			}
   			 		}
   			 	})
-  			   res.send({'message':'case added','caseId': result.insertId});
+  			  
  		 	}
 	})
 
@@ -297,8 +312,10 @@ exports.updateCase = function(req,res) {
 	var caseData = req.body;
 	var QA = caseData.QA;
 	var images = caseData.images;
+	var currentId = caseData.replaceCurrent;
 	delete caseData.QA;
 	delete caseData.images;
+	delete caseData.replaceCurrent;
 
 		// test data
 //	caseData = 
@@ -332,7 +349,19 @@ exports.updateCase = function(req,res) {
 	      });
 	    }
 		//	createQuestionAnswer(QA);
-			res.send({'success':true});
+			if (currentId) {
+  			 				db.query('update case_main set display_status = 2 where case_id = ?',[currentId],function(err,updatedResult){
+  			 					if (err) {
+  			 						res.send(err);
+  			 					}
+  			 					else {
+  			 						res.send({'success':true});
+  			 					}
+  			 				})
+  			 			}
+			 else { 
+			 	res.send({'success':true});
+			 }
 			// remove all question and answer before re-insert with the new order (if changed)
 			// db.query('delete from question where case_id = ? ; delete from answer where case_id = ?',[case_id,case_id],function(err,qDeleteResult){
 			// 	if (err) {

@@ -209,7 +209,7 @@ div(ng-controller="createCaseCtrl" style="background-color:#f2f2f2;")
 						hr(style="border-top: 1px solid #000")
 						.row
 							.col-lg-6
-								button.btn.btn-primary.pull-left(type="button" ng-click="saveDraft()")
+								button.btn.btn-primary.pull-left(type="button" ng-click="saveCase()")
 									| Save
 							.col-lg-6
 								button.btn.btn-primary.pull-right(type="button" ng-click="previewCase()")
@@ -226,7 +226,7 @@ div(ng-controller="createCaseCtrl" style="background-color:#f2f2f2;")
 									br
 									label Visibility:
 									select.form-control(ng-disabled = 'case.development_status != 5' placeholder='Select a visibility status' ng-model='case.display_status' ng-options='displayStatus.display_status_id as displayStatus.description for displayStatus in displayStatuses' )
-										option(value="") - Select a visibility status -
+										option(value="") - Select Publication Location  -
 									br
 									label Scheduled Publish Date:
 										.dropdown(style="position:relative; z-index:1")

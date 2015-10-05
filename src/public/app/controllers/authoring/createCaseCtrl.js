@@ -1,4 +1,4 @@
-angular.module('app').controller('createCaseCtrl', function ($scope,$http,$window,$log,ngCase,Upload,ngNotifier,$state) {
+angular.module('app').controller('createCaseCtrl', function ($scope,$http,$window,$log,ngCase,Upload,ngNotifier,$state,dialogs) {
 
 $scope.developmentStatuses;
 $scope.displayStatuses;
@@ -49,6 +49,17 @@ if ($scope.caseId) {
 	getCaseData($scope.caseId);
 }
 
+
+$scope.saveCase = function(){
+	if ($scope.case.development_status == 5) {
+		$scope.publishCase();
+	}
+	else {
+		$scope.saveDraft();
+	}
+}
+
+
 $scope.saveDraft = function() {
 	 	// validate data before save 
 	 if (validateCase()) {
@@ -58,130 +69,133 @@ $scope.saveDraft = function() {
 		}
 		$scope.case.last_edited = date.toISOString();
 		// build overview text
-		$scope.case.overview = $scope.case.case_text.replace(/<\/?[^>]+>/gi, '').substring(1,400) + '...';
-		if ($scope.case.case_id == null) {
-		//	delete $scope.case.case_id;
-		 $http.get('/api/mmwrcase/getNextCaseId').then(function(getIdRes) {
-		 	if (getIdRes.data.insertId) {
-		 		$scope.case.case_id = getIdRes.data.insertId;
-				$http.post('/api/mmwrcase/createCase',$scope.case).then(function(res){
-					if (res.data.hasOwnProperty('message')) { // create was success
-						// $scope.case.case_id = res.data.caseId;  // retreive newly inserted case id
-						 // using the new id for the QAs
-						 var combinedQA = $scope.qa.pre.concat($scope.qa.post);
-						 for (var i=0; i < combinedQA.length; i++) {
-						 	combinedQA[i].question.case_id = $scope.case.case_id;
-						 	combinedQA[i].question.question_id = i;
-						 	combinedQA[i].question.sequence_id = i;
-						 	delete combinedQA[i].question.editing; 
-						 	for (var j = 0 ; j < combinedQA[i].answers.length; j ++) {
-						 		combinedQA[i].answers[j].case_id = $scope.case.case_id;
-						 		combinedQA[i].answers[j].question_id = i;
-						 		combinedQA[i].answers[j].answer_id = j;
-						 		delete combinedQA[i].answers[j].editing;
-						 	}
-						 }
-						 // saving QA to database
-						 if (combinedQA.length > 0) {
-						 	$http.post('/api/mmwrcase/createQuestionAnswer',combinedQA).then(function(res){
+		$scope.case.overview = $scope.case.case_text.replace(/<\/?[^>]+>/gi, '').substring(0,400) + '...';
+		
+			if ($scope.case.case_id == null) {
+			//	delete $scope.case.case_id;
+			 $http.get('/api/mmwrcase/getNextCaseId').then(function(getIdRes) {
+			 	if (getIdRes.data.insertId) {
+			 		$scope.case.case_id = getIdRes.data.insertId;
+					$http.post('/api/mmwrcase/createCase',$scope.case).then(function(res){
+						if (res.data.hasOwnProperty('message')) { // create was success
+							// $scope.case.case_id = res.data.caseId;  // retreive newly inserted case id
+							 // using the new id for the QAs
+							 var combinedQA = $scope.qa.pre.concat($scope.qa.post);
+							 for (var i=0; i < combinedQA.length; i++) {
+							 	combinedQA[i].question.case_id = $scope.case.case_id;
+							 	combinedQA[i].question.question_id = i;
+							 	combinedQA[i].question.sequence_id = i;
+							 	delete combinedQA[i].question.editing; 
+							 	for (var j = 0 ; j < combinedQA[i].answers.length; j ++) {
+							 		combinedQA[i].answers[j].case_id = $scope.case.case_id;
+							 		combinedQA[i].answers[j].question_id = i;
+							 		combinedQA[i].answers[j].answer_id = j;
+							 		delete combinedQA[i].answers[j].editing;
+							 	}
+							 }
+							 // saving QA to database
+							 if (combinedQA.length > 0) {
+							 	$http.post('/api/mmwrcase/createQuestionAnswer',combinedQA).then(function(res){
+					               if (res.data.success) {
+					                 // alert('question save success');
+					                }
+					                else {
+					                  alert('question save failed')
+					                }
+					              });
+							 }
+							 // saving images.  this could move to the back end.
+							 if ($scope.images.length > 0) {
+							 	// populate values before sending to backing
+							 	for (var i=0; i < $scope.images.length; i ++) {
+							 		$scope.images[i].case_id = $scope.case.case_id;
+							 		$scope.images[i].sequence_id = i;
+							 		$scope.images[i].image_id = i;
+							 		delete $scope.images[i].editing;
+							 	}
+							 	$http.post('/api/mmwrcase/saveImages',$scope.images).then(function(res){
+					               if (res.data.success) {
+					                 // alert('question save success');
+					                }
+					                else {
+					                  alert('images save failed')
+					                }
+					              });
+							 }
+							 	ngNotifier.notify('case saved successfully');
+							}
+							else {
+								alert ('Draft case save failed')
+							}
+						});
+					}
+					else {
+						console.log("could not get a new case Id")
+					}
+
+				})
+			}
+			else {  // case already exist, update case
+
+					$http.post('/api/mmwrcase/updateCase',$scope.case).then(function(res){
+				        if (res.data.success) {
+				           var combinedQA = $scope.qa.pre.concat($scope.qa.post);
+				            for (var i=0; i < combinedQA.length; i++) {
+				              combinedQA[i].question.case_id = $scope.case.case_id;
+				              combinedQA[i].question.question_id = i;
+				              delete combinedQA[i].question.editing; 
+				              for (var j = 0 ; j < combinedQA[i].answers.length; j ++) {
+				                combinedQA[i].answers[j].case_id = $scope.case.case_id;
+				                combinedQA[i].answers[j].question_id = i;
+				                combinedQA[i].answers[j].answer_id = j;
+				                delete combinedQA[i].answers[j].editing;
+				              }
+				           }
+				           if (combinedQA.length > 0 ) {
+				            	$http.post('/api/mmwrcase/createQuestionAnswer',combinedQA).then(function(res){
 				               if (res.data.success) {
-				                 // alert('question save success');
+				                  // alert('update success');
 				                }
 				                else {
-				                  alert('question save failed')
+				                  alert('update question failed')
 				                }
 				              });
-						 }
-						 // saving images.  this could move to the back end.
-						 if ($scope.images.length > 0) {
-						 	// populate values before sending to backing
-						 	for (var i=0; i < $scope.images.length; i ++) {
-						 		$scope.images[i].case_id = $scope.case.case_id;
-						 		$scope.images[i].sequence_id = i;
-						 		$scope.images[i].image_id = i;
-						 		delete $scope.images[i].editing;
-						 	}
-						 	$http.post('/api/mmwrcase/saveImages',$scope.images).then(function(res){
-				               if (res.data.success) {
-				                 // alert('question save success');
-				                }
-				                else {
-				                  alert('images save failed')
-				                }
-				              });
-						 }
-						 	ngNotifier.notify('case saved successfully');
-						}
-						else {
-							alert ('Draft case save failed')
-						}
-					});
-				}
-				else {
-					console.log("could not get a new case Id")
-				}
+				        	}
+				        	 // saving images.  this could move to the back end.
+							 if ($scope.images.length > 0) {
+							 	// populate values before sending to backing
+							 	for (var i=0; i < $scope.images.length; i ++) {
+							 		$scope.images[i].case_id = $scope.case.case_id;
+							 		$scope.images[i].sequence_id = i;
+							 		$scope.images[i].image_id = i;
+							 		delete $scope.images[i].editing;
+							 	}
+							 	$http.post('/api/mmwrcase/saveImages',$scope.images).then(function(res){
+					               if (res.data.success) {
+					                 // alert('question save success');
+					                }
+					                else {
+					                  alert('images save failed')
+					                }
+					              });
+							 }
+				        	ngNotifier.notify('case saved successfully');
+				        }
+				        else {
+				            console.log(res.data)
+				         //   alert('update failed with error: ', res.error)
+				        }
 
-			})
-		}
-		else {  // case already exist, update case
+		    		})
 
-				$http.post('/api/mmwrcase/updateCase',$scope.case).then(function(res){
-			        if (res.data.success) {
-			           var combinedQA = $scope.qa.pre.concat($scope.qa.post);
-			            for (var i=0; i < combinedQA.length; i++) {
-			              combinedQA[i].question.case_id = $scope.case.case_id;
-			              combinedQA[i].question.question_id = i;
-			              delete combinedQA[i].question.editing; 
-			              for (var j = 0 ; j < combinedQA[i].answers.length; j ++) {
-			                combinedQA[i].answers[j].case_id = $scope.case.case_id;
-			                combinedQA[i].answers[j].question_id = i;
-			                combinedQA[i].answers[j].answer_id = j;
-			                delete combinedQA[i].answers[j].editing;
-			              }
-			           }
-			           if (combinedQA.length > 0 ) {
-			            	$http.post('/api/mmwrcase/createQuestionAnswer',combinedQA).then(function(res){
-			               if (res.data.success) {
-			                  // alert('update success');
-			                }
-			                else {
-			                  alert('update question failed')
-			                }
-			              });
-			        	}
-			        	 // saving images.  this could move to the back end.
-						 if ($scope.images.length > 0) {
-						 	// populate values before sending to backing
-						 	for (var i=0; i < $scope.images.length; i ++) {
-						 		$scope.images[i].case_id = $scope.case.case_id;
-						 		$scope.images[i].sequence_id = i;
-						 		$scope.images[i].image_id = i;
-						 		delete $scope.images[i].editing;
-						 	}
-						 	$http.post('/api/mmwrcase/saveImages',$scope.images).then(function(res){
-				               if (res.data.success) {
-				                 // alert('question save success');
-				                }
-				                else {
-				                  alert('images save failed')
-				                }
-				              });
-						 }
-			        	ngNotifier.notify('case saved successfully');
-			        }
-			        else {
-			            console.log(res.data)
-			         //   alert('update failed with error: ', res.error)
-			        }
-
-	    		})
-
-		}
+			}
+		
 	}
 };
 
 $scope.publishCase=function() {
 	// make sure all required fields are populated
+	var publishOk = 0;
 	var currentCaseExist = false;
 	if (isEmpty($scope.case.title)) {
 		ngNotifier.notifyError('Please enter the title for the case');
@@ -241,15 +255,21 @@ $scope.publishCase=function() {
 		if ($scope.case.display_status == 0) { 
 			ngCase.getCurrentCase()
 				.success(function(caseData){
-				 	if (caseData.case_id) {
-						ngNotifier.notifyError('Only one current case allowed.  Pleaes de-activate the current case and retry');
+				 	if (caseData.case_id && caseData.case_id != $scope.case.case_id) {
+						var dlg = dialogs.confirm('Confirm Activate Current Case','Current Case of the Week already exist, Please confirm that you want to replace the current case with this case');
+						dlg.result.then(function(btn){
+								$scope.case.replaceCurrent = caseData.case_id;		
+								$scope.saveDraft();
+								// close the modal here
+							
+						}, function(btn){
+							//No
+							publishOk = false;
+						});
 						
 					}
 					else { // no current case exist, check publish ok flag
-						if (publishOk) {	  // validate completed, save the case with valid flags
-							$scope.case.development_status = 5;
 					 		$scope.saveDraft();
-					 	}
 					}
 				})
 				.error(function(err){
@@ -261,6 +281,96 @@ $scope.publishCase=function() {
 	
 }
 
+// function validatePublish() {
+// 	// make sure all required fields are populated
+// 	var currentCaseExist = false;
+// 	var publishOk = false;
+// 	if (isEmpty($scope.case.title)) {
+// 		ngNotifier.notifyError('Please enter the title for the case');
+// 	}
+// 	else if (isEmpty($scope.case.tag_line)) {
+// 		ngNotifier.notifyError('Please enter a tag line');
+		
+// 	}
+// 	else if (isEmpty($scope.case.case_text)) {
+// 		ngNotifier.notifyError('Please enter the case text');
+		
+// 	}
+// 	else if (isEmpty($scope.case.abstract_text)) {
+// 		ngNotifier.notifyError('Please enter the abstract');
+		
+// 	}
+// 	else if (isEmpty($scope.case.additional_information)) {
+// 		ngNotifier.notifyError('Please enter text for additional information');
+// 	}
+// 	else if (isEmpty($scope.case.publication_date)) {
+// 		ngNotifier.notifyError('Please select a publication date');
+// 	}
+// 	else if ($scope.case.available_cme_credits && number_cme_credits_available == 0 ) {
+// 		ngNotifier.notifyError('Please enter a valid CME credit');
+// 	}
+// 	else if ($scope.case.available_cme_credits && cme_release_date == null ) {
+// 		ngNotifier.notifyError('Please enter a valid CME release date');
+// 	}
+// 	else if ($scope.case.available_cme_credits && cme_valid_until == null ) {
+// 		ngNotifier.notifyError('Please enter a valid CME expiration date');
+// 	}
+// 	else if (!validQA($scope.qa.pre)) {
+// 		ngNotifier.notifyError('Please enter some pre-test question and a minimum of '+ $scope.minAnsRequired + ' answers and select a correct answer');
+// 	}
+// 	else if (!validQA($scope.qa.post)) {
+// 		ngNotifier.notifyError('Please enter some post-test question and a minimum of ' + $scope.minAnsRequired + ' answers and select a correct answer');
+// 	}
+// 	else if ($scope.images.length == 0) {
+// 		ngNotifier.notifyError('Please enter at least 1 image for the case');
+// 	}
+
+// 	else {
+		
+// 		if ($scope.case.display_status == 1)  {  // future case,  make sure publication date is in the future
+// 			var d1 = new Date($scope.case.publication_date);
+// 			var curDate = new Date();
+// 			if (d1 <= curDate ) {
+// 				ngNotifier.notifyError('You are publishing an upcoming case, Please select a future publication date.');
+						
+// 			}
+// 		}
+// 		// checking for conflicting status
+// 		if (!validStatus($scope.case.development_status,$scope.case.display_status)) {
+// 			ngNotifier.notifyError('You have selected an invalid combination of development status and display status.  Please verify and retry');
+// 		}
+
+// 		if ($scope.case.display_status == 0) { 
+// 			ngCase.getCurrentCase()
+// 				.success(function(caseData){
+// 				 	if (caseData.case_id && caseData.case_id != $scope.case.case_id) {
+// 				 		var dlg = dialogs.confirm('Confirm Activate Current Case','Current Case of the Week already exist, Please confirmat you want to replace the current case with this case');
+// 				 		dlg.result.then(function(btn){
+// 							ngcase.replaceCurrent(caseData.case_id, $scope.case.case_id).success(function(){
+// 								ngNotifier.notify('Current Case has been successfully replaced');
+// 								// close the modal here
+// 							})
+// 						}, function(btn){
+// 							//No
+// 							return false;
+// 						});
+// 				//		ngNotifier.notifyError('Only one current case allowed.  Do you want to replace the current case with this case?');
+						
+// 					}
+// 					else { // no current case exist, check publish ok flag
+
+// 						return true;
+// 					}
+// 				})
+// 				.error(function(err){
+// 					return false;
+// 					console.log('Unable to retrieve case data, not sure of the status of the case: '+err);
+// 				});
+// 		}
+		
+// 	}
+	
+// }
 function getCaseData(caseId) {
 	ngCase.getCaseById(caseId)
 			.success(function(caseData){
