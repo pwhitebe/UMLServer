@@ -113,7 +113,8 @@ angular.module('app').controller('dashboardCtrl', function($scope, ngCase,$modal
 	}
 
 	function getDraftCases() {
-		ngCase.getCasesByStatus(0, 3)
+		//ngCase.getCasesByStatus(0, 3)
+		ngCase.getDraftCases()
 			.success(function(cases) {
 				$scope.draftCases = cases;
 			})

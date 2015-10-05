@@ -32,6 +32,9 @@ angular.module('app').factory('ngCase', function($http) {
 		},
 		getCaseRatingStats : function() {
 			return $http.get('/api/mmwrcase/getCaseRatingStats');
+		},
+		getDraftCases : function() {
+			return $http.get('/api/mmwrcase/getDraftCases');
 		}
 	}
 

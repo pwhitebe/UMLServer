@@ -1,4 +1,4 @@
-angular.module('app').controller('createCaseCtrl', function ($scope,$http,$window,$log,ngCase,Upload,ngNotifier) {
+angular.module('app').controller('createCaseCtrl', function ($scope,$http,$window,$log,ngCase,Upload,ngNotifier,$state) {
 
 $scope.developmentStatuses;
 $scope.displayStatuses;
@@ -19,7 +19,7 @@ $scope.case = {
 	"additional_information" :"",
 	"rating"	: 0,
 	"development_status"	: 0,
-	"display_status"	: 3,
+	"display_status"	: 2,
 	"available_cme_credits" : 0,
 	"cme_release_date"	: null,
 	"cme_valid_until"	: null,
@@ -73,10 +73,12 @@ $scope.saveDraft = function() {
 						 	combinedQA[i].question.case_id = $scope.case.case_id;
 						 	combinedQA[i].question.question_id = i;
 						 	combinedQA[i].question.sequence_id = i;
+						 	delete combinedQA[i].question.editing; 
 						 	for (var j = 0 ; j < combinedQA[i].answers.length; j ++) {
 						 		combinedQA[i].answers[j].case_id = $scope.case.case_id;
 						 		combinedQA[i].answers[j].question_id = i;
 						 		combinedQA[i].answers[j].answer_id = j;
+						 		delete combinedQA[i].answers[j].editing;
 						 	}
 						 }
 						 // saving QA to database
@@ -129,10 +131,12 @@ $scope.saveDraft = function() {
 			            for (var i=0; i < combinedQA.length; i++) {
 			              combinedQA[i].question.case_id = $scope.case.case_id;
 			              combinedQA[i].question.question_id = i;
+			              delete combinedQA[i].question.editing; 
 			              for (var j = 0 ; j < combinedQA[i].answers.length; j ++) {
 			                combinedQA[i].answers[j].case_id = $scope.case.case_id;
 			                combinedQA[i].answers[j].question_id = i;
 			                combinedQA[i].answers[j].answer_id = j;
+			                delete combinedQA[i].answers[j].editing;
 			              }
 			           }
 			           if (combinedQA.length > 0 ) {
@@ -571,6 +575,13 @@ $scope.copyQuestion = function(frm,to) {
 		for (var i = 0; i < $scope.qa[to].length ; i++){
 			$scope.qa[to][i].question.post_pre = to;
 		}
+}
+
+$scope.previewCase = function() {
+
+	var url = $state.href('overview', {caseID: $scope.case.case_id});
+	console.log(url);
+	window.open(url,'_blank');
 }
 
 });

@@ -33,6 +33,7 @@ module.exports = function(app) {
   app.get('/api/mmwrcase/getSortOptions/', mmwrCase.getSortOptions);
   app.get('/api/mmwrcase/getCaseRatingStats', mmwrCase.getCaseRatingStats);
   app.get('/api/mmwrcase/getNextCaseId',mmwrCase.getNextCaseId);
+  app.get('/api/mmwrcase/getDraftCases',mmwrCase.getDraftCases);
 
 
 // image upload section

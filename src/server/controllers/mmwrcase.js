@@ -126,6 +126,17 @@ exports.getPreviousCases = function(req,res) {
 
 }
 
+exports.getDraftCases = function(req,res) {
+	db.query('select * from case_main where development_status <> 5', function(err,rows){
+		if(err) {
+  			res.send(err);
+  		} 
+  		else {
+  		 	   res.send(rows);
+		 	}
+	})
+}
+
 exports.getQuestions = function(req,res) {
 //	connection.connect();
 	var caseId = req.params.caseId;
@@ -656,7 +667,7 @@ exports.getDevStatus = function(req,res) {
 
 exports.getDisplayStatus = function(req,res) {
 
-	db.query('select * from display_status', function(err,result){
+	db.query('select * from display_status where display_status_id < 3', function(err,result){
 		if (err) {
 			res.send(err);
 		}
