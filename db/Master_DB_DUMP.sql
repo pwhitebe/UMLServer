@@ -43,9 +43,9 @@ CREATE TABLE `case_main` (
   `current` tinyint(1) NOT NULL,
   `archived` tinyint(1) NOT NULL,
   `rating` int(11) DEFAULT NULL,
-  `development_status` int(11) NOT NULL,
+  `development_status` int(11) NOT NULL DEFAULT 0,
   `development_status_notes` text,
-  `display_status` int(11) NOT NULL,
+  `display_status` int(11) NOT NULL DEFAULT 2,
   `available_cme_credits` tinyint(1) DEFAULT NULL,
   `cme_release_date` datetime DEFAULT NULL,
   `cme_valid_until` datetime DEFAULT NULL,
@@ -299,6 +299,12 @@ CREATE TABLE `master_controls` (
   `next_case_id` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`next_case_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `master_controls` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `master_control` VALUES (7)
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
