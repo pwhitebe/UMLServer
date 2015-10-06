@@ -209,8 +209,10 @@ div(ng-controller="createCaseCtrl" style="background-color:#f2f2f2;")
 						hr(style="border-top: 1px solid #000")
 						.row
 							.col-lg-6
-								button.btn.btn-primary.pull-left(type="button" ng-click="saveCase()")
-									| Save
+									button.btn.btn-primary.pull-left(ng-if = 'case.development_status != 5' type="button" ng-click="saveCase()")
+										| Save
+									button.btn.btn-success.pull-left(ng-if = 'case.development_status == 5' type="button" ng-click="saveCase()")
+										| Publish
 							.col-lg-6
 								button.btn.btn-primary.pull-right(type="button" ng-click="previewCase()")
 									| Preview
@@ -224,20 +226,21 @@ div(ng-controller="createCaseCtrl" style="background-color:#f2f2f2;")
 									label Status Notes:
 									input.form-control(type="text" ng-model = 'case.development_status_notes' placeholder='Enter status note')
 									br
-									label Visibility:
-									select.form-control(ng-disabled = 'case.development_status != 5' placeholder='Select a visibility status' ng-model='case.display_status' ng-options='displayStatus.display_status_id as displayStatus.description for displayStatus in displayStatuses' )
-										option(value="") - Select Publication Location  -
+									.panel(ng-show = 'case.development_status == 5' )
+										label Publish Location:
+										select.form-control(placeholder='Select a publish location' ng-model='case.display_status' ng-options='displayStatus.display_status_id as displayStatus.description for displayStatus in displayStatuses' )
+											option(value='-1') - Select Publish Location  -
 									br
-									label Scheduled Publish Date:
-										.dropdown(style="position:relative; z-index:1")
-											a#dropdown1.dropdown-toggle(role='button', data-toggle='dropdown', data-target='#', href='')
-												.input-group
-													div.form-control(type='text')
-														| {{case.publication_date | date:'MMM d, yyyy'}}
-													span.input-group-addon
-														i.glyphicon.glyphicon-calendar
-											ul.dropdown-menu(role='menu', aria-labelledby='dLabel')
-												datetimepicker(data-on-set-time="publicationDateChanged(newDate, oldDate)" data-ng-model='case.publication_date', data-datetimepicker-config="{ dropdownSelector: '#dropdown1',startView:'day', minView:'day' }")
+									//- label Scheduled Publish Date:
+									//- 	.dropdown(style="position:relative; z-index:1")
+									//- 		a#dropdown1.dropdown-toggle(role='button', data-toggle='dropdown', data-target='#', href='')
+									//- 			.input-group
+									//- 				div.form-control(type='text')
+									//- 					| {{case.publication_date | date:'MMM d, yyyy'}}
+									//- 				span.input-group-addon
+									//- 					i.glyphicon.glyphicon-calendar
+									//- 		ul.dropdown-menu(role='menu', aria-labelledby='dLabel')
+									//- 			datetimepicker(data-on-set-time="publicationDateChanged(newDate, oldDate)" data-ng-model='case.publication_date', data-datetimepicker-config="{ dropdownSelector: '#dropdown1',startView:'day', minView:'day' }")
 								//- br
 								//- .create-btn-cont
 								//- 	button.btn.btn-success(type="button" ng-click="publishCase()")
