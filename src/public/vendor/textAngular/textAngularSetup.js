@@ -41,12 +41,21 @@ angular.module('textAngularSetup', [])
 	// {commandKeyCode: 'UndoKey', testForKey: function (event) { return false; } },
 	// to disable them.
 	//
+
+	// toolbar: [
+	// 	['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote'],
+	// 	['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear','fontSize', 'fontName'],
+	// 	['justifyLeft','justifyCenter','justifyRight','justifyFull','indent','outdent'],
+	// 	['html', 'insertImage', 'insertLink', 'insertVideo', 'wordcount', 'charcount'],
+		
+	// ],
+
 	keyMappings : [],
 	toolbar: [
 		['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote'],
 		['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear','fontSize', 'fontName'],
 		['justifyLeft','justifyCenter','justifyRight','justifyFull','indent','outdent'],
-		['html', 'insertImage', 'insertLink', 'insertVideo', 'wordcount', 'charcount'],
+		['insertLink','wordcount', 'charcount'],
 		
 	],
 	classes: {
