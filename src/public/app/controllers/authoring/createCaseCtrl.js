@@ -688,7 +688,7 @@ $scope.copyQuestion = function(frm,to) {
 }
 
 $scope.previewCase = function() {
-
+	$scope.saveCase();
 	var url = $state.href('overview', {caseID: $scope.case.case_id});
 	console.log(url);
 	window.open(url,'_blank');
