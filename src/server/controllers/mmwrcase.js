@@ -286,7 +286,7 @@ exports.createCase = function(req,res) {
   			 			res.send(err);
   			 		}
   			 		else {
-  			 			if (currenId) {
+  			 			if (currentId) {
   			 				db.query('update case_main set display_status = 2 where case_id = ?'[currentId],function(err,updatedResult){
   			 					if (err) {
   			 						res.send(err);
