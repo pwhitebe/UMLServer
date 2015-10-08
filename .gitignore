@@ -15,3 +15,5 @@ src/npm-debug.log
 src/node_modules
 
 src/server/config/certs
+
+src/server/lib/envProperties.js
