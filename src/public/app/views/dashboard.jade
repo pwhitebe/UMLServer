@@ -2,8 +2,9 @@
     .col.zero-padding-margin
         .main-content
             .row
-                h3 Quick Stats
-                div(style="border: 2px solid #fbfbfb")
+                .col-lg-12.col-md-12.col-sm-12
+                    h3 Quick Stats (In Development)
+                    br
                     .row
                         .col-lg-4.col-md-4.col-sm-4.col-xs-4
                             .well
@@ -18,75 +19,41 @@
             .row
                 .col-lg-9.col-md-9.col-sm-8
                     h3 All Cases 
-                .col-lg-3.col-md-3.col-sm-4
+                .col-lg-3.col-md-3.col-sm-4(style='margin-top:20px;')
                     button.btn.btn-primary.ng-cloak.pull-right(type='button' ng-click="createCase('lg')") Create New Case
             .row
                 .tab-container
-                    label.pull-right Filter: 
+                    label.pull-right Sort: 
                        select(ng-model='selectedFilter' ng-options='caseFilter.option as caseFilter.display for caseFilter in caseFilters' )
                     tabset
-                        tab(heading="Drafts")
-                            br
-                            .row
-                                .col-lg-8.col-md-8.col-sm-8.col-xs-8
-                                    h4 Draft Cases
-                                //.col-lg-4.col-md-4.col-sm-4.col-xs-4
-                                    label.pull-right Filter: 
-                                        select(ng-model='selectedFilter' ng-options='caseFilter.option as caseFilter.display for caseFilter in caseFilters' )
-                            div(ng-repeat='case in draftCases | orderBy : selectedFilter')
-                                .well(style='background-color:#ffffff;')
-                                    .row
-                                        .col-lg-1.col-md-1.col-sm-1
-                                            label.pull-right
-                                                i.fa.fa-file-text.fa-3x(style="color:#428bca")
-                                        .col-lg-5.col-md-5.col-sm-5.col-xs-5
-                                            span.title-case(style="color:black")
-                                                {{case.title}}  
-                                                //a(ui-sref='editcase({caseID:case.case_id})')
-                                                a(ng-click='editCase(case.case_id)')
-                                                    span.teaser-title Edit/View
-                                            br
-                                            rating(ng-model='case.rating' max ='max' readOnly='isReadOnly' on-hover='hoveringOver(value)' on-leave='overStar = null')
-                                        .col-lg-4.col-md-4.col-sm-4.col-xs-4
-                                            span.teaser-title(style="color:black") Published Date: 
-                                            span.teaser-date
-                                                {{case.publication_date | date}}
-                                            br
-                                            span.teaser-title(style="color:black") Last Edited:
-                                            span.teaser-date
-                                                {{case.last_edited | date}}
-                                        .col-lg-2.col-md-2.col-sm-2.col-xs-2(align='center')
-                                            a.del-edit-btn.btn.btn-default.btn-lg( href='', data-nodrag='', ng-click="deleteCase(case)")
-                                                .glyphicon.glyphicon-trash
                         tab(heading="Current")
                             br
                             .row
                                 .col-lg-8.col-md-6.col-sm-6.col-xs-6
                                     h4 Current Case
                             div(ng-repeat='case in currentCases')
-                                .well(style='background-color:#ffffff;')
+                                .well
                                     .row
-                                        .col-lg-1.col-md-1.col-sm-1
-                                            label.pull-right
-                                                i.fa.fa-file-text.fa-3x(style="color:#428bca")
                                         .col-lg-5.col-md-5.col-sm-5.col-xs-5
+                                            label.pull-left
+                                                i.fa.fa-file-text.fa-3x(style="color:#428bca; margin-right:25px;")
                                             span.title-case(style="color:black")
                                                 {{case.title}}  
                                                 //a(ui-sref='editcase({caseID:case.case_id})')
                                                 a(ng-click='editCase(case.case_id)')
-                                                    span.teaser-title Edit/View
+                                                    span.teaser-title-atr Edit/View
                                             br
                                             rating(ng-model='case.rating' max ='max' readOnly='isReadOnly' on-hover='hoveringOver(value)' on-leave='overStar = null')
-                                        .col-lg-4.col-md-4.col-sm-4.col-xs-4
-                                            span.teaser-title(style="color:black") Published Date: 
-                                            span.teaser-date
+                                        .col-lg-5.col-md-5.col-sm-5.col-xs-5
+                                            span.teaser-title-atr(style="color:black") Published Date: 
+                                            span.teaser-date-atr
                                                 {{case.publication_date | date}}
                                             br
-                                            span.teaser-title(style="color:black") Last Edited:
-                                            span.teaser-date
+                                            span.teaser-title-atr(style="color:black") Last Edited: 
+                                            span.teaser-date-atr
                                                 {{case.last_edited | date}}
-                                        .col-lg-2.col-md-2.col-sm-2.col-xs-2(align='center')
-                                            a.del-edit-btn.btn.btn-default.btn-lg( href='', data-nodrag='', ng-click="deleteCase(case)")
+                                        .col-lg-2.col-md-2.col-sm-2.col-xs-2
+                                            a.del-edit-btn.btn.btn-default.pull-right( href='', data-nodrag='', ng-click="deleteCase(case)", style='margin-top:7px; margin-right:20px;')
                                                 .glyphicon.glyphicon-trash
                         tab(heading="Upcoming")
                             br
@@ -96,29 +63,28 @@
                                 .col-lg-4.col-md-4.col-sm-4.col-xs-4
                                    
                             div(ng-repeat='case in upcomingCases | orderBy : selectedFilter')
-                                .well(style='background-color:#ffffff;')
+                                .well
                                     .row
-                                        .col-lg-1.col-md-1.col-sm-1
-                                            label.pull-right
-                                                i.fa.fa-file-text.fa-3x(style="color:#428bca")
-                                        .col-lg-5.col-md-5.col-sm-5.col-xs-5
+                                        .col-lg-5.col-md-5.col-sm-5
+                                            label.pull-left
+                                                i.fa.fa-file-text.fa-3x(style="color:#428bca; margin-right:25px;")
                                             span.title-case(style="color:black")
                                                 {{case.title}}  
                                                 //a(ui-sref='editcase({caseID:case.case_id})')
                                                 a(ng-click='editCase(case.case_id)')
-                                                    span.teaser-title Edit/View
+                                                    span.teaser-title-atr Edit/View
                                             br
                                             rating(ng-model='case.rating' max ='max' readOnly='isReadOnly' on-hover='hoveringOver(value)' on-leave='overStar = null')
-                                        .col-lg-4.col-md-4.col-sm-4.col-xs-4
-                                            span.teaser-title(style="color:black") Scheduled Date: 
-                                            span.teaser-date
+                                        .col-lg-5.col-md-5.col-sm-5.col-xs-5
+                                            span.teaser-title-atr(style="color:black") Scheduled Date: 
+                                            span.teaser-date-atr
                                                 {{case.publication_date | date}}
                                             br
-                                            span.teaser-title(style="color:black") Last Edited:
-                                            span.teaser-date
+                                            span.teaser-title-atr(style="color:black") Last Edited: 
+                                            span.teaser-date-atr
                                                 {{case.last_edited | date}}
-                                        .col-lg-2.col-md-2.col-sm-2.col-xs-2(align='center')
-                                            a.del-edit-btn.btn.btn-default.btn-lg( href='', data-nodrag='', ng-click="deleteCase(case)")
+                                        .col-lg-2.col-md-2.col-sm-2.col-xs-2
+                                            a.del-edit-btn.btn.btn-default.pull-right( href='', data-nodrag='', ng-click="deleteCase(case)", style='margin-top:7px; margin-right:20px;')
                                                 .glyphicon.glyphicon-trash
                         tab(heading="Previous")
                             br
@@ -130,31 +96,62 @@
                                         select(ng-model='selectedFilter' ng-options='caseFilter.option as caseFilter.display for caseFilter in caseFilters' )
                             //option(value='{{case.development_status}}') - Select a development status -
                             div(ng-repeat='case in previousCases | orderBy : selectedFilter')
-                                .well(style='background-color:#ffffff;')
+                                .well
                                     .row
-                                        .col-lg-1.col-md-1.col-sm-1
-                                            label.pull-right
-                                                i.fa.fa-file-text.fa-3x(style="color:#428bca")
-                                        .col-lg-5
+                                        .col-lg-5.col-md-5.col-sm-5
+                                            label.pull-left
+                                                i.fa.fa-file-text.fa-3x(style="color:#428bca; margin-right:25px;")
                                             span.title-case(style="color:black")
                                                 {{case.title}}  
                                                 //a(ui-sref='editcase({caseID:case.case_id})')
                                                 a(ng-click='editCase(case.case_id)')
-                                                    span.teaser-title Edit/View
+                                                    span.teaser-title-atr Edit/View
                                             br
                                             rating(ng-model='case.rating' max ='max' readOnly='isReadOnly' on-hover='hoveringOver(value)' on-leave='overStar = null')
-                                        .col-lg-4.col-md-4.col-sm-4.col-xs-4
-                                            span.teaser-title(style="color:black") Published Date: 
-                                            span.teaser-date
+                                        .col-lg-5.col-md-5.col-sm-5.col-xs-5
+                                            span.teaser-title-atr(style="color:black") Published Date: 
+                                            span.teaser-date-atr
                                                 {{case.publication_date | date}}
                                             br
-                                            span.teaser-title(style="color:black") Last Edited:
-                                            span.teaser-date
+                                            span.teaser-title-atr(style="color:black") Last Edited: 
+                                            span.teaser-date-atr
                                                 {{case.last_edited | date}}
-                                        .col-lg-2.col-md-2.col-sm-2.col-xs-2(align='center')
-                                            a.del-edit-btn.btn.btn-default.btn-lg( href='', data-nodrag='', ng-click="deleteCase(case)")
+                                        .col-lg-2.col-md-2.col-sm-2.col-xs-2
+                                            a.del-edit-btn.btn.btn-default.pull-right( href='', data-nodrag='', ng-click="deleteCase(case)", style='margin-top:7px; margin-right:20px;')
                                                 .glyphicon.glyphicon-trash
-                        tab(heading="Private")
+                        tab(heading="Drafts")
+                            br
+                            .row
+                                .col-lg-8.col-md-8.col-sm-8.col-xs-8
+                                    h4 Draft Cases
+                                //.col-lg-4.col-md-4.col-sm-4.col-xs-4
+                                    label.pull-right Filter: 
+                                        select(ng-model='selectedFilter' ng-options='caseFilter.option as caseFilter.display for caseFilter in caseFilters' )
+                            div(ng-repeat='case in draftCases | orderBy : selectedFilter')
+                                .well
+                                    .row
+                                        .col-lg-5.col-md-5.col-sm-5
+                                            label.pull-left
+                                                i.fa.fa-file-text.fa-3x(style="color:#428bca; margin-right:25px;")
+                                            span.title-case(style="color:black")
+                                                {{case.title}}  
+                                                //a(ui-sref='editcase({caseID:case.case_id})')
+                                                a(ng-click='editCase(case.case_id)')
+                                                    span.teaser-title-atr Edit/View
+                                            br
+                                            rating(ng-model='case.rating' max ='max' readOnly='isReadOnly' on-hover='hoveringOver(value)' on-leave='overStar = null')
+                                        .col-lg-5.col-md-5.col-sm-5.col-xs-5
+                                            span.teaser-title-atr(style="color:black") Published Date: 
+                                            span.teaser-date-atr
+                                                {{case.publication_date | date}}
+                                            br
+                                            span.teaser-title-atr(style="color:black") Last Edited:
+                                            span.teaser-date-atr
+                                                {{case.last_edited | date}}
+                                        .col-lg-2.col-md-2.col-sm-2.col-xs-2
+                                            a.del-edit-btn.btn.btn-default.pull-right( href='', data-nodrag='', ng-click="deleteCase(case)", style='margin-top:7px; margin-right:20px;')
+                                                .glyphicon.glyphicon-trash
+                        //tab(heading="Private")
                             br
                             .row
                                 .col-lg-8.col-md-6.col-sm-6.col-xs-6

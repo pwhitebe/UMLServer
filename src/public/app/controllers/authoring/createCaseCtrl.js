@@ -70,7 +70,7 @@ $scope.saveDraft = function() {
 		$scope.case.last_edited = date.toISOString();
 		// build overview text
 		if ($scope.case.development_status == 5) {
-				$scope.case.pulication_date = date.toISOString();
+				$scope.case.publication_date = date.toISOString();
 		}
 		$scope.case.overview = $scope.case.case_text.replace(/<\/?[^>]+>/gi, '').substring(0,400) + '...';
 		
@@ -489,7 +489,7 @@ $scope.uploadFile = function(imageUpload) {
 $scope.publicationDateChanged = function (newDate, oldDate) {
     //console.log(newDate);
     //console.log(oldDate);
-    $scope.pulication_date = newDate;
+    $scope.publication_date = newDate;
 }
 
 $scope.addQuestion = function(qa,type,e) {

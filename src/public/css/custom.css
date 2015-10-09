@@ -163,6 +163,15 @@ fieldset[disabled] .btn-mmwr.active {
   color:#0062ab;
   font-size:16px;
 }
+.teaser-title-atr {
+  color:#0062ab;
+  font-size:14px;
+}
+.teaser-date-atr {
+  font-style:oblique;
+  color:#9d9d9d;
+  font-size:14px;
+}
 .teaser-date {
   font-style:oblique;
   color:#9d9d9d;
@@ -298,7 +307,7 @@ fieldset[disabled] .btn-mmwr.active {
   color:#0062ab;
 }
 .title-case {
-  font-size:24px;
+  font-size:20px;
 }
 .title-date {
   font-size:17px;
