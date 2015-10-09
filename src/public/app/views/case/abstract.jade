@@ -4,6 +4,8 @@
 	.col.zero-padding-margin
 		.main-content
 			.row
+				H3(ng-if='preview')
+					| Preview Mode
 				.col-lg-12
 					span.title-type The Abstract: 
 					span.title-case {{case.title}}
@@ -25,6 +27,9 @@
 									p.thumbnail-fig {{image.caption}}
 			.row
 				.col-lg-12.col-md-12.col-sm-12
-					button.btn.btn-mmwr.btn-lg.pull-right.nav-button(type='button', ui-sref='test({caseID:case.case_id, testType:"post"})')
+					button.btn.btn-mmwr.btn-lg.pull-right.nav-button(ng-if='!preview' type='button', ui-sref='test({caseID:case.case_id, testType:"post"})')
+						| Next 
+						span.glyphicon.glyphicon-chevron-right
+					button.btn.btn-mmwr.btn-lg.pull-right.nav-button(ng-if='preview' type='button', ui-sref='previewTest({caseID:case.case_id, testType:"post",preview:"p"})')
 						| Next 
 						span.glyphicon.glyphicon-chevron-right

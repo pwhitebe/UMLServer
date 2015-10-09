@@ -117,6 +117,32 @@ mmwrcase.config(['$stateProvider', '$urlRouterProvider',
         controller  : 'editCaseCtrl',
         resolve : stateRoleChecks.isAdmin
       })
+      .state('preview', {
+        url:'/preview/:caseID/:preview',
+        templateUrl: 'partials/case/overview',
+        controller:'overviewCtrl'
+      })
+       .state('previewTest', {
+        url:'/preview/test/:testType/:caseID/:preview',
+        templateUrl: 'partials/case/test',
+        controller:'testCtrl'
+      })
+      .state('previewResults', {
+      url:'/preview/results/:caseID/:preview',
+      templateUrl: 'partials/case/results',
+      controller:'resultsCtrl',
+      params : {testType: null, questionID : null, selectedAnswerID : null}
+      })
+      .state('previewAbstract', {
+      url:'/preview/abstract/:caseID/:preview',
+      templateUrl: 'partials/case/abstract',
+      controller: 'abstractCtrl'
+      })
+      .state('previewAdditionalInfo', {
+      url:'/preview/additionalInfo/:caseID/:preview',
+      templateUrl: 'partials/case/additionalInfo',
+      controller: 'additionalInfoCtrl'
+      })
 }]);
 
 // angular.module('app').run(function($rootScope,$location) {

@@ -4,6 +4,7 @@
     .col.zero-padding-margin
         .main-content
             .row
+                H3(ng-show='preview') Preview
                 .col-lg-12
                     span.title-type The Case: 
                     span.title-case {{case.title}}
@@ -15,6 +16,9 @@
                     p(ng-bind-html='case.case_text')
             .row
                 .col-lg-12.col-md-12.col-sm-12
-                    button.btn.btn-mmwr.btn-lg.pull-right.nav-button(type='button' ui-sref='test({caseID:case.case_id, testType:"pre"})')
+                    button.btn.btn-mmwr.btn-lg.pull-right.nav-button(ng-if='preview' type='button' ui-sref='previewTest({caseID:case.case_id, testType:"pre",preview:"p"})')
+                        | Next 
+                        span.glyphicon.glyphicon-chevron-right
+                    button.btn.btn-mmwr.btn-lg.pull-right.nav-button(ng-if= '!preview' type='button' ui-sref='test({caseID:case.case_id, testType:"pre"})')
                         | Next 
                         span.glyphicon.glyphicon-chevron-right

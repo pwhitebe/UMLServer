@@ -1,8 +1,9 @@
-angular.module('app').controller('additionalInfoCtrl', function($scope,$stateParams, ngCase, $modal, $http, dialogs) {
+angular.module('app').controller('additionalInfoCtrl', function($scope,$stateParams, ngCase, $modal, $http, dialogs,$window) {
 	$scope.case;
 	$scope.max = 5;
 	$scope.isReadOnly = false;
 	$scope.caseRating = null;
+	$scope.preview = $stateParams.preview;
 	
 	$scope.hoveringOver = function(value) {
 		$scope.overStar = value;
@@ -34,9 +35,18 @@ angular.module('app').controller('additionalInfoCtrl', function($scope,$statePar
 	$scope.exit = function() {
 		var dlg = dialogs.confirm();
 		dlg.result.then(function(btn){
-			$state.go('home');
+			if ($stateParams.preview) {
+				$window.close();
+			}
+			else {
+				$state.go('home');
+			}
 		}, function(btn){
 			//No
 		});
+	};
+
+	$scope.exitCase = function() {
+		$window.close();
 	};
 });

@@ -4,12 +4,14 @@
 	.col.zero-padding-margin
 		.main-content
 			.row
+				H3(ng-if='preview')
+					| Preview Mode
 				.col-lg-8
 					span.title-type Additional Information: 
 					span.title-case {{case.title}}
-				.col-lg-4.col-md-6.col-sm-6.col-xs-6.rating-sty
-					p Rate this case
-					rating(ng-model='caseRating' max ='max' readOnly='isReadOnly' on-hover='hoveringOver(value)' on-leave='overStar = null')
+				//- .col-lg-4.col-md-6.col-sm-6.col-xs-6.rating-sty
+				//- 	p Rate this case
+				//- 	rating(ng-model='caseRating' max ='max' readOnly='isReadOnly' on-hover='hoveringOver(value)' on-leave='overStar = null')
 			.row
 				.col-lg-12.col-md-12.col-sm-12
 					hr.line-margin
@@ -18,5 +20,7 @@
 					p(ng-bind-html='case.additional_information')
 			.row
 				.col-lg-12.col-md-12.col-sm-12
-					button.btn.btn-mmwr.btn-lg.pull-right.nav-button(type='button' ui-sref='home' ng-click='rateCase()')
+					button.btn.btn-mmwr.btn-lg.pull-right.nav-button(ng-if='!preview' type='button' ui-sref='home' ng-click='rateCase()')
+						| Close Case 
+					button.btn.btn-mmwr.btn-lg.pull-right.nav-button(ng-if='preview' type='button' ng-click='exitCase();')
 						| Close Case 

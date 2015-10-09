@@ -76,64 +76,67 @@ $scope.saveDraft = function(originate) {
 		
 			if ($scope.case.case_id == null) {
 			//	delete $scope.case.case_id;
-			 $http.get('/api/mmwrcase/getNextCaseId').then(function(getIdRes) {
-			 	if (getIdRes.data.insertId) {
-			 		$scope.case.case_id = getIdRes.data.insertId;
-					$http.post('/api/mmwrcase/createCase',$scope.case).then(function(res){
-						if (res.data.hasOwnProperty('message')) { // create was success
-							// $scope.case.case_id = res.data.caseId;  // retreive newly inserted case id
-							 // using the new id for the QAs
-							 var combinedQA = $scope.qa.pre.concat($scope.qa.post);
-							 for (var i=0; i < combinedQA.length; i++) {
-							 	combinedQA[i].question.case_id = $scope.case.case_id;
-							 	combinedQA[i].question.question_id = i+1;
-							 	combinedQA[i].question.sequence_id = i+1;
-							 	delete combinedQA[i].question.editing; 
-							 	for (var j = 0 ; j < combinedQA[i].answers.length; j ++) {
-							 		combinedQA[i].answers[j].case_id = $scope.case.case_id;
-							 		combinedQA[i].answers[j].question_id = combinedQA[i].question.question_id;
-							 		combinedQA[i].answers[j].answer_id = j+1;
-							 		delete combinedQA[i].answers[j].editing;
-							 	}
-							 }
-							 // saving QA to database
-							 if (combinedQA.length > 0) {
-							 	$http.post('/api/mmwrcase/createQuestionAnswer',combinedQA).then(function(res){
-					               if (res.data.success) {
-					                 // alert('question save success');
-					                }
-					                else {
-					                  alert('question save failed')
-					                }
-					              });
-							 }
-							 // saving images.  this could move to the back end.
-							 if ($scope.images.length > 0) {
-							 	// populate values before sending to backing
-							 	for (var i=0; i < $scope.images.length; i ++) {
-							 		$scope.images[i].case_id = $scope.case.case_id;
-							 		$scope.images[i].sequence_id = i+1;
-							 		$scope.images[i].image_id = i+1;
-							 		delete $scope.images[i].editing;
-							 	}
-							 	$http.post('/api/mmwrcase/saveImages',$scope.images).then(function(res){
-					               if (res.data.success) {
-					                 // alert('question save success');
-					                }
-					                else {
-					                  alert('images save failed')
-					                }
-					              });
-							 }
-							 	ngNotifier.notify('case saved successfully');
-								if (originate == 'publish')	{
-									$scope.cancel()
+				 $http.get('/api/mmwrcase/getNextCaseId').then(function(getIdRes) {
+				 	if (getIdRes.data.insertId) {
+				 		$scope.case.case_id = getIdRes.data.insertId;
+							$http.post('/api/mmwrcase/createCase',$scope.case).then(function(res){
+								if (res.data.hasOwnProperty('message')) { // create was success
+									// $scope.case.case_id = res.data.caseId;  // retreive newly inserted case id
+									 // using the new id for the QAs
+									 var combinedQA = $scope.qa.pre.concat($scope.qa.post);
+									 for (var i=0; i < combinedQA.length; i++) {
+									 	combinedQA[i].question.case_id = $scope.case.case_id;
+									 	combinedQA[i].question.question_id = i+1;
+									 	combinedQA[i].question.sequence_id = i+1;
+									 	delete combinedQA[i].question.editing; 
+									 	for (var j = 0 ; j < combinedQA[i].answers.length; j ++) {
+									 		combinedQA[i].answers[j].case_id = $scope.case.case_id;
+									 		combinedQA[i].answers[j].question_id = combinedQA[i].question.question_id;
+									 		combinedQA[i].answers[j].answer_id = j+1;
+									 		delete combinedQA[i].answers[j].editing;
+									 	}
+									 }
+									 // saving QA to database
+									 if (combinedQA.length > 0) {
+									 	$http.post('/api/mmwrcase/createQuestionAnswer',combinedQA).then(function(res){
+							               if (res.data.success) {
+							                 // alert('question save success');
+							                }
+							                else {
+							                  alert('question save failed')
+							                }
+							              });
+									 }
+									 // saving images.  this could move to the back end.
+									if ($scope.images.length > 0) {
+									 	// populate values before sending to backing
+									 	for (var i=0; i < $scope.images.length; i ++) {
+									 		$scope.images[i].case_id = $scope.case.case_id;
+									 		$scope.images[i].sequence_id = i+1;
+									 		$scope.images[i].image_id = i+1;
+									 		delete $scope.images[i].editing;
+									 	}
+									 	$http.post('/api/mmwrcase/saveImages',$scope.images).then(function(res){
+							               	if (res.data.success) {
+							                 // alert('question save success');
+							                }
+							                else {
+							                  alert('images save failed')
+							                }
+							            });
+									}
+									ngNotifier.notify('case saved successfully');
+									if (originate == 'publish')	{
+											$scope.cancel()
+									} else if (originate == 'preview') {
+											var url = $state.href('preview', {caseID: $scope.case.case_id, preview : 'p'});
+											window.open(url,'_blank');
+						        	}
 								}
-							}
-							else {
-								alert ('Draft case save failed')
-							}
-						});
+								else {
+										alert ('Draft case save failed')
+								}
+							});
 					}
 					else {
 						console.log("could not get a new case Id")
@@ -158,7 +161,7 @@ $scope.saveDraft = function(originate) {
 				                delete combinedQA[i].answers[j].editing;
 				              }
 				           }
-				           if (combinedQA.length > 0 ) {
+				           	if (combinedQA.length > 0 ) {
 				            	$http.post('/api/mmwrcase/createQuestionAnswer',combinedQA).then(function(res){
 				               if (res.data.success) {
 				                  // alert('update success');
@@ -169,7 +172,7 @@ $scope.saveDraft = function(originate) {
 				              });
 				        	}
 				        	 // saving images.  this could move to the back end.
-							 if ($scope.images.length > 0) {
+							if ($scope.images.length > 0) {
 							 	// populate values before sending to backing
 							 	for (var i=0; i < $scope.images.length; i ++) {
 							 		$scope.images[i].case_id = $scope.case.case_id;
@@ -185,11 +188,14 @@ $scope.saveDraft = function(originate) {
 					                  alert('images save failed')
 					                }
 					              });
-							 }
-				        	ngNotifier.notify('case saved successfully');
+							}
+				  		      	ngNotifier.notify('case saved successfully');
 				        		if (originate == 'publish')	{
 									$scope.cancel()
-								}
+								} else if (originate = 'preview') {
+				        			var url = $state.href('preview', {caseID: $scope.case.case_id, preview : true});
+									window.open(url,'_blank');
+					        	}
 				        }
 				        else {
 				            console.log(res.data)
@@ -271,7 +277,7 @@ $scope.publishCase=function() {
 						dlg.result.then(function(btn){
 								oKtoSave = false;
 								$scope.case.replaceCurrent = caseData.case_id;		
-								$scope.saveDraft();
+								$scope.saveDraft('publish');
 								// close the modal here
 								
 						}, function(btn){
@@ -282,7 +288,7 @@ $scope.publishCase=function() {
 					}
 					else { // no current case exist, check publish ok flag
 							oKtoSave = false;
-					 		$scope.saveDraft();
+					 		$scope.saveDraft('publish');
 					 		
 					 		
 					}
@@ -708,10 +714,8 @@ $scope.copyQuestion = function(frm,to) {
 }
 
 $scope.previewCase = function() {
-	$scope.saveCase();
-	var url = $state.href('overview', {caseID: $scope.case.case_id});
-	console.log(url);
-	window.open(url,'_blank');
+	$scope.saveDraft('preview');
+	
 }
 
 $scope.confirmCancel = function() {

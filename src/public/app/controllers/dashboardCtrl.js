@@ -1,6 +1,7 @@
 angular.module('app').controller('dashboardCtrl', function($scope, ngCase,$modal,$window,$http,$state) {
 	
 	$scope.max = 5;
+	$scope.isReadOnly = true;
 	$scope.developmentStatus;
 	$scope.displayStatus;
 	$scope.tabCategory=[

@@ -1,4 +1,5 @@
-angular.module('app').controller('resultsCtrl', function($scope, ngTest, ngCase, $stateParams,$state, dialogs) {
+angular.module('app').controller('resultsCtrl', function($scope, ngTest, ngCase, $stateParams,$state, dialogs,$window) {
+	$scope.preview = $stateParams.preview;
 	//ngTest.getQuestions($stateParams.caseID).then(function(data) {
 	ngTest.getQuestions($stateParams.caseID, $stateParams.testType).then(function(data) {
 		$scope.questions = data;
@@ -20,15 +21,30 @@ angular.module('app').controller('resultsCtrl', function($scope, ngTest, ngCase,
 
 
 	$scope.goNext = function() {
-		if ($scope.moreQuestions) {
-	   		$state.go('test',{caseID : $stateParams.caseID, questionID :$scope.questions.question.question_id});
-	   	}
-		else {
-			if ($scope.questions.question.post_pre == 'pre') {
-				$state.go('abstract',{caseID : $stateParams.caseID});
-			}
+		if ($scope.preview) {
+			if ($scope.moreQuestions) {
+		   		$state.go('previewTest',{caseID : $stateParams.caseID, questionID :$scope.questions.question.question_id,preview:'p'});
+		   	}
 			else {
-				$state.go('additionalInfo',{caseID : $stateParams.caseID});
+				if ($scope.questions.question.post_pre == 'pre') {
+					$state.go('previewAbstract',{caseID : $stateParams.caseID,preview:'p'});
+				}
+				else {
+					$state.go('previewAdditionalInfo',{caseID : $stateParams.caseID,preview:'p'});
+				}
+			}
+		}
+		else {
+			if ($scope.moreQuestions) {
+		   		$state.go('test',{caseID : $stateParams.caseID, questionID :$scope.questions.question.question_id});
+		   	}
+			else {
+				if ($scope.questions.question.post_pre == 'pre') {
+					$state.go('abstract',{caseID : $stateParams.caseID});
+				}
+				else {
+					$state.go('additionalInfo',{caseID : $stateParams.caseID});
+				}
 			}
 		}
 	};
@@ -36,7 +52,12 @@ angular.module('app').controller('resultsCtrl', function($scope, ngTest, ngCase,
 	$scope.exit = function() {
 		var dlg = dialogs.confirm();
 		dlg.result.then(function(btn){
-			$state.go('home');
+			if ($stateParams.preview) {
+				$window.close();
+			}
+			else {
+				$state.go('home');
+			}
 		}, function(btn){
 			//No
 		});

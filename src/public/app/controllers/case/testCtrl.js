@@ -1,8 +1,8 @@
-angular.module('app').controller('testCtrl', function($scope, ngTest, ngCase, $stateParams, $state, dialogs) {
+angular.module('app').controller('testCtrl', function($scope, ngTest, ngCase, $stateParams, $state, dialogs,$window) {
 	$scope.case;
 	$scope.input = {};
-	console.log($stateParams);
-
+	$scope.preview = $stateParams.preview;
+	
 	ngTest.getQuestions($stateParams.caseID, $stateParams.testType).then(function(data) {
 		$scope.questions = data;
 		console.log($scope.questions);
@@ -20,7 +20,9 @@ angular.module('app').controller('testCtrl', function($scope, ngTest, ngCase, $s
 	//	console.log($scope.questions);
 	//	console.log($scope.questions.selectedAnswer);
 		// may need to update hit counter here pending clarification.  
-		ngCase.updateHitCounter($stateParams.caseID,$scope.questions.question.question_id,$scope.questions.selectedAnswer);
+	 	if(!$scope.preview && $stateParams.testType != 'pre') {	
+			ngCase.updateHitCounter($stateParams.caseID,$scope.questions.question.question_id,$scope.questions.selectedAnswer);
+		}
         for(var i = 0; i < $scope.questions.answers.length; i++){
         	if ($scope.questions.answers[i].answer_id == $scope.questions.selectedAnswer){
         			// found matching answer
@@ -29,13 +31,23 @@ angular.module('app').controller('testCtrl', function($scope, ngTest, ngCase, $s
         		}
        	} 
 		
-       	$state.go('results',{caseID : $stateParams.caseID, testType: $stateParams.testType, questionID :$scope.questions.question.question_id, selectedAnswerID :  $scope.questions.selectedAnswer});
-	};
+       	if ($stateParams.preview) {
+       		$state.go('previewResults',{caseID : $stateParams.caseID, testType: $stateParams.testType, questionID :$scope.questions.question.question_id, selectedAnswerID :  $scope.questions.selectedAnswer, preview:'p'});
+       	}
+       	else {
+       		$state.go('results',{caseID : $stateParams.caseID, testType: $stateParams.testType, questionID :$scope.questions.question.question_id, selectedAnswerID :  $scope.questions.selectedAnswer});
+		}
+	};	 
 
 	$scope.exit = function() {
 		var dlg = dialogs.confirm();
 		dlg.result.then(function(btn){
-			$state.go('home');
+			if ($stateParams.preview) {
+				$window.close();
+			}
+			else {
+				$state.go('home');
+			}
 		}, function(btn){
 			//No
 		});

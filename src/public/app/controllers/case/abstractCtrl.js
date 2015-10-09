@@ -1,6 +1,6 @@
-angular.module('app').controller('abstractCtrl', function($scope,$stateParams, ngCase, $modal, $state, dialogs) {
+angular.module('app').controller('abstractCtrl', function($scope,$stateParams, ngCase, $modal, $state, dialogs,$window) {
 	$scope.case;
-
+	$scope.preview = $stateParams.preview;
 	(function(){
 		ngCase.getCaseById($stateParams.caseID)
 			.success(function(caseData){
@@ -37,7 +37,12 @@ angular.module('app').controller('abstractCtrl', function($scope,$stateParams, n
 	$scope.exit = function() {
 		var dlg = dialogs.confirm();
 		dlg.result.then(function(btn){
-			$state.go('home');
+			if ($stateParams.preview) {
+				$window.close();
+			}
+			else {
+				$state.go('home');
+			}
 		}, function(btn){
 			//No
 		});
