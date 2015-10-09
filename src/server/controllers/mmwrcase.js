@@ -292,7 +292,7 @@ exports.createCase = function(req,res) {
   			 						res.send(err);
   			 					}
   			 					else {
-  			 					 	res.send({'message':'case added','caseId': result.insertId});
+  			 					 	res.send({'message':'new case added and curent case moved to archived','caseId': result.insertId});
   			 					}
   			 				})
   			 			}

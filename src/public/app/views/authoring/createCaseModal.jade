@@ -7,7 +7,7 @@ div(ng-controller="createCaseCtrl" style="background-color:#eee;")
 						h2(ng-show='!case.case_id') Create New Case
 						h2(ng-show='case.case_id') Edit Case
 					.save-draft-cont(style='position:absolute; float:left; margin-left:-30px;')
-						button.btn.btn-default.btn-circle.glyphicon.glyphicon-remove(type="button" ng-click="cancel()")
+						button.btn.btn-default.btn-circle.glyphicon.glyphicon-remove(type="button" ng-click="confirmCancel()")
 		.modal-body(style="padding-right:40px;")
 			.row
 				//LEFT COLUMN
@@ -26,7 +26,7 @@ div(ng-controller="createCaseCtrl" style="background-color:#eee;")
 							tabset
 								tab(heading="The Case" )
 									div(text-angular='',  ng-model="case.case_text")
-									div
+									//div
 										h4 Upload Images
 										hr(style="border-top: 1px solid #ececec")
 										.row
@@ -92,7 +92,7 @@ div(ng-controller="createCaseCtrl" style="background-color:#eee;")
 
 								tab(heading="Pre-Test")
 									|   Pre-Test
-									button.btn.btn-primary.pull-right(ng-click="copyQuestion('post','pre')") Copy Questions from Post-Test 
+									button.btn.btn-primary.pull-right(ng-click="copyQuestion('post','pre')" ng-disabled="qa.post.length == 0") Copy Questions from Post-Test 
 									hr
 									.row
 										.col-lg-12(ui-tree='options')
@@ -147,9 +147,72 @@ div(ng-controller="createCaseCtrl" style="background-color:#eee;")
 												{{ qa.pre | json }}	
 								tab(heading="The Abstract")
 									div(text-angular='',  ng-model='case.abstract_text')
+									div
+										h4 Upload Images
+										hr(style="border-top: 1px solid #ececec")
+										.row
+											.col-lg-12
+												.well
+													.form(name='uploadForm')
+														fieldset
+															input(type='file', ngf-select= '', ng-model='imageUpload.imageFile', name='file', accept='image/*', required='' ngf-clear-arq='' ngf-reset-on-click='')
+															br
+															.col-xs-6.col-md-4.col-lg-3
+																div.preview-thumbnail
+																	img.img-thumbnail.img-responsive(id='uploadThumb' ng-show='imageUpload.imageFile != null', ngf-src='imageUpload.imageFile' src='')
+															.col-xs-6.col-md-4.col-lg-3
+																div
+																	label Image Title
+																		input.form-control(type='text' placeholder='enter a title' ng-model='imageUpload.imageTitle')
+																	label Image Caption
+																		input.form-control(type='text' placeholder='Enter image caption (45 characters max)' ng-model='imageUpload.imageCaption' style='width:320px')
+														button.btn.btn-primary(ng-click='uploadFile(imageUpload)') Upload
+										br
+										.row
+											.col-lg-12
+												accordion(style='background-color:337ab7; color:#000000;')
+													accordion-group(style='background-color:#f5f5f5;' is-open="galleryStatus.open")
+														accordion-heading(style="cursor:pointer")
+															i(ng-class="{'fa fa-plus-circle': !galleryStatus.open, 'fa fa-minus-circle': galleryStatus.open}")&nbsp;
+															| Uploaded Images
+														.row
+															div.col-xs-12.col-md-12.col-lg-12(ng-repeat='image in images track by $index', style="margin-bottom:10px; background-color:#f5f5f5;")
+																.panel.panel-default
+																	.panel-body(style="padding-right:30px;")
+																		.row
+																			.col-lg-4.col-md-4.col-sm-4.col-xs-4
+																				img.img-responsive.img-thumbnail(ng-src="{{image.image_url}}")
+																				br
+																				br
+																				label(style='font-weight:normal;')
+																					input(type='radio' name='{{image.case_id}}' ng-value='1' ng-model='image.featured' ng-change='setFeatureImage(images,image)')
+																					|&nbsp Use as featured image 
+																			.col-lg-6.col-md-6.col-sm-6.col-xs-6(align='left')
+																					strong
+																						| Image Title: &nbsp;
+																					label(style='font-weight:normal;')
+																						p(ng-show='!image.editing') {{image.title}}
+																						input.form-control(ng-show='image.editing' type='text', ng-model='image.title')
+																					br
+																					
+																					strong
+																						| Image Caption: &nbsp;
+																					label
+																						p(ng-show='!image.editing') {{image.caption}}
+																						input.form-control(ng-show='image.editing' type='text', ng-model='image.caption' style='width:320px')
+																					br
+																					button.btn.btn-success(ng-show='image.editing' type='button' ng-click='saveImage(image)')
+																						| Done 	
+																						
+																			.col-lg-2.col-md-2.col-sm-2.col-xs-2(align='center')
+																				a.del-edit-btn.btn.btn-default.btn-sm.pull-right( href='', data-nodrag='', ng-click='deleteFile(image,$index)' style='margin-left:5px;') 
+																					i.glyphicon.glyphicon-trash
+																				a.del-edit-btn.btn.btn-default.btn-sm.pull-right(ng-click='editImage(image)')
+																						i.glyphicon.glyphicon-pencil
+																		//hr(style="color:#dddddd; background-color:#dddddd; height:1px;")
 								tab(heading="Post-Test")
 									|   Post-Test
-									button.btn.btn-primary.pull-right(ng-click="copyQuestion('pre','post')") Copy Questions from Pre-Test 
+									button.btn.btn-primary.pull-right(ng-click="copyQuestion('pre','post')" ng-disabled="qa.pre.length == 0") Copy Questions from Pre-Test 
 									hr
 									.row
 										.col-lg-12(ui-tree='options')

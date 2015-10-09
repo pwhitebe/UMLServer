@@ -60,7 +60,7 @@ $scope.saveCase = function(){
 }
 
 
-$scope.saveDraft = function() {
+$scope.saveDraft = function(originate) {
 	 	// validate data before save 
 	 if (validateCase()) {
 	 	var date = new Date();  // get the current timestamp
@@ -86,13 +86,13 @@ $scope.saveDraft = function() {
 							 var combinedQA = $scope.qa.pre.concat($scope.qa.post);
 							 for (var i=0; i < combinedQA.length; i++) {
 							 	combinedQA[i].question.case_id = $scope.case.case_id;
-							 	combinedQA[i].question.question_id = i;
-							 	combinedQA[i].question.sequence_id = i;
+							 	combinedQA[i].question.question_id = i+1;
+							 	combinedQA[i].question.sequence_id = i+1;
 							 	delete combinedQA[i].question.editing; 
 							 	for (var j = 0 ; j < combinedQA[i].answers.length; j ++) {
 							 		combinedQA[i].answers[j].case_id = $scope.case.case_id;
-							 		combinedQA[i].answers[j].question_id = i;
-							 		combinedQA[i].answers[j].answer_id = j;
+							 		combinedQA[i].answers[j].question_id = combinedQA[i].question.question_id;
+							 		combinedQA[i].answers[j].answer_id = j+1;
 							 		delete combinedQA[i].answers[j].editing;
 							 	}
 							 }
@@ -112,8 +112,8 @@ $scope.saveDraft = function() {
 							 	// populate values before sending to backing
 							 	for (var i=0; i < $scope.images.length; i ++) {
 							 		$scope.images[i].case_id = $scope.case.case_id;
-							 		$scope.images[i].sequence_id = i;
-							 		$scope.images[i].image_id = i;
+							 		$scope.images[i].sequence_id = i+1;
+							 		$scope.images[i].image_id = i+1;
 							 		delete $scope.images[i].editing;
 							 	}
 							 	$http.post('/api/mmwrcase/saveImages',$scope.images).then(function(res){
@@ -126,6 +126,9 @@ $scope.saveDraft = function() {
 					              });
 							 }
 							 	ngNotifier.notify('case saved successfully');
+								if (originate == 'publish')	{
+									$scope.cancel()
+								}
 							}
 							else {
 								alert ('Draft case save failed')
@@ -145,12 +148,13 @@ $scope.saveDraft = function() {
 				           var combinedQA = $scope.qa.pre.concat($scope.qa.post);
 				            for (var i=0; i < combinedQA.length; i++) {
 				              combinedQA[i].question.case_id = $scope.case.case_id;
-				              combinedQA[i].question.question_id = i;
+				              combinedQA[i].question.question_id = i+1;
+				              combinedQA[i].question.sequence_id = i+1;
 				              delete combinedQA[i].question.editing; 
 				              for (var j = 0 ; j < combinedQA[i].answers.length; j ++) {
 				                combinedQA[i].answers[j].case_id = $scope.case.case_id;
-				                combinedQA[i].answers[j].question_id = i;
-				                combinedQA[i].answers[j].answer_id = j;
+				                combinedQA[i].answers[j].question_id = combinedQA[i].question.question_id;
+				                combinedQA[i].answers[j].answer_id = j+1;
 				                delete combinedQA[i].answers[j].editing;
 				              }
 				           }
@@ -169,8 +173,8 @@ $scope.saveDraft = function() {
 							 	// populate values before sending to backing
 							 	for (var i=0; i < $scope.images.length; i ++) {
 							 		$scope.images[i].case_id = $scope.case.case_id;
-							 		$scope.images[i].sequence_id = i;
-							 		$scope.images[i].image_id = i;
+							 		$scope.images[i].sequence_id = i+1;
+							 		$scope.images[i].image_id = i+1;
 							 		delete $scope.images[i].editing;
 							 	}
 							 	$http.post('/api/mmwrcase/saveImages',$scope.images).then(function(res){
@@ -183,6 +187,9 @@ $scope.saveDraft = function() {
 					              });
 							 }
 				        	ngNotifier.notify('case saved successfully');
+				        		if (originate == 'publish')	{
+									$scope.cancel()
+								}
 				        }
 				        else {
 				            console.log(res.data)
@@ -286,8 +293,7 @@ $scope.publishCase=function() {
 				});
 		}
 		if (oKtoSave) {
-			console.log('i was called');
-			$scope.saveDraft();
+			$scope.saveDraft('publish');
 		}
 
 		
@@ -647,7 +653,7 @@ $scope.resetUpload = function() {
  function validateCase() {
  	var noError = true;
  	if (isEmpty($scope.case.title)){
- 		ngNotifier('Please enter a title for the case');
+ 		ngNotifier.notifyError('Please enter a title for the case');
  		noError = false;
  	}
  	return noError
@@ -707,6 +713,15 @@ $scope.previewCase = function() {
 	console.log(url);
 	window.open(url,'_blank');
 }
+
+$scope.confirmCancel = function() {
+		var dlg = dialogs.confirm('Confirmn Close Edit', 'Please save your changes before exit.  Click yes to continue');
+		dlg.result.then(function(btn){
+			$scope.cancel()
+		}, function(btn){
+			//No
+		});
+	};
 
 });
 
