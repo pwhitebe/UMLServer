@@ -18,7 +18,6 @@
 --
 -- Table structure for table `answer`
 --
-
 DROP TABLE IF EXISTS `answer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -177,7 +176,7 @@ INSERT INTO `question` VALUES (1,1,1,'pre','Which of the following should be inc
 /*!40000 ALTER TABLE `question` ENABLE KEYS */;
 UNLOCK TABLES;
 
-
+DROP TABLE IF EXISTS `answer`;
 CREATE TABLE `answer` (
   `answer_id` int(11) NOT NULL,
   `question_id` int(11) NOT NULL,
@@ -193,8 +192,6 @@ CREATE TABLE `answer` (
   CONSTRAINT `fk_Answer_Question1` FOREIGN KEY (`case_id`,`question_id`) REFERENCES `question` (`case_id`,`question_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-
 --
 -- Dumping data for table `answer`
 --
@@ -239,7 +236,6 @@ UNLOCK TABLES;
 --
 -- Table structure for table `user`
 --
-
 DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -295,15 +291,14 @@ LOCK TABLES `user_history` WRITE;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
+DROP TABLE IF EXISTS `master_controls`;
 CREATE TABLE `master_controls` (
   `next_case_id` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`next_case_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `master_controls` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `master_control` VALUES (7)
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+INSERT INTO `master_controls` VALUES (7);
 UNLOCK TABLES;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
