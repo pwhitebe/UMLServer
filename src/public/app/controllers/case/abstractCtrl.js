@@ -35,17 +35,7 @@ angular.module('app').controller('abstractCtrl', function($scope,$stateParams, n
 	};
 
 	$scope.exit = function() {
-		var dlg = dialogs.confirm();
-		dlg.result.then(function(btn){
-			if ($stateParams.preview) {
-				$window.close();
-			}
-			else {
-				$state.go('home');
-			}
-		}, function(btn){
-			//No
-		});
+		ngCase.exitMode($scope.preview)
 	};
 
 });

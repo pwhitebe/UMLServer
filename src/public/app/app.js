@@ -118,30 +118,42 @@ mmwrcase.config(['$stateProvider', '$urlRouterProvider',
         resolve : stateRoleChecks.isAdmin
       })
       .state('preview', {
-        url:'/preview/:caseID/:preview',
+        url:'/preview/:caseID',
         templateUrl: 'partials/case/overview',
-        controller:'overviewCtrl'
+        controller:'overviewCtrl',
+        params : {
+          preview:true,
+        }
       })
        .state('previewTest', {
-        url:'/preview/test/:testType/:caseID/:preview',
+        url:'/preview/test/:testType/:caseID',
         templateUrl: 'partials/case/test',
-        controller:'testCtrl'
+        controller:'testCtrl',
+        params : {
+          preview:true,
+        }
       })
       .state('previewResults', {
-      url:'/preview/results/:caseID/:preview',
+      url:'/preview/results/:caseID',
       templateUrl: 'partials/case/results',
       controller:'resultsCtrl',
-      params : {testType: null, questionID : null, selectedAnswerID : null}
+      params : {testType: null, questionID : null, selectedAnswerID : null, preview:true}
       })
       .state('previewAbstract', {
-      url:'/preview/abstract/:caseID/:preview',
+      url:'/preview/abstract/:caseID',
       templateUrl: 'partials/case/abstract',
-      controller: 'abstractCtrl'
+      controller: 'abstractCtrl',
+      params : {
+          preview:true,
+        }
       })
       .state('previewAdditionalInfo', {
-      url:'/preview/additionalInfo/:caseID/:preview',
+      url:'/preview/additionalInfo/:caseID',
       templateUrl: 'partials/case/additionalInfo',
-      controller: 'additionalInfoCtrl'
+      controller: 'additionalInfoCtrl',
+      params : {
+          preview:true,
+        }
       })
 }]);
 

@@ -40,16 +40,6 @@ angular.module('app').controller('testCtrl', function($scope, ngTest, ngCase, $s
 	};	 
 
 	$scope.exit = function() {
-		var dlg = dialogs.confirm();
-		dlg.result.then(function(btn){
-			if ($stateParams.preview) {
-				$window.close();
-			}
-			else {
-				$state.go('home');
-			}
-		}, function(btn){
-			//No
-		});
+		ngCase.exitMode($scope.preview)
 	};
 });

@@ -1,4 +1,4 @@
-angular.module('app').controller('overviewCtrl', function($scope, ngCase, $stateParams,$state, dialogs,$window) {
+angular.module('app').controller('overviewCtrl', function($scope, ngCase, $stateParams,$state, dialogs) {
 	$scope.case;
 	$scope.preview = $stateParams.preview;
 	(function(){
@@ -13,16 +13,6 @@ angular.module('app').controller('overviewCtrl', function($scope, ngCase, $state
 	})();
 
 	$scope.exit = function() {
-		var dlg = dialogs.confirm();
-		dlg.result.then(function(btn){
-		if ($scope.preview=='p') {
-			$window.close();
-		}
-		else {
-			$state.go('home');
-		}
-		}, function(btn){
-			//No
-		});
+		ngCase.exitMode($scope.preview)
 	};
 });

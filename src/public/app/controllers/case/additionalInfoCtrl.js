@@ -33,17 +33,7 @@ angular.module('app').controller('additionalInfoCtrl', function($scope,$statePar
 	};
 
 	$scope.exit = function() {
-		var dlg = dialogs.confirm();
-		dlg.result.then(function(btn){
-			if ($stateParams.preview) {
-				$window.close();
-			}
-			else {
-				$state.go('home');
-			}
-		}, function(btn){
-			//No
-		});
+		ngCase.exitMode($scope.preview)
 	};
 
 	$scope.exitCase = function() {
