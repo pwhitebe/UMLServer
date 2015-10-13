@@ -1,4 +1,4 @@
-angular.module('app').factory('ngCase', function($http) {
+angular.module('app').factory('ngCase', function($http,dialogs,$window) {
 	return {
 		getCasesByStatus: function(developmentStatus,displayStatus) {
 			return $http.get('/api/mmwrcase/getCasesByStatus/'+developmentStatus+'/'+displayStatus);
@@ -35,6 +35,24 @@ angular.module('app').factory('ngCase', function($http) {
 		},
 		getDraftCases : function() {
 			return $http.get('/api/mmwrcase/getDraftCases');
+		},
+		exitMode : function(preview) {
+			if (preview) {
+				var dlg = dialogs.confirm('Confirm Close','Please confirm that you are done with previewing the case');
+				dlg.result.then(function(btn){
+					$window.close();
+				}, function(btn){
+					//No
+				});
+			}
+			else {
+				var dlg = dialogs.confirm();
+				dlg.result.then(function(btn){
+					$state.go('home');
+				}, function(btn){
+				//No
+				});	
+			}	
 		}
 	}
 
