@@ -252,15 +252,16 @@ $scope.publishCase=function() {
 		ngNotifier.notifyError('Please select a valid publish location');
 	}
 	else {
-		var oKtoSave = true;
 		// set publication date to current date
 		if ($scope.case.display_status == 1)  {  // future case,  make sure publication date is in the future
 			var d1 = new Date($scope.case.publication_date);
 			var curDate = new Date();
 			if (d1 <= curDate ) {
-				oKtoSave = false;
 				ngNotifier.notifyError('You are publishing an upcoming case, Please select a future publication date.');
 						
+			}
+			else  {
+				$scope.saveDraft('publish');
 			}
 		}
 		// checking for conflicting status
@@ -269,36 +270,28 @@ $scope.publishCase=function() {
 		// 	ngNotifier.notifyError('You have selected an invalid combination of development status and display status.  Please verify and retry');
 		// }
 
-		if ($scope.case.display_status == 0) { 
+		else if ($scope.case.display_status == 0) { 
 			ngCase.getCurrentCase()
 				.success(function(caseData){
 				 	if (caseData.case_id && caseData.case_id != $scope.case.case_id) {
 						var dlg = dialogs.confirm('Confirm Activate Current Case','Current Case of the Week already exist, Please confirm that you want to replace the current case with this case');
 						dlg.result.then(function(btn){
-								oKtoSave = false;
 								$scope.case.replaceCurrent = caseData.case_id;		
 								$scope.saveDraft('publish');
-								// close the modal here
-								
 						}, function(btn){
 							//No
-							oKtoSave = false;
 						});
 						
 					}
 					else { // no current case exist, check publish ok flag
-							oKtoSave = false;
 					 		$scope.saveDraft('publish');
-					 		
-					 		
 					}
 				})
 				.error(function(err){
 					console.log('Unable to retrieve case data, not sure of the status of the case: '+err);
-					oKtoSave = false;
 				});
 		}
-		if (oKtoSave) {
+		else {
 			$scope.saveDraft('publish');
 		}
 
@@ -726,7 +719,6 @@ $scope.confirmCancel = function() {
 			//No
 		});
 	};
-
 });
 
 
