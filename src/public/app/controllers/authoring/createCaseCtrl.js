@@ -63,14 +63,14 @@ $scope.saveCase = function(){
 $scope.saveDraft = function(originate) {
 	 	// validate data before save 
 	 if (validateCase()) {
-	 	var date = new Date();  // get the current timestamp
+	 	var now = moment().format("YYYY-MM-DDTHH:mm:ss")  // get the current timestamp
 	 	if ($scope.case.created_date == null) {
-			$scope.case.created_date = date.toISOString();
+			$scope.case.created_date = now;
 		}
-		$scope.case.last_edited = date.toISOString();
+		$scope.case.last_edited = now;
 		// build overview text
 		if ($scope.case.development_status == 5) {
-				$scope.case.publication_date = date.toISOString();
+				$scope.case.publication_date = now;
 		}
 		$scope.case.overview = $scope.case.case_text.replace(/<\/?[^>]+>/gi, '').substring(0,400) + '...';
 		
@@ -129,7 +129,7 @@ $scope.saveDraft = function(originate) {
 									if (originate == 'publish')	{
 											$scope.cancel()
 									} else if (originate == 'preview') {
-											var url = $state.href('preview', {caseID: $scope.case.case_id, preview : 'p'});
+											var url = $state.href('preview', {caseID: $scope.case.case_id, preview :true});
 											window.open(url,'_blank');
 						        	}
 								}
@@ -193,7 +193,7 @@ $scope.saveDraft = function(originate) {
 				        		if (originate == 'publish')	{
 									$scope.cancel()
 								} else if (originate = 'preview') {
-				        			var url = $state.href('preview', {caseID: $scope.case.case_id, preview : true});
+				        			var url = $state.href('preview', {caseID: $scope.case.case_id, preview:true});
 									window.open(url,'_blank');
 					        	}
 				        }
