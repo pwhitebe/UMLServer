@@ -1,9 +1,9 @@
 # mmwrcase
 
-A SEAN application for generating questions related to CDC MMWRticls.
+A SEAN application for generating UMLS term data from a mySQL database
 
 ## Goals
-To integrate with MMWR offerings.
+To provide Jupiter and similar programs with RESTful UMLS CUI data
 
 ##Requirements
 * SQL-compatible database (currently MySQL)
@@ -12,7 +12,7 @@ To integrate with MMWR offerings.
 * NodeJS
 
 ## Status and Roadmap
-Early Prototype, style updates and bug fixes as needed.
+Early Prototype
 
 ## Contributing
 Anyone is encouraged to contribute to the project by [forking](https://help.github.com/articles/fork-a-repo) and submitting a pull request. (If you are new to GitHub, you might start with a [basic tutorial](https://help.github.com/articles/set-up-git).)
@@ -36,4 +36,3 @@ You should have received a copy of the Apache Software License along with this p
 ## Privacy
 
 This project contains only non-sensitive, publicly available data and information. All material and community participation is covered by the PHIResearchLab.org [Disclaimer](http://www.phiresearchlab.org/index.php?option=com_content&view=article&id=26&Itemid=15) and [Code of Conduct](http://www.phiresearchlab.org/index.php?option=com_content&view=article&id=27&Itemid=19). For more information about CDC's privacy policy, please visit http://www.cdc.gov/privacy.html
->>>>>>> 55a1264ef56b0e633c8e06a4105cbdc7d221477b
