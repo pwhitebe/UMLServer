@@ -12,8 +12,8 @@ var connection = mysql.createConnection({
   host     : properties.mysqlhost,
   user     : properties.mysqluser,
   password : properties.mysqlpassword,
-  database : properties.mysqldatabase
-  //port     : '/tmp/mysql.sock' 
+  database : properties.mysqldatabase,
+  port     : properties.port
 });
 connection.connect( function(err) {
 	if(err) {

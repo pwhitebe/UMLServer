@@ -13,6 +13,7 @@ module.exports = function(app) {
   // app.get('/api/users', auth.requiresRole('admin'), users.getUsers);
   // app.post('/api/users', users.createUser);
   // app.put('/api/users', users.updateUser);
+  app.get('/api/mmwrcase/CuisByNSTR/:nstr',mmwrCase.getCUISByNSTR);
   app.get('/api/mmwrcase/currentCase/',mmwrCase.getCurrentCase);
   app.get('/api/mmwrcase/getCasesByStatus/:devStatus/:displayStatus',mmwrCase.getCasesByStatus);
   app.get('/api/mmwrcase/getCaseById/:caseId',mmwrCase.getCaseById);
