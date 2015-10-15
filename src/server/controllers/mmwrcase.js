@@ -33,6 +33,30 @@ exports.getCUISByNSTR = function(req,res) {
 
 }
 
+exports.getDefinitionsByAUI = function(req,res) {
+	//connection.connect();
+	var aui = req.params.aui;
+	//var sqlStm = 'SELECT * FROM case_main where development_status = ? and display_status = ?',[devStatus,displayStatus];
+	//console.log(sqlStm)
+	if(true){
+		connection.query('select cui, aui, atui, satui, sab, def, suppress, cvf  from mrdef where aui = ?',[aui],function(err,rows){
+  		if(err) {
+  			res.send(err);
+  		} 
+  		else {
+
+  		 	   res.send(rows);
+ 		 	}
+		});
+	}
+	else
+	{
+		console.log("DB connection failed");
+	}
+//	connection.end();
+
+}
+
 exports.getCasesByStatus = function(req,res) {
 	//connection.connect();
 	var devStatus = req.params.devStatus;
