@@ -7,8 +7,8 @@ To provide Jupiter and similar programs with RESTful UMLS CUI data
 
 ##Requirements
 * SQL-compatible database (currently MySQL)
+* UMLS Metathesaurus account to populate database
 * ExpressJS
-* AngularJS
 * NodeJS
 
 ## Status and Roadmap
