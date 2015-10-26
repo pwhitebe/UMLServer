@@ -15,7 +15,7 @@ exports.getCUISByNSTR = function(req,res) {
 	//var sqlStm = 'SELECT * FROM case_main where development_status = ? and display_status = ?',[devStatus,displayStatus];
 	//console.log(sqlStm)
 	if(true){
-		connection.query('select distinct mrx.cui, mrh.AUI, mrc.* from MRXNS_ENG mrx join mrhier mrh on mrx.cui = mrh.cui and mrh.sab = \'NCI\' join mrconso mrc on mrh.AUI = mrc.AUI  where mrx.NSTR like  ?',[nstr],function(err,rows){
+		connection.query('select distinct mrx.cui, mrh.AUI, mrc.* from MRXNS_ENG mrx join MRHIER mrh on mrx.cui = mrh.cui and mrh.sab = \'NCI\' join MRCONSO mrc on mrh.AUI = mrc.AUI  where mrx.NSTR like  ?',[nstr],function(err,rows){
   		if(err) {
   			res.send(err);
   		} 
@@ -39,7 +39,7 @@ exports.getDefinitionsByAUI = function(req,res) {
 	//var sqlStm = 'SELECT * FROM case_main where development_status = ? and display_status = ?',[devStatus,displayStatus];
 	//console.log(sqlStm)
 	if(true){
-		connection.query('select cui, aui, atui, satui, sab, def, suppress, cvf  from mrdef where aui = ?',[aui],function(err,rows){
+		connection.query('select cui, aui, atui, satui, sab, def, suppress, cvf  from MRDEF where aui = ?',[aui],function(err,rows){
   		if(err) {
   			res.send(err);
   		} 
